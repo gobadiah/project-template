@@ -27,6 +27,7 @@ ssh-keygen -t rsa
 ```
 # Latest version of zsh first
 cd /tmp
+sudo apt-get install -y ncurses-dev
 wget -O zsh-5.4.2.tar.gz "https://downloads.sourceforge.net/project/zsh/zsh/5.4.2/zsh-5.4.2.tar.gz?r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Fzsh%2Ffiles%2Fzsh%2F5.4.2%2Fzsh-5.4.2.tar.gz%2Fdownload&ts=1518718011"
 tar xvzf zsh-5.4.2.tar.gz
 cd zsh-5.4.2
@@ -37,7 +38,7 @@ sudo make install
 echo /usr/local/bin/zsh | sudo tee --append /etc/shells
 chsh -s /usr/local/bin/zsh
 
-# At that point you should login again so zsh is used
+# Reboot 
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 ```
 
@@ -78,6 +79,7 @@ git clone https://github.com/pyenv/pyenv.git ~/.pyenv
 sudo apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev \
 libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev \
 xz-utils tk-dev
+git clone https://github.com/pyenv/pyenv-virtualenv.git $(pyenv root)/plugins/pyenv-virtualenv
 ```
 Then add `pyenv` to your plugins list.
 
@@ -241,15 +243,13 @@ Ask an administrator for an account, then
 aws configure --profile kincube
 ```
 
-With keys, region `eu-west-1` and format `json`.
+With keys, region `eu-west-3` and format `json`.
 
 ## Neovim
 
 * Setup python for `neovim` : 
 
 ```
-git clone https://github.com/pyenv/pyenv-virtualenv.git $(pyenv root)/plugins/pyenv-virtualenv
-
 pyenv install 2.7.14
 pyenv install 3.6.3
 
@@ -265,7 +265,7 @@ PYENV_VERSION=neovim3 pip install flake8
 Other dependencies
 
 ```
-git clone git://github.com/bartman/git-wip.git /tmp/
+git clone git://github.com/bartman/git-wip.git /tmp/git-wip
 cp /tmp/git-wip/git-wip ~/.local/bin
 ```
 
