@@ -1,0 +1,24 @@
+#!/usr/local/bin/zsh
+
+SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
+TMP="$SCRIPTPATH/tmp"
+
+ENV=${ENV:=staging}
+
+source $SCRIPTPATH/../config
+
+source $SCRIPTPATH/lib
+
+mkdir -p $TMP
+
+create_bucket
+
+create_user
+
+create_policy
+
+attach_policy
+
+create_access_key
+
+rm -rf $TMP

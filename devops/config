@@ -1,0 +1,20 @@
+#!/usr/local/bin/zsh
+
+web="kincube-web-$ENV"
+api="kincube-api-$ENV"
+
+API_URL="https://$api.herokuapp.com"
+WEB_URL="https://$web.herokuapp.com"
+
+REGION="eu-west-1"
+BUCKET="kincube-$ENV"
+POLICY_BASE="s3-limited-access"
+POLICY="$POLICY_BASE-$ENV"
+ROLE="api-role-$ENV"
+USER="api-user-$ENV"
+
+function get_aws_output_config() {
+  echo "aws-config-$1.json"
+}
+
+AWS_OUTPUT_CONFIG=$(get_aws_output_config $ENV)

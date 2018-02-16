@@ -1,0 +1,15 @@
+#!/usr/local/bin/zsh
+
+SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
+
+ENV=${ENV:=staging}
+
+source $SCRIPTPATH/config
+
+source $SCRIPTPATH/lib
+
+$SCRIPTPATH/aws/setup
+
+$SCRIPTPATH/heroku/setup
+
+rm $AWS_OUTPUT_CONFIG
