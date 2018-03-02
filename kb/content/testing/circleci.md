@@ -1,0 +1,9 @@
+# CircleCI
+
+[CircleCI](https://circleci.com/) provides Continuous Integration as a Service, as well as continuous deployment if needed.
+
+Each time someone push to a repository, a new workflow is started on circle ci, with different jobs, allowing to automatically test, build and deploy each component of the project.
+
+## Configuration
+
+CircleCI configuration file resides at `.circleci/config.yml`, and documentation can be found [here](https://circleci.com/docs/2.0/).
