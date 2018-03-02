@@ -1,0 +1,18 @@
+#!/bin/sh
+
+SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
+
+TAG=${TAG:=latest}
+
+docker build \
+  --file $SCRIPTPATH/Dockerfile \
+  --tag $PROJECT/web:$TAG \
+  --build-arg SENTRY_DSN=$SENTRY_DSN \
+  --build-arg SENTRY_PUBLIC_DSN=$SENTRY_PUBLIC_DSN \
+  --build-arg WEB_URL=$WEB_URL \
+  --build-arg BUCKET=$BUCKET \
+  --build-arg AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID \
+  --build-arg GOOGLE_API_KEY=$GOOGLE_API_KEY \
+  --build-arg GOOGLE_UNRESTRICTED_API_KEY=$GOOGLE_UNRESTRICTED_API_KEY \
+  $@ \
+  $SCRIPTPATH/..

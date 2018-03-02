@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Language should match snapshot 1`] = `
+<div>
+  <div>
+    <input
+      onClick={[Function]}
+      type="button"
+      value="Switch to french"
+    />
+     
+    <img
+      alt=""
+      src="/static/build/329f5c89d4f13938971b9b0d8d35f296.png"
+    />
+  </div>
+  <div>
+    <input
+      onClick={[Function]}
+      type="button"
+      value="Switch to english"
+    />
+     
+    <img
+      alt=""
+      src="/static/build/1b46775dab5a7245b5969a5aa84e0dff.png"
+    />
+  </div>
+</div>
+`;

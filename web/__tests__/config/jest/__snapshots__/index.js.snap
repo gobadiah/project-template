@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Jest config should match this 1`] = `
+Object {
+  "collectCoverageFrom": Array [
+    "<rootDir>/src/**/*.js",
+    "!<rootDir>/src/.next/**",
+  ],
+  "coverageDirectory": "<rootDir>/reports/coverage",
+  "coveragePathIgnorePatterns": Array [
+    "/node_modules/",
+    "/dist/",
+  ],
+  "coverageReporters": Array [
+    "json",
+    "lcov",
+    "text",
+    "html",
+  ],
+  "modulePathIgnorePatterns": Array [
+    "<rootDir>/dist",
+  ],
+  "setupFiles": Array [
+    "<rootDir>/src/config/jest/setup.js",
+  ],
+  "setupTestFrameworkScriptFile": "<rootDir>/src/config/jest/setup-test-framework.js",
+  "snapshotSerializers": Array [
+    "enzyme-to-json/serializer",
+  ],
+  "testEnvironment": "node",
+  "testPathIgnorePatterns": Array [
+    "/node_modules/",
+    "/dist/",
+  ],
+}
+`;

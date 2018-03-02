@@ -1,0 +1,61 @@
+version: 2
+jobs:
+  build-web:
+    docker:
+      - image: docker:17.05.0-ce-git
+    steps:
+      - checkout
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - run:
+          name: Build application Docker image
+          command: |
+            ./web/docker/build --cache-from=web
+  test-web:
+    docker:
+      - image: circleci/node:9-stretch
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-web-node_modules-{{ checksum "web/package.json" }}-{{ checksum "web/yarn.lock" }}
+            - v1-web-node_modules-{{ checksum "web/package.json" }}-
+            - v1-web-node-modules-
+      - run:
+          name: Yarn
+          command: |
+            cd web
+            yarn install
+      - save_cache:
+          key: v1-web-node_modules-{{ checksum "web/package.json" }}-{{ checksum "web/yarn.lock" }}
+          paths:
+            - web/node_modules
+      - run:
+          name: Setup Code Climate test-reporter
+          command: |
+            cd web
+            curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+            chmod +x ./cc-test-reporter
+      - run:
+          name: Run tests
+          command: |
+            cd web
+            ./cc-test-reporter before-build
+            npm run test:ci
+            ./cc-test-reporter format-coverage -t lcov reports/coverage/lcov.info
+            ./cc-test-reporter upload-coverage
+          environment:
+            JEST_JUNIT_OUTPUT: "reports/junit/js-test-results.xml"
+      - run:
+          name: Coveralls
+          command: cat web/reports/coverage/lcov.info | ./web/node_modules/.bin/coveralls
+      - store_test_results:
+          path: web/reports/junit
+      - store_artifacts:
+          path: web/reports
+workflows:
+  version: 2
+  build-and-test-web:
+    jobs:
+      - build-web
+      - test-web

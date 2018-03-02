@@ -1,0 +1,42 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SomePage should match snapshot 1`] = `
+.emotion-0 {
+  color: green;
+}
+
+.emotion-1 {
+  background-color: greenyellow;
+}
+
+<div
+  className="emotion-1"
+>
+  <div
+    className="emotion-0"
+  >
+    Hello world
+  </div>
+  <a
+    href="/"
+    onClick={[Function]}
+  >
+    Back to index
+  </a>
+  <br />
+  <a
+    href="/generate-error"
+    onClick={[Function]}
+  >
+    Generate error
+  </a>
+  <br />
+  <a
+    href="/api"
+    onClick={[Function]}
+  >
+    Api endpoint
+  </a>
+  <br />
+</div>
+`;

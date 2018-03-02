@@ -1,0 +1,62 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Index should match snapshot 1`] = `
+.emotion-0 {
+  color: green;
+}
+
+.emotion-1 {
+  background-color: hotpink;
+}
+
+<div
+  className="emotion-1"
+>
+  <div
+    className="emotion-0"
+  >
+    Hello world
+  </div>
+  <div>
+    <div>
+      <input
+        onClick={[Function]}
+        type="button"
+        value="Switch to french"
+      />
+       
+      <img
+        alt=""
+        src="/static/build/329f5c89d4f13938971b9b0d8d35f296.png"
+      />
+    </div>
+    <div>
+      <input
+        onClick={[Function]}
+        type="button"
+        value="Switch to english"
+      />
+       
+      <img
+        alt=""
+        src="/static/build/1b46775dab5a7245b5969a5aa84e0dff.png"
+      />
+    </div>
+  </div>
+  <div>
+    This is a pure component
+  </div>
+  <a
+    href="/some-page"
+    onClick={[Function]}
+  >
+    Some page
+  </a>
+  <a
+    href="/generate-error"
+    onClick={[Function]}
+  >
+    Generate error
+  </a>
+</div>
+`;

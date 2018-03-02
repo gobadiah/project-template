@@ -1,0 +1,23 @@
+{
+    "parser": "babel-eslint",
+    "extends": ["airbnb", "plugin:jest/recommended"],
+    "plugins": ["jest", "babel"],
+    "settings": {
+      "import/resolver": {
+        "babel-plugin-root-import": {}
+      }
+    },
+    "rules": {
+        "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+        "react/prefer-stateless-function": "off",
+        "jsx-a11y/label-has-for": [ 2, {
+            "required": {
+                "some": [ "nesting", "id" ]
+            }
+        }],
+        "jsx-a11y/anchor-is-valid": "off",
+        "jsx-quotes": [ "error", "prefer-single" ],
+        "quotes": [ "error", "single" ],
+        "babel/semi": 1
+    }
+}
