@@ -8,13 +8,15 @@ import config from './config';
 const google = config.google.clientId && config.google.clientSecret;
 const facebook = config.facebook.clientId && config.facebook.clientSecret;
 
+const getConfig = provider => ({
+  clientID: config[provider].clientId,
+  clientSecret: config[provider].clientSecret,
+  callbackURL: `${config.web}/auth/${provider}/callback`,
+});
+
 if (google) {
   passport.use(new GoogleStrategy(
-    {
-      clientID: config.google.clientId,
-      clientSecret: config.google.clientSecret,
-      callbackURL: `${config.web}/auth/google/callback`,
-    },
+    getConfig('google'),
     (accessToken, refreshToken, profile, done) => {
       const data = {
         uid: profile.id,
@@ -30,11 +32,7 @@ if (google) {
 
 if (facebook) {
   passport.use(new FacebookStrategy(
-    {
-      clientID: config.facebook.clientId,
-      clientSecret: config.facebook.clientSecret,
-      callbackURL: `${config.web}/auth/facebook/callback`,
-    },
+    getConfig('facebook'),
     (accessToken, refreshToken, profile, done) => {
       const data = {
         uid: profile.id,

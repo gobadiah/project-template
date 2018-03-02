@@ -37,6 +37,30 @@ beforeEach(() => {
   mockAxios.post.mockImplementation(goodPost);
 });
 
+const runExpectations = (provider, args, done) => {
+  expect(mockAxios.post).toHaveBeenCalledTimes(1);
+  expect(mockAxios.post).toHaveBeenCalledWith(
+    '/auth/provider',
+    {
+      uid: 7,
+      provider,
+      access_token: 'accessToken',
+    },
+    {
+      baseUrl: 'http://127.0.0.1:8000',
+      headers: {},
+      withCredentials: true,
+    },
+  );
+  expect(done).toHaveBeenCalledTimes(1);
+  expect(done).toHaveBeenCalledWith(...args);
+};
+
+const setEnv = (provider) => {
+  process.env[`${provider.toUpperCase()}_CLIENT_ID`] = `${provider}-client-id`;
+  process.env[`${provider.toUpperCase()}_CLIENT_SECRET`] = `${provider}-client-secret`;
+};
+
 describe('Passport', () => {
   it('should do nothing when neither google of facebook are configured', () => {
     const passport = require('~/passport').default;
@@ -52,8 +76,7 @@ describe('Passport', () => {
   });
 
   it('should setup Google if env var are present', () => {
-    global.process.env.GOOGLE_CLIENT_ID = 'google-client-id';
-    global.process.env.GOOGLE_CLIENT_SECRET = 'google-client-secret';
+    setEnv('google');
 
     const passport = require('~/passport').default;
     const config = require('~/passport/config').default;
@@ -105,30 +128,13 @@ describe('Passport', () => {
 
     return func('accessToken', 'refreshToken', { id: 7 }, done)
       .then(() => {
-        expect(mockAxios.post).toHaveBeenCalledTimes(1);
-        expect(mockAxios.post).toHaveBeenCalledWith(
-          '/auth/provider',
-          {
-            uid: 7,
-            provider: 'google',
-            access_token: 'accessToken',
-          },
-          {
-            baseUrl: 'http://127.0.0.1:8000',
-            headers: {},
-            withCredentials: true,
-          },
-        );
-        expect(done).toHaveBeenCalledTimes(1);
-        expect(done).toHaveBeenCalledWith(null, 5);
+        runExpectations('google', [null, 5], done);
       });
   });
 
   it('should handle Google auth when axios rejects', () => {
     mockAxios.post.mockImplementation(badPost);
-
-    global.process.env.GOOGLE_CLIENT_ID = 'google-client-id';
-    global.process.env.GOOGLE_CLIENT_SECRET = 'google-client-secret';
+    setEnv('google');
 
     // eslint-disable-next-line no-unused-expressions
     require('~/passport').default;
@@ -138,28 +144,12 @@ describe('Passport', () => {
 
     return func('accessToken', 'refreshToken', { id: 7 }, done)
       .then(() => {
-        expect(mockAxios.post).toHaveBeenCalledTimes(1);
-        expect(mockAxios.post).toHaveBeenCalledWith(
-          '/auth/provider',
-          {
-            uid: 7,
-            provider: 'google',
-            access_token: 'accessToken',
-          },
-          {
-            baseUrl: 'http://127.0.0.1:8000',
-            headers: {},
-            withCredentials: true,
-          },
-        );
-        expect(done).toHaveBeenCalledTimes(1);
-        expect(done).toHaveBeenCalledWith(err);
+        runExpectations('google', [err], done);
       });
   });
 
   it('should setup Facebook if env var are present', () => {
-    global.process.env.FACEBOOK_CLIENT_ID = 'facebook-client-id';
-    global.process.env.FACEBOOK_CLIENT_SECRET = 'facebook-client-secret';
+    setEnv('facebook');
 
     const passport = require('~/passport').default;
     const config = require('~/passport/config').default;
@@ -206,30 +196,14 @@ describe('Passport', () => {
 
     return func('accessToken', 'refreshToken', { id: 7 }, done)
       .then(() => {
-        expect(mockAxios.post).toHaveBeenCalledTimes(1);
-        expect(mockAxios.post).toHaveBeenCalledWith(
-          '/auth/provider',
-          {
-            uid: 7,
-            provider: 'facebook',
-            access_token: 'accessToken',
-          },
-          {
-            baseUrl: 'http://127.0.0.1:8000',
-            headers: {},
-            withCredentials: true,
-          },
-        );
-        expect(done).toHaveBeenCalledTimes(1);
-        expect(done).toHaveBeenCalledWith(null, 5);
+        runExpectations('facebook', [null, 5], done);
       });
   });
 
   it('should handle Facebook auth when axios rejects', () => {
     mockAxios.post.mockImplementation(badPost);
 
-    global.process.env.FACEBOOK_CLIENT_ID = 'facebook-client-id';
-    global.process.env.FACEBOOK_CLIENT_SECRET = 'facebook-client-secret';
+    setEnv('facebook');
 
     // eslint-disable-next-line no-unused-expressions
     require('~/passport').default;
@@ -239,22 +213,7 @@ describe('Passport', () => {
 
     return func('accessToken', 'refreshToken', { id: 7 }, done)
       .then(() => {
-        expect(mockAxios.post).toHaveBeenCalledTimes(1);
-        expect(mockAxios.post).toHaveBeenCalledWith(
-          '/auth/provider',
-          {
-            uid: 7,
-            provider: 'facebook',
-            access_token: 'accessToken',
-          },
-          {
-            baseUrl: 'http://127.0.0.1:8000',
-            headers: {},
-            withCredentials: true,
-          },
-        );
-        expect(done).toHaveBeenCalledTimes(1);
-        expect(done).toHaveBeenCalledWith(err);
+        runExpectations('facebook', [err], done);
       });
   });
 });
