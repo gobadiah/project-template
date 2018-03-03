@@ -8,31 +8,43 @@ beforeAll(() => createApp(false).then((value) => { server = value.listen(0); }))
 
 afterAll(() => { server.close(); });
 
+const testServer = (message, get, status, text, set = ['Accept', 'text/html']) => {
+  it(message, () => request(server)
+    .get(get)
+    .set(...set)
+    .expect(status)
+    .expect(text));
+};
+
 describe('App', () => {
-  it('should return english when specifying lng query parameter', () =>
-    request(server)
-      .get('/?lng=en')
-      .expect(200)
-      .expect(/>Hello world !<\/div>/));
+  testServer(
+    'should return english when specifying lng query parameter',
+    '/?lng=en',
+    200,
+    />Hello world !<\/div>/,
+  );
 
-  it('should return english when specifying Accept-Language header', () =>
-    request(server)
-      .get('/')
-      .set('Accept-Language', 'en')
-      .expect(200)
-      .expect(/>Hello world !<\/div>/));
+  testServer(
+    'should return english when specifying Accept-Language header',
+    '/',
+    200,
+    />Hello world !<\/div>/,
+    ['Accept-Language', 'en'],
+  );
 
-  it('should return english when specifying i18next cookie', () =>
-    request(server)
-      .get('/')
-      .set('Cookie', 'i18next=en')
-      .expect(200)
-      .expect(/>Hello world !<\/div>/));
+  testServer(
+    'should return english when specifying i18next cookie',
+    '/',
+    200,
+    />Hello world !<\/div>/,
+    ['Cookie', 'i18next=en'],
+  );
 
-  it('should prioritize query over header', () =>
-    request(server)
-      .get('/?lng=fr')
-      .set('Accept-Language', 'en')
-      .expect(200)
-      .expect(/>Salut le monde !<\/div>/));
+  testServer(
+    'should prioritize query over header',
+    '/?lng=fr',
+    200,
+    />Salut le monde !<\/div>/,
+    ['Accept-Language', 'en'],
+  );
 });

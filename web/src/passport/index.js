@@ -14,37 +14,55 @@ const getConfig = provider => ({
   callbackURL: `${config.web}/auth/${provider}/callback`,
 });
 
+const callback = provider => (accessToken, refreshToken, profile, done) => {
+  const data = {
+    uid: profile.id,
+    provider,
+    access_token: accessToken,
+  };
+  return axios.post('/auth/provider', data, config.axios())
+    .then(result => done(null, result.data.data))
+    .catch(err => done(err));
+};
+
 if (google) {
   passport.use(new GoogleStrategy(
     getConfig('google'),
-    (accessToken, refreshToken, profile, done) => {
-      const data = {
-        uid: profile.id,
-        provider: 'google',
-        access_token: accessToken,
-      };
-      return axios.post('/auth/provider', data, config.axios())
-        .then(result => done(null, result.data.data))
-        .catch(err => done(err));
-    },
+    callback('google'),
   ));
 }
 
 if (facebook) {
   passport.use(new FacebookStrategy(
     getConfig('facebook'),
-    (accessToken, refreshToken, profile, done) => {
-      const data = {
-        uid: profile.id,
-        provider: 'facebook',
-        access_token: accessToken,
-      };
-      return axios.post('/auth/provider', data, config.axios())
-        .then(result => done(null, result.data.data))
-        .catch(err => done(err));
-    },
+    callback('facebook'),
   ));
 }
+
+const setupProvider = (server, provider) => {
+  server.get(
+    `/auth/${provider}`,
+    passport.authenticate(
+      provider,
+      {
+        session: false,
+        scope: config[provider].scope,
+      },
+    ),
+  );
+
+  server.get(
+    `/auth/${provider}/callback`,
+    passport.authenticate(
+      provider,
+      {
+        failureRedirect: '/signin',
+        session: false,
+      },
+    ),
+    (req, res) => res.redirect('/'),
+  );
+};
 
 export default (server) => {
   if (!google && !facebook) {
@@ -53,45 +71,10 @@ export default (server) => {
   server.use(passport.initialize());
 
   if (google) {
-    server.get(
-      '/auth/google',
-      passport.authenticate(
-        'google',
-        {
-          session: false,
-          scope: config.google.scope,
-        },
-      ),
-    );
-
-    server.get(
-      '/auth/google/callback',
-      passport.authenticate(
-        'google',
-        {
-          failureRedirect: '/signin',
-          session: false,
-        },
-      ),
-      (req, res) => res.redirect('/'),
-    );
+    setupProvider(server, 'google');
   }
 
   if (facebook) {
-    server.get('/auth/facebook', passport.authenticate('facebook', {
-      session: false,
-      scope: config.facebook.scope,
-    }));
-    server.get(
-      '/auth/facebook/callback',
-      passport.authenticate(
-        'facebook',
-        {
-          session: false,
-          successRedirect: '/',
-          failureRedirect: '/signin',
-        },
-      ),
-    );
+    setupProvider(server, 'facebook');
   }
 };

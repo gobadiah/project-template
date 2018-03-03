@@ -56,9 +56,72 @@ const runExpectations = (provider, args, done) => {
   expect(done).toHaveBeenCalledWith(...args);
 };
 
-const setEnv = (provider) => {
+const setup = (provider, postImpl) => {
   process.env[`${provider.toUpperCase()}_CLIENT_ID`] = `${provider}-client-id`;
   process.env[`${provider.toUpperCase()}_CLIENT_SECRET`] = `${provider}-client-secret`;
+
+  if (postImpl) {
+    mockAxios.post.mockImplementation(postImpl);
+  }
+};
+
+const testProvider = (provider, mockA, mockB) => {
+  it(`should setup ${provider} if env var are present`, () => {
+    setup(provider);
+
+    const passport = require('~/passport').default;
+    const config = require('~/passport/config').default;
+
+    expect(mockB).not.toHaveBeenCalled();
+
+    expect(mockA).toHaveBeenCalledTimes(1);
+    expect(mockA.mock.calls[0]).toHaveLength(2);
+    expect(mockA.mock.calls[0][0]).toEqual({
+      clientID: `${provider}-client-id`,
+      clientSecret: `${provider}-client-secret`,
+      callbackURL: `${config.web}/auth/${provider}/callback`,
+    });
+    const func = mockA.mock.calls[0][1];
+    const done = jest.fn();
+
+    const server = {
+      use: jest.fn(),
+      get: jest.fn(),
+    };
+
+    passport(server);
+
+    expect(mockPassport.initialize).toHaveBeenCalledTimes(1);
+    expect(mockPassport.initialize).toHaveBeenCalledWith();
+
+    expect(server.use).toHaveBeenCalledTimes(1);
+    expect(server.use).toHaveBeenCalledWith('initialize');
+
+    expect(mockPassport.authenticate).toHaveBeenCalledTimes(2);
+    expect(mockPassport.authenticate).toHaveBeenCalledWith(provider, {
+      session: false,
+      scope: config[provider].scope,
+    });
+    expect(mockPassport.authenticate).toHaveBeenCalledWith(provider, {
+      failureRedirect: '/signin',
+      session: false,
+    });
+
+    expect(server.get).toHaveBeenCalledTimes(2);
+    expect(server.get).toHaveBeenCalledWith(`/auth/${provider}`, 'authenticate');
+    expect(server.get.mock.calls[1][0]).toEqual(`/auth/${provider}/callback`);
+    expect(server.get.mock.calls[1][1]).toEqual('authenticate');
+    const arg = server.get.mock.calls[1][2];
+    const res = { redirect: jest.fn() };
+    arg({}, res);
+    expect(res.redirect).toHaveBeenCalledTimes(1);
+    expect(res.redirect).toHaveBeenCalledWith('/');
+
+    return func('accessToken', 'refreshToken', { id: 7 }, done)
+      .then(() => {
+        runExpectations(provider, [null, 5], done);
+      });
+  });
 };
 
 describe('Passport', () => {
@@ -75,66 +138,10 @@ describe('Passport', () => {
     expect(mockAxios.post).not.toHaveBeenCalled();
   });
 
-  it('should setup Google if env var are present', () => {
-    setEnv('google');
-
-    const passport = require('~/passport').default;
-    const config = require('~/passport/config').default;
-
-    expect(mockFacebook).not.toHaveBeenCalled();
-
-    expect(mockGoogle).toHaveBeenCalledTimes(1);
-    expect(mockGoogle.mock.calls[0]).toHaveLength(2);
-    expect(mockGoogle.mock.calls[0][0]).toEqual({
-      clientID: 'google-client-id',
-      clientSecret: 'google-client-secret',
-      callbackURL: `${config.web}/auth/google/callback`,
-    });
-    const func = mockGoogle.mock.calls[0][1];
-    const done = jest.fn();
-
-    const server = {
-      use: jest.fn(),
-      get: jest.fn(),
-    };
-
-    passport(server);
-
-    expect(mockPassport.initialize).toHaveBeenCalledTimes(1);
-    expect(mockPassport.initialize).toHaveBeenCalledWith();
-
-    expect(server.use).toHaveBeenCalledTimes(1);
-    expect(server.use).toHaveBeenCalledWith('initialize');
-
-    expect(mockPassport.authenticate).toHaveBeenCalledTimes(2);
-    expect(mockPassport.authenticate).toHaveBeenCalledWith('google', {
-      session: false,
-      scope: config.google.scope,
-    });
-    expect(mockPassport.authenticate).toHaveBeenCalledWith('google', {
-      failureRedirect: '/signin',
-      session: false,
-    });
-
-    expect(server.get).toHaveBeenCalledTimes(2);
-    expect(server.get).toHaveBeenCalledWith('/auth/google', 'authenticate');
-    expect(server.get.mock.calls[1][0]).toEqual('/auth/google/callback');
-    expect(server.get.mock.calls[1][1]).toEqual('authenticate');
-    const arg = server.get.mock.calls[1][2];
-    const res = { redirect: jest.fn() };
-    arg({}, res);
-    expect(res.redirect).toHaveBeenCalledTimes(1);
-    expect(res.redirect).toHaveBeenCalledWith('/');
-
-    return func('accessToken', 'refreshToken', { id: 7 }, done)
-      .then(() => {
-        runExpectations('google', [null, 5], done);
-      });
-  });
+  testProvider('google', mockGoogle, mockFacebook);
 
   it('should handle Google auth when axios rejects', () => {
-    mockAxios.post.mockImplementation(badPost);
-    setEnv('google');
+    setup('google', badPost);
 
     // eslint-disable-next-line no-unused-expressions
     require('~/passport').default;
@@ -148,62 +155,10 @@ describe('Passport', () => {
       });
   });
 
-  it('should setup Facebook if env var are present', () => {
-    setEnv('facebook');
-
-    const passport = require('~/passport').default;
-    const config = require('~/passport/config').default;
-
-    expect(mockGoogle).not.toHaveBeenCalled();
-
-    expect(mockFacebook).toHaveBeenCalledTimes(1);
-    expect(mockFacebook.mock.calls[0]).toHaveLength(2);
-    expect(mockFacebook.mock.calls[0][0]).toEqual({
-      clientID: 'facebook-client-id',
-      clientSecret: 'facebook-client-secret',
-      callbackURL: `${config.web}/auth/facebook/callback`,
-    });
-    const func = mockFacebook.mock.calls[0][1];
-    const done = jest.fn();
-
-    const server = {
-      use: jest.fn(),
-      get: jest.fn(),
-    };
-
-    passport(server);
-
-    expect(mockPassport.initialize).toHaveBeenCalledTimes(1);
-    expect(mockPassport.initialize).toHaveBeenCalledWith();
-
-    expect(server.use).toHaveBeenCalledTimes(1);
-    expect(server.use).toHaveBeenCalledWith('initialize');
-
-    expect(mockPassport.authenticate).toHaveBeenCalledTimes(2);
-    expect(mockPassport.authenticate).toHaveBeenCalledWith('facebook', {
-      session: false,
-      scope: config.facebook.scope,
-    });
-    expect(mockPassport.authenticate).toHaveBeenCalledWith('facebook', {
-      successRedirect: '/',
-      failureRedirect: '/signin',
-      session: false,
-    });
-
-    expect(server.get).toHaveBeenCalledTimes(2);
-    expect(server.get).toHaveBeenCalledWith('/auth/facebook', 'authenticate');
-    expect(server.get).toHaveBeenCalledWith('/auth/facebook/callback', 'authenticate');
-
-    return func('accessToken', 'refreshToken', { id: 7 }, done)
-      .then(() => {
-        runExpectations('facebook', [null, 5], done);
-      });
-  });
+  testProvider('facebook', mockFacebook, mockGoogle);
 
   it('should handle Facebook auth when axios rejects', () => {
-    mockAxios.post.mockImplementation(badPost);
-
-    setEnv('facebook');
+    setup('facebook', badPost);
 
     // eslint-disable-next-line no-unused-expressions
     require('~/passport').default;

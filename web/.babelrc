@@ -8,7 +8,27 @@
             "publicPath": "/static/build",
             "outputPath": "/dist/static/build"
           }
-        ]
+        ],
+      ]
+    },
+    "production": {
+      "plugins": [
+        ["transform-inline-env-vars", {
+          "include": [
+            "NODE_ENV",
+            "SENTRY_PUBLIC_DSN",
+          ]
+        }]
+      ]
+    },
+    "development": {
+      "plugins": [
+        ["transform-inline-env-vars", {
+          "include": [
+            "NODE_ENV",
+            "SENTRY_PUBLIC_DSN",
+          ]
+        }]
       ]
     }
   },
@@ -16,12 +36,6 @@
   "plugins": [
     ["babel-plugin-root-import", {
       "rootPathSuffix": "src"
-    }],
-    ["transform-inline-env-vars", {
-      "include": [
-        "NODE_ENV",
-        "SENTRY_PUBLIC_DSN",
-      ]
     }],
     "emotion",
     "transform-class-properties",

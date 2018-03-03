@@ -2,6 +2,17 @@
 
 beforeEach(() => jest.resetModules());
 
+const testEnvConfig = (property, e, val) => {
+  const upper = property.toUpperCase();
+  const env = e || upper;
+  it(`has a ${property} property base on ${env}`, () => {
+    const value = val || 'some-value';
+    process.env[env] = value;
+    const config = require('~/config').default;
+    expect(config[property]).toEqual(value);
+  });
+};
+
 describe('Config', () => {
   it('should have a set of keys', () => {
     const config = require('~/config').default;
@@ -30,31 +41,14 @@ describe('Config', () => {
     });
   });
 
-  it('has a api property based on API_URL', () => {
-    const url = 'http://some-api';
-    global.process.env.API_URL = url;
-    const config = require('~/config').default;
-    expect(config.api).toEqual(url);
-  });
+  testEnvConfig('api', 'API_URL');
+  testEnvConfig('web', 'WEB_URL');
+  testEnvConfig('port', 'PORT', 3123);
 
   it('has a api property when on browser uses web', () => {
-    global.process.browser = true;
+    process.browser = true;
     const config = require('~/config').default;
     expect(config.api).toEqual(`${config.web}/api`);
-  });
-
-  it('has a web property based on WEB_URL', () => {
-    const url = 'http://some-url';
-    global.process.env.WEB_URL = url;
-    const config = require('~/config').default;
-    expect(config.web).toEqual(url);
-  });
-
-  it('has a port property based on PORT', () => {
-    const port = 3456;
-    global.process.env.PORT = port;
-    const config = require('~/config').default;
-    expect(config.port).toEqual(port);
   });
 
   it('has a dev property based on NODE_ENV', () => {

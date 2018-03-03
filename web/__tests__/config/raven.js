@@ -1,26 +1,41 @@
-import getRaven from '~/config/raven';
+/* eslint-disable global-require */
 
-beforeEach(() => { jest.resetModules(); });
+beforeEach(() => {
+  jest.resetModules();
+  global.window = undefined;
+  delete process.env.SENTRY_DSN;
+  delete process.env.SENTRY_PUBLIC_DSN;
+});
 
-describe('getRaven', () => {
-  it('should return a server instance on node', () => {
-    const Raven = getRaven();
-    expect(Raven).toBeDefined();
-    const Raven2 = getRaven();
-    expect(Raven2).toBe(Raven);
-  });
-
-  it('should return a client instance if window is defined', () => {
-    global.window = true;
+const testRaven = (message, browser) => {
+  it(message, () => {
+    const dsn = 'some-dsn';
+    const module = browser ? 'raven-js' : 'raven';
+    global.window = browser;
+    const env = browser ? 'SENTRY_PUBLIC_DSN' : 'SENTRY_DSN';
+    process.env[env] = dsn;
+    const mockInstall = jest.fn();
     const mockConfig = jest.fn(() => ({
-      install: jest.fn(),
+      install: mockInstall,
     }));
-    jest.mock('raven-js', () => ({
+    jest.doMock(module, () => ({
       config: mockConfig,
     }));
+    const getRaven = require('~/config/raven').default;
     const Raven = getRaven();
     expect(Raven).toBeDefined();
     const Raven2 = getRaven();
     expect(Raven2).toBe(Raven);
+
+    expect(mockConfig).toHaveBeenCalledTimes(1);
+    expect(mockConfig).toHaveBeenCalledWith(dsn);
+
+    expect(mockInstall).toHaveBeenCalledTimes(1);
+    expect(mockInstall).toHaveBeenCalledWith();
   });
+};
+
+describe('getRaven', () => {
+  testRaven('should return a server instance on node');
+  testRaven('should return a client instance if window is defined', true);
 });

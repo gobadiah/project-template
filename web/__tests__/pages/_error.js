@@ -36,6 +36,11 @@ const setup = (dev, DSN, req) => {
   };
 };
 
+const testNotCalled = (message, dev, DSN, req) => it(message, () => {
+  const { Raven } = setup(dev, DSN, req);
+  expect(Raven.captureException).not.toHaveBeenCalled();
+});
+
 describe('Error', () => {
   it('should be shallow-renderable', () => {
     const ErrorPage = require('~/pages/_error').default;
@@ -49,18 +54,7 @@ describe('Error', () => {
     expect(Raven.captureException.mock.calls[0]).toEqual([err]);
   });
 
-  it('should not record an error on server with dsn not available', () => {
-    const { Raven } = setup(false, false, true);
-    expect(Raven.captureException).not.toHaveBeenCalled();
-  });
-
-  it('should not do anything on client', () => {
-    const { Raven } = setup(false, true, undefined);
-    expect(Raven.captureException).not.toHaveBeenCalled();
-  });
-
-  it('should not do anything in dev mode', () => {
-    const { Raven } = setup(true, true, true);
-    expect(Raven.captureException).not.toHaveBeenCalled();
-  });
+  testNotCalled('should not record an error on server with dsn not available', false, false, true);
+  testNotCalled('should not do anything on client', false, true, undefined);
+  testNotCalled('should not do anything in dev mode', true, true, true);
 });

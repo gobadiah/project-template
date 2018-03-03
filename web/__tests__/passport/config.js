@@ -9,6 +9,19 @@ beforeEach(() => {
   jest.resetModules();
 });
 
+const testConfig = (provider) => {
+  const upper = provider.toUpperCase();
+  it(`has a ${provider} property based on ${upper}_CLIENT_ID and ${upper}_CLIENT_SECRET`, () => {
+    const clientId = `${provider}-client-id`;
+    const clientSecret = `${provider}-client-secret`;
+    process.env[`${upper}_CLIENT_ID`] = clientId;
+    process.env[`${upper}_CLIENT_SECRET`] = clientSecret;
+    const config = require('~/passport/config').default;
+    expect(config[provider].clientId).toEqual(clientId);
+    expect(config[provider].clientSecret).toEqual(clientSecret);
+  });
+};
+
 describe('Passport config', () => {
   it('should add google and facebook keys to general config', () => {
     const config = require('~/passport/config').default;
@@ -27,19 +40,6 @@ describe('Passport config', () => {
     expect(config).toHaveProperty('facebook.clientSecret');
   });
 
-  it('has a google property based on GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET', () => {
-    process.env.GOOGLE_CLIENT_ID = 'google-client-id';
-    process.env.GOOGLE_CLIENT_SECRET = 'google-client-secret';
-    const config = require('~/passport/config').default;
-    expect(config.google.clientId).toEqual('google-client-id');
-    expect(config.google.clientSecret).toEqual('google-client-secret');
-  });
-
-  it('has a facebook property based on FACEBOOK_CLIENT_ID and FACEBOOK_CLIENT_SECRET', () => {
-    process.env.FACEBOOK_CLIENT_ID = 'facebook-client-id';
-    process.env.FACEBOOK_CLIENT_SECRET = 'facebook-client-secret';
-    const config = require('~/passport/config').default;
-    expect(config.facebook.clientId).toEqual('facebook-client-id');
-    expect(config.facebook.clientSecret).toEqual('facebook-client-secret');
-  });
+  testConfig('google');
+  testConfig('facebook');
 });
