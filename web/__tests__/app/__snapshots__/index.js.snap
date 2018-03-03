@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App unit should have options matching snapshot 1`] = `
+Object {
+  "backend": Object {
+    "jsonIndent": 2,
+  },
+  "ns": Array [
+    "common",
+    "index",
+  ],
+  "preload": Array [
+    "fr",
+    "en",
+  ],
+}
+`;

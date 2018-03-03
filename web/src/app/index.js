@@ -11,17 +11,19 @@ import routes from '~/routes';
 
 import passport from '~/passport';
 
+export const options = {
+  preload: availableLanguages,
+  ns: availableNamespaces,
+  backend: {
+    loadPath: path.join(__dirname, '../../locales/{{lng}}/{{ns}}.json'),
+    addPath: path.join(__dirname, '../../locales/{{lng}}/{{ns}}.missing.json'),
+    jsonIndent: 2,
+  },
+};
+
 export default dev => new Promise(resolve => i18n.use(LanguageDetector)
   .use(fsBackend)
-  .init({
-    preload: availableLanguages,
-    ns: availableNamespaces,
-    backend: {
-      loadPath: path.join(__dirname, '../../locales/{{lng}}/{{ns}}.json'),
-      addPath: path.join(__dirname, '../../locales/{{lng}}/{{ns}}.missing.json'),
-      jsonIndent: 2,
-    },
-  }, () => {
+  .init(options, () => {
     const app = next({ dev, dir: './src' });
     const handler = routes.getRequestHandler(app);
 

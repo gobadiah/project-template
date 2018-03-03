@@ -26,6 +26,15 @@ describe('App integration', () => {
 });
 
 describe('App unit', () => {
+  it('should have options matching snapshot', () => {
+    const { options } = require('~/app');
+    expect(options.backend.loadPath).toEqual(path.join(__dirname, '../../locales/{{lng}}/{{ns}}.json'));
+    expect(options.backend.addPath).toEqual(path.join(__dirname, '../../locales/{{lng}}/{{ns}}.missing.json'));
+    delete options.backend.loadPath;
+    delete options.backend.addPath;
+    expect(options).toMatchSnapshot();
+  });
+
   it('should use dependencies', () => {
     jest.resetModules();
     const availableLanguages = ['fr'];
@@ -58,6 +67,7 @@ describe('App unit', () => {
     const dev = false;
 
     const app = require('~/app').default;
+    const { options } = require('~/app');
     const result = app(dev);
     expect(typeof result.then === 'function').toBe(true);
 
@@ -66,15 +76,7 @@ describe('App unit', () => {
     expect(i18n.use).toHaveBeenCalledWith(LanguageDetector);
 
     expect(i18n.init).toHaveBeenCalledTimes(1);
-    expect(i18n.init.mock.calls[0][0]).toEqual({
-      preload: availableLanguages,
-      ns: availableNamespaces,
-      backend: {
-        loadPath: path.join(__dirname, '../../locales/{{lng}}/{{ns}}.json'),
-        addPath: path.join(__dirname, '../../locales/{{lng}}/{{ns}}.missing.json'),
-        jsonIndent: 2,
-      },
-    });
+    expect(i18n.init.mock.calls[0][0]).toEqual(options);
     const func = i18n.init.mock.calls[0][1];
 
     const mockApp = {
