@@ -132,6 +132,23 @@ const testProvider = (provider, mockA, mockB) => {
   });
 };
 
+const testAxiosRejects = (provider, mock) => {
+  it(`should handle ${provider} auth when axios rejects`, () => {
+    setup(provider, badPost);
+
+    // eslint-disable-next-line no-unused-expressions
+    require('~/passport').default;
+
+    const func = mock.mock.calls[0][1];
+    const done = jest.fn();
+
+    return func('accessToken', 'refreshToken', { id: 7 }, done)
+      .then(() => {
+        runExpectations(provider, [err], done);
+      });
+  });
+};
+
 describe('Passport', () => {
   it('should do nothing when neither google of facebook are configured', () => {
     const passport = require('~/passport').default;
@@ -147,36 +164,7 @@ describe('Passport', () => {
   });
 
   testProvider('google', mockGoogle, mockFacebook);
-
-  it('should handle Google auth when axios rejects', () => {
-    setup('google', badPost);
-
-    // eslint-disable-next-line no-unused-expressions
-    require('~/passport').default;
-
-    const func = mockGoogle.mock.calls[0][1];
-    const done = jest.fn();
-
-    return func('accessToken', 'refreshToken', { id: 7 }, done)
-      .then(() => {
-        runExpectations('google', [err], done);
-      });
-  });
-
   testProvider('facebook', mockFacebook, mockGoogle);
-
-  it('should handle Facebook auth when axios rejects', () => {
-    setup('facebook', badPost);
-
-    // eslint-disable-next-line no-unused-expressions
-    require('~/passport').default;
-
-    const func = mockFacebook.mock.calls[0][1];
-    const done = jest.fn();
-
-    return func('accessToken', 'refreshToken', { id: 7 }, done)
-      .then(() => {
-        runExpectations('facebook', [err], done);
-      });
-  });
+  testAxiosRejects('google', mockGoogle);
+  testAxiosRejects('facebook', mockFacebook);
 });
