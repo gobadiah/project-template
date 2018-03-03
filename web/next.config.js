@@ -20,6 +20,11 @@ module.exports = {
       ],
     });
 
+    config.module.rules.push({
+      test: /__tests__/,
+      loader: 'ignore-loader',
+    });
+
     return config;
   },
 };

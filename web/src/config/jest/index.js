@@ -5,6 +5,7 @@ module.exports = {
   testEnvironment: 'node',
   modulePathIgnorePatterns: [
     '<rootDir>/dist',
+    '<rootDir>/src/.next',
   ],
   testPathIgnorePatterns: [
     '/node_modules/',

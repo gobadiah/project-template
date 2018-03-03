@@ -17,6 +17,10 @@ Object {
           },
         ],
       },
+      Object {
+        "loader": "ignore-loader",
+        "test": /__tests__/,
+      },
     ],
   },
   "node": Object {
