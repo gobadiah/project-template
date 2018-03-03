@@ -3,8 +3,8 @@
 [![CircleCI](https://circleci.com/gh/gobadiah/project-template/tree/develop.svg?style=svg)](https://circleci.com/gh/gobadiah/project-template/tree/develop)
 [![Coverage Status](https://coveralls.io/repos/github/gobadiah/project-template/badge.svg?branch=develop)](https://coveralls.io/github/gobadiah/project-template?branch=develop)
 [![Web Dependencies](https://david-dm.org/gobadiah/project-template.svg?path=web)]()
-[![Maintainability](https://api.codeclimate.com/v1/badges/1a1acb2d0a3bc44a8bf5/maintainability)](https://codeclimate.com/github/gobadiah/project-template/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/1a1acb2d0a3bc44a8bf5/test_coverage)](https://codeclimate.com/github/gobadiah/project-template/test_coverage)
+[![Maintainability](https://api.codeclimate.com/v1/badges/60dd931afdd54b6d6742/maintainability)](https://codeclimate.com/github/gobadiah/project-template/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/60dd931afdd54b6d6742/test_coverage)](https://codeclimate.com/github/gobadiah/project-template/test_coverage)
 
 _Update the flags above with your project name and delete this line_
 
