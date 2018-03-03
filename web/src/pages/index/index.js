@@ -7,7 +7,7 @@ import hoc from '~/hoc';
 import Language from '~/components/language';
 import SomePureComponent from '~/components/some-pure-component';
 
-import s from '~/styles/pages';
+import s from './styles';
 
 class Index extends Page {
   render() {

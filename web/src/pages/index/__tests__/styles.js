@@ -1,4 +1,4 @@
-import styles from '..';
+import styles from '../styles';
 
 describe('Styles', () => {
   describe('Pages', () => {

@@ -2,19 +2,13 @@
 
 exports[`SomePage should match snapshot 1`] = `
 .emotion-0 {
-  color: green;
-}
-
-.emotion-1 {
   background-color: greenyellow;
 }
 
 <div
-  className="emotion-1"
+  className="emotion-0"
 >
-  <div
-    className="emotion-0"
-  >
+  <div>
     Hello world
   </div>
   <a
