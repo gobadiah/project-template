@@ -17,3 +17,5 @@ In order to function properly, you need to set the following environment variabl
 * `CC_TEST_REPORTER_ID`: [Code Climate](https://codeclimate.com) test reporter id, found in test coverage section
 
 * `COVERALLS_REPO_TOKEN`: [Coveralls](https://coveralls.io/) repo token found in settings
+
+* `COVERALLS_PARALLEL=true`: [See here](https://docs.coveralls.io/parallel-build-webhook) we gather coverage from different processes.
