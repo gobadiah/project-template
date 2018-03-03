@@ -33,16 +33,16 @@ jobs:
       - run:
           name: Setup Code Climate test-reporter
           command: |
-            cd web
             curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
             chmod +x ./cc-test-reporter
       - run:
           name: Run tests
           command: |
-            cd web
             ./cc-test-reporter before-build
+            cd web
             npm run test:ci
-            ./cc-test-reporter format-coverage -t lcov reports/coverage/lcov.info
+            cd ..
+            ./cc-test-reporter format-coverage -t lcov web/reports/coverage/lcov.info
             ./cc-test-reporter upload-coverage
           environment:
             JEST_JUNIT_OUTPUT: "reports/junit/js-test-results.xml"
