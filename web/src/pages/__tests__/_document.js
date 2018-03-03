@@ -12,6 +12,11 @@ jest.mock('emotion-server', () => ({
 import { extractCritical } from 'emotion-server';
 
 describe('Document', () => {
+  it('should match snapshot', () => {
+    const wrapper = shallow(<Document />);
+    expect(wrapper).toMatchSnapshot();
+  });
+
   it('should be shallow-renderable and record ids when available', () => {
     const nextData = {};
     const ids = { a: 2 };

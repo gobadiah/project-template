@@ -83,3 +83,15 @@ Test coverage is available in `reports/coverage` in various formats.
 * `locales`: Web localizations.
 * `next.config.js`: nextjs config file.
 * `src`: App source.
+
+## Features
+
+* `toast`: Show the user a [toast](https://ux.stackexchange.com/questions/11998/what-is-a-toast-notification). Using [react-toastify](https://github.com/fkhadra/react-toastify).
+
+```
+import { toast } from 'react-toastify';
+
+// Later
+
+toast.info('Show me a notification');
+```

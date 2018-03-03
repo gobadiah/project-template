@@ -2,6 +2,7 @@ import React from 'react';
 import Document, { Head, Main, NextScript } from 'next/document';
 import { extractCritical } from 'emotion-server';
 import nprogress from 'nprogress/nprogress.css';
+import { ToastContainer } from 'react-toastify';
 
 import { Sentry } from '~/sentry';
 
@@ -34,6 +35,7 @@ export default class MyDocument extends Document {
           <Sentry />
           <Main />
           <NextScript />
+          <ToastContainer />
         </body>
       </html>
     );
