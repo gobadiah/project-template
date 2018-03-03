@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Styles Pages index should match snapshot 1`] = `
+exports[`Pages Index styles should match snapshot 1`] = `
 Object {
   "helloWorld": "css-bjcoli",
 }
