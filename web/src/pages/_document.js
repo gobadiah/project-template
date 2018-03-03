@@ -3,7 +3,7 @@ import Document, { Head, Main, NextScript } from 'next/document';
 import { extractCritical } from 'emotion-server';
 import nprogress from 'nprogress/nprogress.css';
 
-import Sentry from '~/tags/sentry';
+import { Sentry } from '~/sentry';
 
 export default class MyDocument extends Document {
   static getInitialProps({ renderPage }) {
