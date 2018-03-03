@@ -1,5 +1,3 @@
-/* eslint-disable global-require */
-
 jest.mock('i18next-xhr-backend');
 
 beforeEach(() => {

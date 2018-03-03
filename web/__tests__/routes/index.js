@@ -1,5 +1,3 @@
-/* eslint-disable global-require */
-
 describe('Routes', () => {
   it('should add a number of routes', () => {
     const mockRoutes = { Router: {} };

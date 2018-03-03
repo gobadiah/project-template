@@ -1,5 +1,3 @@
-/* eslint-disable global-require */
-
 import { Map } from 'immutable';
 
 import { defaultState } from '~/redux/auth';

@@ -1,5 +1,3 @@
-/* eslint-disable global-require */
-
 const mockWithRedux = jest.fn(x => x);
 
 jest.mock('next-redux-wrapper', () => jest.fn(() => mockWithRedux));

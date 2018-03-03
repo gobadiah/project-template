@@ -1,5 +1,3 @@
-/* eslint-disable global-require */
-
 beforeEach(() => {
   delete process.env.GOOGLE_CLIENT_ID;
   delete process.env.GOOGLE_CLIENT_SECRET;

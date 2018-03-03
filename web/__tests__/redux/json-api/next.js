@@ -1,5 +1,3 @@
-/* eslint-disable global-require */
-
 const axiosConfig = 'axiosConfig';
 const readEndpoint = 'readEndpoint';
 const mockSetAxiosConfig = jest.fn(() => axiosConfig);

@@ -1,5 +1,3 @@
-/* eslint-disable global-require */
-
 const mockCreateActions = jest.fn(x => x);
 
 jest.mock('redux-actions', () => ({

@@ -1,16 +1,13 @@
-/* eslint-disable import/first, global-require */
-
 import React from 'react';
-
 import { shallow } from 'enzyme';
+
+import getRaven from '~/config/raven';
 
 const mockCaptureException = jest.fn();
 
 jest.mock('../../src/config/raven', () => () => ({
   captureException: mockCaptureException,
 }));
-
-import getRaven from '~/config/raven';
 
 beforeEach(() => {
   mockCaptureException.mockClear();

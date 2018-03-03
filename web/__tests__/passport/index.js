@@ -1,5 +1,3 @@
-/* eslint-disable global-require */
-
 const mockPassport = {
   use: jest.fn(),
   initialize: jest.fn(() => 'initialize'),
