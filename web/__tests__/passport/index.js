@@ -63,17 +63,52 @@ const setup = (provider, postImpl) => {
   if (postImpl) {
     mockAxios.post.mockImplementation(postImpl);
   }
+
+  const passport = require('~/passport').default;
+  const config = require('~/passport/config').default;
+
+  return {
+    passport,
+    config,
+  };
+};
+
+const passportExpectations = (provider, config) => {
+  expect(mockPassport.initialize).toHaveBeenCalledTimes(1);
+  expect(mockPassport.initialize).toHaveBeenCalledWith();
+
+  expect(mockPassport.authenticate).toHaveBeenCalledTimes(2);
+  expect(mockPassport.authenticate).toHaveBeenCalledWith(provider, {
+    session: false,
+    scope: config[provider].scope,
+  });
+  expect(mockPassport.authenticate).toHaveBeenCalledWith(provider, {
+    failureRedirect: '/signin',
+    session: false,
+  });
+};
+
+const serverExpectations = (provider, server) => {
+  expect(server.use).toHaveBeenCalledTimes(1);
+  expect(server.use).toHaveBeenCalledWith('initialize');
+
+
+  expect(server.get).toHaveBeenCalledTimes(2);
+  expect(server.get).toHaveBeenCalledWith(`/auth/${provider}`, 'authenticate');
+  expect(server.get.mock.calls[1][0]).toEqual(`/auth/${provider}/callback`);
+  expect(server.get.mock.calls[1][1]).toEqual('authenticate');
+  const arg = server.get.mock.calls[1][2];
+  const res = { redirect: jest.fn() };
+  arg({}, res);
+  expect(res.redirect).toHaveBeenCalledTimes(1);
+  expect(res.redirect).toHaveBeenCalledWith('/');
 };
 
 const testProvider = (provider, mockA, mockB) => {
   it(`should setup ${provider} if env var are present`, () => {
-    setup(provider);
-
-    const passport = require('~/passport').default;
-    const config = require('~/passport/config').default;
+    const { passport, config } = setup(provider);
 
     expect(mockB).not.toHaveBeenCalled();
-
     expect(mockA).toHaveBeenCalledTimes(1);
     expect(mockA.mock.calls[0]).toHaveLength(2);
     expect(mockA.mock.calls[0][0]).toEqual({
@@ -83,44 +118,17 @@ const testProvider = (provider, mockA, mockB) => {
     });
     const func = mockA.mock.calls[0][1];
     const done = jest.fn();
-
     const server = {
       use: jest.fn(),
       get: jest.fn(),
     };
 
     passport(server);
-
-    expect(mockPassport.initialize).toHaveBeenCalledTimes(1);
-    expect(mockPassport.initialize).toHaveBeenCalledWith();
-
-    expect(server.use).toHaveBeenCalledTimes(1);
-    expect(server.use).toHaveBeenCalledWith('initialize');
-
-    expect(mockPassport.authenticate).toHaveBeenCalledTimes(2);
-    expect(mockPassport.authenticate).toHaveBeenCalledWith(provider, {
-      session: false,
-      scope: config[provider].scope,
-    });
-    expect(mockPassport.authenticate).toHaveBeenCalledWith(provider, {
-      failureRedirect: '/signin',
-      session: false,
-    });
-
-    expect(server.get).toHaveBeenCalledTimes(2);
-    expect(server.get).toHaveBeenCalledWith(`/auth/${provider}`, 'authenticate');
-    expect(server.get.mock.calls[1][0]).toEqual(`/auth/${provider}/callback`);
-    expect(server.get.mock.calls[1][1]).toEqual('authenticate');
-    const arg = server.get.mock.calls[1][2];
-    const res = { redirect: jest.fn() };
-    arg({}, res);
-    expect(res.redirect).toHaveBeenCalledTimes(1);
-    expect(res.redirect).toHaveBeenCalledWith('/');
+    passportExpectations(provider, config);
+    serverExpectations(provider, server);
 
     return func('accessToken', 'refreshToken', { id: 7 }, done)
-      .then(() => {
-        runExpectations(provider, [null, 5], done);
-      });
+      .then(() => runExpectations(provider, [null, 5], done));
   });
 };
 
