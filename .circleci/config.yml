@@ -64,9 +64,6 @@ jobs:
           root: tmp
           paths: 
             - codeclimate.web.json
-      - run:
-          name: Coveralls
-          command: cat web/reports/coverage/lcov.info | ./web/node_modules/.bin/coveralls
       - store_test_results:
           path: web/reports/junit
       - store_artifacts:
@@ -89,7 +86,6 @@ jobs:
             python3 -m venv venv
             . venv/bin/activate
             pip install -r api/requirements.txt
-            pip install python-coveralls
       - save_cache:
           key: v1-api-deps-{{ .Branch }}-{{ checksum "api/requirements.txt" }}
           paths:
@@ -101,7 +97,6 @@ jobs:
             cd api
             pytest --cov . --cov-report xml
             ../tmp/cc-test-reporter format-coverage -o ../tmp/codeclimate.api.json -t coverage.py --add-prefix api
-            coveralls --base_dir ..
       - persist_to_workspace:
           root: tmp
           paths:
@@ -118,10 +113,6 @@ jobs:
           command: |
             ./tmp/cc-test-reporter sum-coverage tmp/codeclimate.*.json -p 2 -o tmp/codeclimate.total.json
             ./tmp/cc-test-reporter upload-coverage -i tmp/codeclimate.total.json
-      - run:
-          name: Notify Coveralls
-          command: |
-            curl -k https://coveralls.io/webhook?repo_token=$COVERALLS_REPO_TOKEN -d "payload[build_num]=$CIRCLE_BUILD_NUM&payload[status]=done"
 workflows:
   version: 2
   build-and-test-web:
