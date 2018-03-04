@@ -1,14 +1,7 @@
-from .. import *  # Noqa
+from .. import *  # Noqa F403 # __init__.py in test coverage
 from ..urls import urlpatterns
 
 
-def test_sum():
-    assert 1 + 1 == 2
-
-
-def test_mult():
-    assert 2 * 3 == 6
-
-
 def test_urls():
+    """Test urlpatterns is not empty."""
     assert len(urlpatterns) > 0

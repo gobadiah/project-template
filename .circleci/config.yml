@@ -57,9 +57,12 @@ jobs:
             cd web
             npm run test:ci
             cd ..
-            ./tmp/cc-test-reporter format-coverage -t lcov -o tmp/codeclimate.web.json web/reports/coverage/lcov.info
           environment:
-            JEST_JUNIT_OUTPUT: "reports/junit/js-test-results.xml"
+            JEST_JUNIT_OUTPUT: "reports/junit/web-tests-results.xml"
+      - run:
+          name: Store Code Climate report
+          command: |
+            ./tmp/cc-test-reporter format-coverage -t lcov -o tmp/codeclimate.web.json web/reports/coverage/lcov.info
       - persist_to_workspace:
           root: tmp
           paths: 
@@ -96,6 +99,10 @@ jobs:
             . venv/bin/activate
             cd api
             invoke test
+      - run:
+          name: Store Code Climate report
+          command: |
+            cd api
             ../tmp/cc-test-reporter format-coverage -o ../tmp/codeclimate.api.json -t coverage.py --add-prefix api reports/coverage/coverage.xml
       - persist_to_workspace:
           root: tmp

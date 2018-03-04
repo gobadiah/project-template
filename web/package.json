@@ -7,7 +7,7 @@
     "build": "npm run clean && next build src && NODE_ENV=production babel --copy-files --ignore node_modules,dist,__tests__ -d dist .",
     "start": "NODE_ENV=production node dist/bin/server.js",
     "lint": "eslint --ignore-path .gitignore --max-warnings=0 .",
-    "lint:ci": "npm run lint --- --format junit -o reports/junit/js-lint-results.xml",
+    "lint:ci": "npm run lint --- --format junit -o reports/junit/web-lint-results.xml",
     "jest": "jest --config src/config/jest/index.js",
     "jest:ci": "JEST_JUNIT_OUTPUT=reports/junit/js-test-results.xml npm run jest -- --testResultsProcessor=\"jest-junit\" --ci --runInBand --coverage",
     "jest:coverage": "npm run jest -- --coverage",
