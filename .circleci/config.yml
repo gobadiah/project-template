@@ -95,12 +95,16 @@ jobs:
           command: |
             . venv/bin/activate
             cd api
-            pytest --cov . --cov-report xml
-            ../tmp/cc-test-reporter format-coverage -o ../tmp/codeclimate.api.json -t coverage.py --add-prefix api
+            invoke test
+            ../tmp/cc-test-reporter format-coverage -o ../tmp/codeclimate.api.json -t coverage.py --add-prefix api reports/coverage/coverage.xml
       - persist_to_workspace:
           root: tmp
           paths:
             - codeclimate.api.json
+      - store_test_results:
+          path: api/reports/junit
+      - store_artifacts:
+          path: api/reports
   upload-coverage:
     <<: *defaults
     docker:

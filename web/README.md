@@ -1,5 +1,7 @@
 # Web template
 
+[![Dependencies](https://david-dm.org/gobadiah/project-template.svg?path=web)]()
+
 ## Getting started
 
 After installing all dependencies (see web install in `kb`), just run 

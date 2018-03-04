@@ -1,4 +1,5 @@
-from api import urls
+from .. import *  # Noqa
+from ..urls import urlpatterns
 
 
 def test_sum():
@@ -10,4 +11,4 @@ def test_mult():
 
 
 def test_urls():
-    assert len(urls.urlpatterns) > 0
+    assert len(urlpatterns) > 0
