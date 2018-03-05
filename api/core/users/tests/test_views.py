@@ -2,9 +2,9 @@
 
 import json
 
-from lib import reload
-
 import pytest
+
+from utils import reload
 
 from .factories import UserFactory
 from ..views import UserViewSet
