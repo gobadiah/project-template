@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'jasonpi',
     'core',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [

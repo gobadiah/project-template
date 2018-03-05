@@ -25,16 +25,12 @@ def coverage_args():
 
 def run_test_watch(ctx):
     """Test api and watch for file changes."""
-    ctx.run('ptw -- --flake8 %s' % coverage_args())
+    ctx.run('ptw -- --flake8 %s' % coverage_args(), pty=True)
 
 
 def run_test_normal(ctx):
     """Test api without watching."""
-    ctx.run(
-        'mkdir -p reports/junit && mkdir -p reports/coverage && '
-        'pytest '
-        '--flake8 %s' % coverage_args(),
-    )
+    ctx.run('pytest --flake8 %s' % coverage_args(), pty=True)
 
 
 @task(clean)
