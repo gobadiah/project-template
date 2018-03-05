@@ -1,14 +1,17 @@
 """Test tasks.py."""
 
 import importlib
+import types
+
 from invoke.context import Context
 from invoke.tasks import Task
+
 from mock import MagicMock
+
 from tasks import clean
 from tasks import coverage_args
 from tasks import run_test_normal
 from tasks import run_test_watch
-import types
 
 
 def test_clean():

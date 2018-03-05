@@ -1,10 +1,12 @@
 """Test settings.py."""
 
-from api import settings
-import dj_database_url
-import imp
+import importlib
 import os
 import sys
+
+from api import settings
+
+import dj_database_url
 
 
 def test_installed_apps():
@@ -18,7 +20,7 @@ def test_installed_apps():
 def test_dj_database_url_called(mocker):
     """Verify that dj_database_url.config is called."""
     mocker.patch('dj_database_url.config')
-    imp.reload(sys.modules['api.settings'])
+    importlib.reload(sys.modules['api.settings'])
     dj_database_url.config.assert_called_once_with(
         default='postgres://localhost/%s_development' %
         os.environ.get('PROJECT'),

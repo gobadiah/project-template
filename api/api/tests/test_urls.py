@@ -1,8 +1,9 @@
 """Test urls."""
 
 import importlib
-import mock
 import sys
+
+import mock
 
 
 def fake_path(*args, **kwargs):
@@ -20,7 +21,7 @@ def fake_include(*args, **kwargs):
     return 'include'
 
 
-def test_urlpatterns(mocker, monkeypatch):
+def test_urlpatterns(mocker):
     """Test urlpatterns contains the right stuffs."""
     urls = mocker.patch(
         'django.contrib.admin.sites.AdminSite.urls',
@@ -35,14 +36,25 @@ def test_urlpatterns(mocker, monkeypatch):
     importlib.reload(sys.modules['api.urls'])
     from api.urls import urlpatterns
 
-    assert len(urlpatterns) == 2
+    assert len(urlpatterns) == 3
+    mocker.stopall()
 
     # Django admin
     urls.assert_called_once()
-    path.assert_called_once_with('admin/', 5)
+    path.assert_any_call('admin/', 5)
+    path.assert_any_call('/', 'include')
+    assert path.call_count == 2
 
     # Drf authentication for browsable api
-    include.assert_called_once_with('rest_framework.urls')
+    include.assert_any_call('rest_framework.urls')
+    import core.urls
+    include.assert_any_call(core.urls)
     url.assert_called_once_with(r'^api-auth/', 'include')
 
-    assert urlpatterns == ['path', 'url']
+    assert urlpatterns == ['path', 'path', 'url']
+
+    # api.settings will not be reloaded in other tests without this
+    # and although django modules are unmocked after this test,
+    # api.urls.urlpatterns has already a (wrong) value.
+    # We delete this so that urlpatterns can be recomputed.
+    del sys.modules['api.urls']

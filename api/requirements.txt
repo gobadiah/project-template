@@ -19,6 +19,8 @@ djangorestframework-jsonapi==2.4.0
 docopt==0.6.2
 enum34==1.1.6
 facebook-sdk==2.0.0
+factory-boy==2.10.0
+Faker==0.8.11
 flake8==3.5.0
 flake8-author==1.1.4
 flake8-bandit==1.0.1
@@ -40,7 +42,6 @@ inflection==0.3.1
 invoke==0.22.1
 ipython==6.2.1
 ipython-genutils==0.2.0
--e git+git@github.com:gobadiah/jasonpi.git@f799aa1f8a69b0e18f4793ceb1e99cc3607b8c13#egg=jasonpi
 jedi==0.11.1
 mccabe==0.6.1
 mock==2.0.0
@@ -55,7 +56,7 @@ pexpect==4.4.0
 pickleshare==0.7.4
 pluggy==0.6.0
 prompt-toolkit==1.0.15
-psycopg2==2.7.3.2
+psycopg2==2.7.3
 ptyprocess==0.5.2
 py==1.5.2
 pyasn1==0.4.2
@@ -72,7 +73,9 @@ pytest-cov==2.5.1
 pytest-django==3.1.2
 pytest-flake8==0.9.1
 pytest-mock==1.7.1
+pytest-sugar==0.9.1
 pytest-watch==4.1.0
+python-dateutil==2.6.1
 pytz==2018.3
 PyYAML==3.12
 requests==2.18.4
@@ -82,6 +85,8 @@ six==1.11.0
 smmap2==2.0.3
 snowballstemmer==1.2.1
 stevedore==1.28.0
+termcolor==1.1.0
+text-unidecode==1.2
 traitlets==4.3.2
 typing==3.6.4
 uritemplate==3.0.0

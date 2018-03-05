@@ -1,17 +1,23 @@
 """Test core.users.views."""
 
+import json
+
+from lib import reload
+
 import pytest
 
-from ..views import UserViewSet
 from .factories import UserFactory
+from ..views import UserViewSet
 
 
 @pytest.mark.django_db
 def test_userviewset_handle_request(rf):
     """Test UserViewSet can handle a simple retrieve."""
+    reload('api.urls')
     user = UserFactory()
-    request = rf.get('/users/%d' % user.id)
+    request = rf.get(r'^/users/%d' % user.id)
     view = UserViewSet.as_view({'get': 'retrieve'})
     response = view(request, pk=user.id)
-    print(response)
-    assert response == False
+    response.render()
+    obj = json.loads(response.content.decode('utf-8'))
+    assert obj['email'] == user.email
