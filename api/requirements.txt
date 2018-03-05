@@ -15,7 +15,9 @@ dj-database-url==0.5.0
 Django==2.0.2
 django-extensions==2.0.0
 djangorestframework==3.7.7
+djangorestframework-jsonapi==2.4.0
 docopt==0.6.2
+enum34==1.1.6
 facebook-sdk==2.0.0
 flake8==3.5.0
 flake8-author==1.1.4
@@ -23,6 +25,7 @@ flake8-bandit==1.0.1
 flake8-bugbear==18.2.0
 flake8-commas==1.0.0
 flake8-docstrings==1.3.0
+flake8-import-order==0.17
 flake8-junit-report==2.1.0
 flake8-module-name==0.1.5
 flake8-polyfill==1.0.2
@@ -33,10 +36,11 @@ google-api-python-client==1.6.5
 hacking==1.0.0
 httplib2==0.10.3
 idna==2.6
+inflection==0.3.1
 invoke==0.22.1
 ipython==6.2.1
 ipython-genutils==0.2.0
-jasonpi==0.4.0
+-e git+git@github.com:gobadiah/jasonpi.git@f799aa1f8a69b0e18f4793ceb1e99cc3607b8c13#egg=jasonpi
 jedi==0.11.1
 mccabe==0.6.1
 mock==2.0.0
