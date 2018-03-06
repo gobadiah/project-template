@@ -47,6 +47,7 @@ ALLOWED_HOSTS = [] if 'API_URL' not in os.environ else [
 INSTALLED_APPS = [
     'corsheaders',
     'django.contrib.admin',
+    'django.contrib.admindocs',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -149,6 +150,7 @@ STATIC_URL = '/static/'
 # Django
 AUTH_USER_MODEL = 'core.User'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+APPEND_SLASH = False  # Play well with javascript sdk
 
 # Jasonpi
 USER_SERIALIZER = 'core.serializers.UserSerializer'
@@ -198,3 +200,8 @@ REST_FRAMEWORK = {
 JSON_API_PLURALIZE_TYPES = True
 JSON_API_FORMAT_KEYS = 'dasherize'
 JSON_API_FORMAT_TYPES = 'dasherize'
+
+# i18n
+LOCALE_PATHS = (
+    os.path.join(BASE_DIR, 'locales'),
+)

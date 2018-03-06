@@ -146,5 +146,22 @@ def test_cors_settings():
     # Do one test with DEBUG True and one test with DEBUG False.
     assert settings.CORS_ORIGIN_ALLOW_ALL == settings.DEBUG
     assert settings.CORS_ALLOW_CREDENTIALS
-    # Same as above, this is depends on WEB_URL and should be tested for it.
+    # Same as above, this depends on WEB_URL and should be tested for it.
     assert settings.CORS_ORIGIN_WHITELIST == ()
+
+
+def test_admin_doc_settings():
+    """Check that admindocs app is in INSTALLED_APPS."""
+    assert 'django.contrib.admindocs' in settings.INSTALLED_APPS
+
+
+def test_append_slash():
+    """Check that APPEND_SLASH is False."""
+    assert not settings.APPEND_SLASH
+
+
+def test_locale_paths():
+    """Test LOCALE_PATHS value."""
+    assert settings.LOCALE_PATHS == (
+        os.path.join(settings.BASE_DIR, 'locales'),
+    )

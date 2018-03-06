@@ -17,7 +17,7 @@ class UserViewSet(
 ):
     """UserViewSet is the `/users` endpoint entry view."""
 
-    queryset = User.objects
+    queryset = User.objects.order_by('id')
     serializer_class = UserSerializer
 
 

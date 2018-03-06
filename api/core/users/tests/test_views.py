@@ -1,6 +1,9 @@
 """Test core.users.views."""
 
+import json
 import re
+
+from jasonpi.auth import get_token
 
 import pytest
 
@@ -38,3 +41,29 @@ def test_user_relationship_view(rf):
     view = UserRelationshipView.as_view()
     response = view(request, pk=user.id, related_field='providers')
     assert response.status_code == 200
+
+
+@pytest.mark.django_db
+def test_integration_users_endpoint(client):
+    """Test integration for GET /users endpoint."""
+    user = UserFactory()
+    token = get_token(user)
+    client.force_login(user=user)
+    response = client.get(
+        '/users',
+        HTTP_AUTHORIZATION='Bearer %s' % token,
+    )
+    assert response.status_code == 200
+    result = json.loads(response.content.decode('utf-8'))
+    assert 'meta' in result
+    assert result['meta'] == {
+        'pagination': {'count': 1, 'page': 1, 'pages': 1},
+        'size': 1,
+    }
+    assert 'data' in result
+    assert len(result['data']) == 1
+    assert result['data'][0]['type'] == 'users'
+    assert result['data'][0]['id'] == str(user.id)
+    assert result['data'][0]['attributes'] == {
+        'email': user.email,
+    }
