@@ -3,7 +3,13 @@
 import importlib
 import sys
 
+import core.urls
+
+import jasonpi
+
 import mock
+
+from utils import clear_modules
 
 
 def fake_path(*args, **kwargs):
@@ -11,16 +17,12 @@ def fake_path(*args, **kwargs):
     return 'path'
 
 
-def fake_url(*args, **kwargs):
-    """Return a fake url."""
-    return 'url'
-
-
-def fake_include(*args, **kwargs):
+def fake_include(value):
     """Return a fake include."""
-    return 'include'
+    return value
 
 
+@clear_modules('api.urls')
 def test_urlpatterns(mocker):
     """Test urlpatterns contains the right stuffs."""
     urls = mocker.patch(
@@ -30,31 +32,41 @@ def test_urlpatterns(mocker):
     urls.return_value = 5
     path = mocker.patch('django.urls.path', side_effect=fake_path)
     path.return_value = 'path'
-    url = mocker.patch('django.conf.urls.url', side_effect=fake_url)
     include = mocker.patch('django.urls.include', side_effect=fake_include)
 
     importlib.reload(sys.modules['api.urls'])
     from api.urls import urlpatterns
 
-    assert len(urlpatterns) == 3
+    assert len(urlpatterns) == 5
     mocker.stopall()
+
+    assert path.call_count == 5
+    assert include.call_count == 4
 
     # Django admin
     urls.assert_called_once()
     path.assert_any_call('admin/', 5)
-    path.assert_any_call('/', 'include')
-    assert path.call_count == 2
 
     # Drf authentication for browsable api
     include.assert_any_call('rest_framework.urls')
-    import core.urls
-    include.assert_any_call(core.urls)
-    url.assert_called_once_with(r'^api-auth/', 'include')
+    path.assert_any_call('api-auth/', 'rest_framework.urls')
 
-    assert urlpatterns == ['path', 'path', 'url']
+    # Core urls
+    include.assert_any_call(core.urls)
+    path.assert_any_call('/', core.urls)
+
+    # Jasonpi
+    include.assert_any_call(jasonpi.urls)
+    path.assert_any_call('/', jasonpi.urls)
+
+    # Django docs
+    include.assert_any_call('django.contrib.admindocs.urls')
+    path.assert_any_call('admin/doc/', 'django.contrib.admindocs.urls')
+
+    assert urlpatterns == ['path'] * 5
 
     # api.settings will not be reloaded in other tests without this
     # and although django modules are unmocked after this test,
     # api.urls.urlpatterns has already a (wrong) value.
-    # We delete this so that urlpatterns can be recomputed.
+    # We delete this so that urlpatterns can be recomputed for the next guy.
     del sys.modules['api.urls']

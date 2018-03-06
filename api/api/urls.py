@@ -17,12 +17,15 @@ Including another URLconf
 
 import core.urls
 
-from django.conf.urls import url
 from django.contrib import admin
 from django.urls import include, path
 
+import jasonpi.urls
+
 urlpatterns = [
     path('/', include(core.urls)),
+    path('/', include(jasonpi.urls)),
+    path('admin/doc/', include('django.contrib.admindocs.urls')),
     path('admin/', admin.site.urls),
-    url(r'^api-auth/', include('rest_framework.urls')),
+    path('api-auth/', include('rest_framework.urls')),
 ]
