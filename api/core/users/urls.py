@@ -2,17 +2,35 @@
 
 from django.urls import include, path
 
+from jasonpi.utils import resource_relationships
+
 from rest_framework_nested import routers
 
 from . import views
+from ..views import ProviderViewSet
 
-users_router = routers.DefaultRouter(trailing_slash=False)
+router = routers.DefaultRouter(trailing_slash=False)
 
-users_router.register(
-    r'users',
+router.register(
+    'users',
     views.UserViewSet,
 )
 
+users_router = routers.NestedDefaultRouter(
+    router,
+    r'users',
+    lookup='user',
+    trailing_slash=False,
+)
+users_router.register(
+    r'providers',
+    ProviderViewSet,
+    base_name='user-providers',
+)
+
+
 urlpatterns = [
-    path('/', include(users_router.urls)),
+    path('', include(router.urls)),
+    path('', include(users_router.urls)),
+    resource_relationships('user', views.UserRelationshipView),
 ]

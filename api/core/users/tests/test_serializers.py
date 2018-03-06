@@ -20,7 +20,6 @@ def test_user_serializer_can_serializer(rf):
     assert serializer.data == {
         'url': None,
         'email': '',
-        'groups': [],
         'providers': [],
     }
 

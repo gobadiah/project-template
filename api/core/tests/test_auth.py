@@ -5,6 +5,7 @@ import json
 import pytest
 
 from ..models import User
+from ..users.tests.factories import UserFactory, default_password
 
 
 @pytest.mark.django_db
@@ -134,3 +135,37 @@ def test_user_registration_successful(client):
     assert User.objects.filter(email=email).count() == 1
     user = User.objects.get(email=email)
     assert user.check_password(password)
+
+
+@pytest.mark.django_db
+def test_user_signin_error(client):
+    """Test server response with 400 for bad credentials."""
+    user = UserFactory()
+    response = client.post(
+        '/auth/signin',
+        json.dumps({
+            'email': user.email,
+            'password': 'wrong-password',
+        }),
+        content_type='application/json',
+    )
+    assert response.status_code == 400
+
+
+@pytest.mark.django_db
+def test_user_signin_successful(client):
+    """Test successful signin.
+
+    Server should response with 200 and have an access_token sent
+    via cookie and body.
+    """
+    user = UserFactory()
+    response = client.post(
+        '/auth/signin',
+        json.dumps({
+            'email': user.email,
+            'password': default_password,
+        }),
+        content_type='application/json',
+    )
+    assert response.status_code == 200

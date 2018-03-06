@@ -132,3 +132,12 @@ STATIC_URL = '/static/'
 # Custom
 ########
 AUTH_USER_MODEL = 'core.User'
+
+# Jasonpi
+USER_SERIALIZER = 'core.serializers.UserSerializer'
+
+# DRF Json api
+# http://django-rest-framework-json-api.readthedocs.io/en/stable/usage.html#configuration
+JSON_API_PLURALIZE_TYPES = True
+JSON_API_FORMAT_KEYS = 'dasherize'
+JSON_API_FORMAT_TYPES = 'dasherize'

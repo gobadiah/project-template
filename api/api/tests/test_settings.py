@@ -25,3 +25,10 @@ def test_dj_database_url_called(mocker):
         default='postgres://localhost/%s_development' %
         os.environ.get('PROJECT'),
     )
+
+
+def test_drf_json_api_settings():
+    """Test DRF Json api configuration in settings."""
+    assert settings.JSON_API_FORMAT_KEYS == 'dasherize'
+    assert settings.JSON_API_FORMAT_TYPES == 'dasherize'
+    assert settings.JSON_API_PLURALIZE_TYPES
