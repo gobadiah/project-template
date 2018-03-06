@@ -1,10 +1,11 @@
 """Test utils.tests."""
 
+import os
 import sys
 
 import pytest
 
-from .. import clear_modules, reload
+from .. import clear_modules, reload, restore_environment
 
 
 def test_reload_with_module_already_loaded(mocker):
@@ -44,3 +45,35 @@ def test_clear_modules(monkeypatch):
 
     assert bzz('r') == 3
     assert module_name not in sys.modules
+
+
+def test_restore_environment():
+    """Test restore_environment function."""
+    e = 'azerty'
+    f = 'qwerty'
+    os.environ[e] = e
+
+    @restore_environment(e, f)
+    def foo():
+        assert e not in os.environ
+        assert f not in os.environ
+        os.environ[f] = 'nice'
+
+    foo()
+
+    assert os.environ[e] == e
+    assert f not in os.environ
+
+    @restore_environment(e, f)
+    def bar():
+        os.environ[e] = 'oh-hear'
+        os.environ[f] = 'nicer'
+        raise Exception('ok')
+
+    with pytest.raises(Exception):
+        bar()
+
+    assert os.environ[e] == e
+    assert f not in os.environ
+
+    del os.environ[e]

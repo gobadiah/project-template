@@ -1,6 +1,7 @@
 """utils module."""
 
 import importlib
+import os
 import sys
 
 import decorator
@@ -31,3 +32,26 @@ def clear_modules(module_names):
             return result
         return decorator.decorator(wrapper, func)
     return clear_module_names_decorator
+
+
+def restore_environment(*envs):
+    """Restore given environment variables after function execution."""
+    def restore_environment_decorator(func):
+        def wrapper(func, *args, **kwargs):
+            d = {}
+            for e in envs:
+                d[e] = os.environ.pop(e, None)
+            result = None
+            try:
+                result = func(*args, **kwargs)
+            except:  # Noqa H201 # Bare except
+                raise
+            finally:
+                for e in envs:
+                    if d[e]:
+                        os.environ[e] = d[e]
+                    elif e in os.environ:
+                        del os.environ[e]
+            return result
+        return decorator.decorator(wrapper, func)
+    return restore_environment_decorator

@@ -4,6 +4,10 @@
 # Test reports
 reports
 
+# Django
+# static folder
+static
+
 ######
 # Source: https://github.com/github/gitignore/blob/master/Python.gitignore
 

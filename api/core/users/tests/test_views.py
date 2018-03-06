@@ -4,6 +4,8 @@ import re
 
 import pytest
 
+from rest_framework.test import force_authenticate
+
 from .factories import UserFactory
 from ..views import UserRelationshipView, UserViewSet
 
@@ -13,6 +15,7 @@ def test_userviewset_handle_request(rf):
     """Test UserViewSet can handle a simple retrieve."""
     user = UserFactory()
     request = rf.get(r'^/users/%d' % user.id)
+    force_authenticate(request, user=user)
     view = UserViewSet.as_view({'get': 'retrieve'})
     response = view(request, pk=user.id)
     data = response.data
@@ -31,6 +34,7 @@ def test_user_relationship_view(rf):
     """
     user = UserFactory()
     request = rf.get('users/%d/relationships' % user.id)
+    force_authenticate(request, user=user)
     view = UserRelationshipView.as_view()
     response = view(request, pk=user.id, related_field='providers')
     assert response.status_code == 200
