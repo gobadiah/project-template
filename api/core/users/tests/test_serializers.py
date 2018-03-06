@@ -6,6 +6,11 @@ from ..models import User
 from ..serializers import UserSerializer
 
 
+def test_user_serializer_fields():
+    """Test that UserSerializer.Meta.fields contains some elements."""
+    assert 'providers' in UserSerializer.Meta.fields
+
+
 def test_user_serializer_can_serializer(rf):
     """Test UserSerializer can serialize a simple User object."""
     request = rf.get('/')
@@ -16,6 +21,7 @@ def test_user_serializer_can_serializer(rf):
         'url': None,
         'email': '',
         'groups': [],
+        'providers': [],
     }
 
 

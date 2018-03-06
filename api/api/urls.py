@@ -23,8 +23,8 @@ from django.urls import include, path
 import jasonpi.urls
 
 urlpatterns = [
-    path('/', include(core.urls)),
-    path('/', include(jasonpi.urls)),
+    path('', include(core.urls)),
+    path('', include(jasonpi.urls)),
     path('admin/doc/', include('django.contrib.admindocs.urls')),
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),

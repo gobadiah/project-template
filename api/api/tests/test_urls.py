@@ -53,11 +53,11 @@ def test_urlpatterns(mocker):
 
     # Core urls
     include.assert_any_call(core.urls)
-    path.assert_any_call('/', core.urls)
+    path.assert_any_call('', core.urls)
 
     # Jasonpi
     include.assert_any_call(jasonpi.urls)
-    path.assert_any_call('/', jasonpi.urls)
+    path.assert_any_call('', jasonpi.urls)
 
     # Django docs
     include.assert_any_call('django.contrib.admindocs.urls')
