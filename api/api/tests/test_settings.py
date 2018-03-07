@@ -194,3 +194,8 @@ def test_sentry_settings():
         'dsn': dsn,
         'release': raven.fetch_git_sha(os.path.join(settings.BASE_DIR, '..')),
     }
+
+    # TODO(michael)
+    # Add a test for docker (where there is no git available) :
+    # just mock raven.fetch_git_sha to raise, and check that
+    # release is 'docker'.
