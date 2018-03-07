@@ -181,7 +181,6 @@ def test_sentry_settings():
     reload('api.settings')
     from api import settings
     assert raven_app not in settings.INSTALLED_APPS
-    assert not hasattr(settings, 'RAVEN_CONFIG')
 
     os.environ['ENV'] = 'test'
     os.environ['SENTRY_DSN'] = dsn

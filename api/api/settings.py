@@ -27,7 +27,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True # 'ENV' not in os.environ
+DEBUG = 'ENV' not in os.environ
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ['SECRET_KEY'] if not DEBUG else \
@@ -67,7 +67,7 @@ if not DEBUG and 'SENTRY_DSN' in os.environ:
         'dsn': os.environ['SENTRY_DSN'],
     }
     try:
-        RAVEN_CONFIG['release']: raven.fetch_git_sha(
+        RAVEN_CONFIG['release'] = raven.fetch_git_sha(
             os.path.dirname(BASE_DIR))
     except raven.exceptions.InvalidGitRepository:
         RAVEN_CONFIG['release'] = 'docker'
