@@ -146,6 +146,7 @@ workflows:
     jobs:
       - build
       - build-web
+      - build-api
       - test-web:
           requires:
             - build
