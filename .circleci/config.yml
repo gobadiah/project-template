@@ -85,7 +85,7 @@ jobs:
     <<: *defaults
     docker:
       - image: circleci/python:3.6.4-stretch-node-browsers
-      - image: circleci/postgres:10.2-alpine-ram
+      - image: circleci/postgres:10.3-alpine-ram
         environment:
         - POSTGRES_USER=ubuntu
         - POSTGRES_DB=test_db
