@@ -18,6 +18,25 @@ Add a `.env` file at the root of this project, it will be loaded using [direnv](
 
 ## Getting started
 
+First it is highly recommended not to have any of the main components of this template already existing in your current project.
+
+Then, to use this template, add a `template` remote to your git, create a branch in case something goes wrong, and merge without caring about not sharing any history, like so : 
+
+```
+git remote add template https://github.com/gobadiah/project-template
+git checkout -b template
+git merge --allow-unrelated-histories template/develop
+```
+
+Resolves any conflicts there may be, and you will probably do : 
+
+```
+touch .env
+direnv allow .
+```
+
+You can then go on configuring the `.env` file.
+
 ## Components
 
 * `web`: This is a nextjs web app with all the good stuff. See `web/README.md`.
