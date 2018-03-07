@@ -1,11 +1,13 @@
 """Test manage.py."""
 
 import builtins
-import django
-import imp
 import os
-import pytest
 import sys
+from importlib.machinery import SourceFileLoader
+
+import django
+
+import pytest
 
 real_import = builtins.__import__
 
@@ -14,7 +16,7 @@ def test_manage(mocker):
     """Test manage.py dependencies."""
     mocker.patch('os.environ.setdefault')
     mocker.patch('django.core.management.execute_from_command_line')
-    imp.load_source('__main__', './manage.py')
+    SourceFileLoader('__main__', './manage.py').load_module()
     os.environ.setdefault.assert_called_once_with(
         'DJANGO_SETTINGS_MODULE',
         'api.settings',
@@ -42,7 +44,7 @@ def test_manage_raises(mocker):
     mocker.patch('django.core.management.execute_from_command_line')
     builtins.__import__ = create_fake_import('django.core.management')
     with pytest.raises(ImportError) as exc_info:
-        imp.load_source('__main__', './manage.py')
+        SourceFileLoader('__main__', './manage.py').load_module()
     assert "Couldn't import Django." in str(exc_info.value)
     os.environ.setdefault.assert_called_once_with(
         'DJANGO_SETTINGS_MODULE',
