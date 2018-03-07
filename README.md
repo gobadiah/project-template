@@ -14,6 +14,7 @@ Add a `.env` file at the root of this project, it will be loaded using [direnv](
 
 * `PROJECT`: project name.
 * `SENTRY_DSN`: for [Sentry](https://sentry.io), used only in production-like environment.
+* `AWS_PROFILE`: See doc about aws, you should create a profile using `aws configure --profile <PROJECT>` and set `AWS_PROFILE` to `PROJECT`.
 
 ## Getting started
 
