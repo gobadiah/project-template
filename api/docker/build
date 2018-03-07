@@ -1,0 +1,11 @@
+#!/bin/sh
+
+SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
+
+TAG=${TAG:=latest}
+
+docker build \
+  --file $SCRIPTPATH/Dockerfile \
+  --tag $PROJECT/api:$TAG \
+  $@ \
+  $SCRIPTPATH/..

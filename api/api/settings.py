@@ -65,8 +65,12 @@ if not DEBUG and 'SENTRY_DSN' in os.environ:
     INSTALLED_APPS.append('raven.contrib.django.raven_compat')
     RAVEN_CONFIG = {
         'dsn': os.environ['SENTRY_DSN'],
-        'release': raven.fetch_git_sha(os.path.dirname(BASE_DIR)),
     }
+    try:
+        RAVEN_CONFIG['release'] = raven.fetch_git_sha(
+            os.path.dirname(BASE_DIR))
+    except raven.exceptions.InvalidGitRepository:
+        RAVEN_CONFIG['release'] = 'docker'
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',

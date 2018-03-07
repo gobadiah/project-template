@@ -6,6 +6,10 @@ This is a [Django REST Framework](http://www.django-rest-framework.org/) project
 
 Current python version: `3.6.4`.
 
+## Database
+
+This project currently relies on [PostgreSQL](https://www.postgresql.org/) version 10.3. This dependency is also writtin in `.circleci/config.yml` and `docker-compose.yml`.
+
 ## Install
 
 First install [pyenv](https://github.com/pyenv/pyenv) or some virtualenv manager, then create a virtualenv named _project_-api and install dependencies.

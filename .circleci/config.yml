@@ -18,7 +18,6 @@ jobs:
           paths:
             - cc-test-reporter
   build-web:
-    <<: *defaults
     docker:
       - image: docker:17.05.0-ce-git
     steps:
@@ -26,7 +25,7 @@ jobs:
       - setup_remote_docker:
           docker_layer_caching: true
       - run:
-          name: Build application Docker image
+          name: Build web Docker image
           command: |
             ./web/docker/build --cache-from=web
   test-web:
@@ -71,11 +70,22 @@ jobs:
           path: web/reports/junit
       - store_artifacts:
           path: web/reports
+  build-api:
+    docker:
+      - image: docker:17.05.0-ce-git
+    steps:
+      - checkout
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - run:
+          name: Build api Docker image
+          command: |
+            ./api/docker/build --cache-from=api
   test-api:
     <<: *defaults
     docker:
       - image: circleci/python:3.6.4-stretch-node-browsers
-      - image: circleci/postgres:10.2-alpine-ram
+      - image: circleci/postgres:10.3-alpine-ram
         environment:
         - POSTGRES_USER=ubuntu
         - POSTGRES_DB=test_db
@@ -136,6 +146,7 @@ workflows:
     jobs:
       - build
       - build-web
+      - build-api
       - test-web:
           requires:
             - build

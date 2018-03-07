@@ -37,6 +37,14 @@ direnv allow .
 
 You can then go on configuring the `.env` file.
 
+## Run it now
+
+You can use [docker-compose](https://docs.docker.com/compose/) to get this running asap :
+
+```
+docker-compose up
+```
+
 ## Components
 
 * `web`: This is a nextjs web app with all the good stuff. See `web/README.md`.
