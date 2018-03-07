@@ -8,7 +8,7 @@ def clean(ctx):
     """Clean api build and tests files."""
     # || true because the command find to delete fails
     ctx.run(
-        'find . -name __pycache__ -delete 2>/dev/null || true && '
+        'find . -name __pycache__ | xargs rm -rf && '
         'rm -rf htmlcov && rm -rf reports && rm -rf .coverage*',
     )
 

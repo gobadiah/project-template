@@ -11,11 +11,11 @@ User = get_user_model()
 class Asset(models.Model):
     """Asset is a usually provided by a user stored somewhere."""
 
-    creator = models.ForeignKey(
+    owner = models.ForeignKey(
         User,
         on_delete=models.PROTECT,
         related_name='assets_created',
-        help_text=_('Creator of this asset'),
+        help_text=_('Owner of this asset'),
     )
     url = models.URLField()
     external = models.BooleanField(

@@ -13,8 +13,10 @@ class AssetFactory(factory.django.DjangoModelFactory):
 
         model = Asset
 
+    owner = factory.SubFactory('core.users.tests.factories.UserFactory')
     url = 'https://some-url.com/path/to/asset.mp4'
     external = False
     content_type = 'video/mp4'
     meta = {
+        'etag': 'Hello',
     }
