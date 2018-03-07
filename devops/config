@@ -1,0 +1,34 @@
+#!/usr/local/bin/zsh
+
+function get_default_env() {
+  branch=$(git rev-parse --abbrev-ref HEAD)
+  if [[ $branch == "master" ]]; then
+    DEFAULT_ENV="production"
+  elif [[ $branch == "develop" ]]; then
+    DEFAULT_ENV="staging"
+  else
+    DEFAULT_ENV=$(echo "$branch" | sed -E 's/^(feature\/|hotfix\/|release\/|support\/)?(.*)/\2/' | sed 's#/#-#g') 
+  fi
+}
+
+get_default_env
+
+ENV=${ENV:=$DEFAULT_ENV}
+
+web="$PROJECT-web-$ENV"
+api="$PROJECT-api-$ENV"
+
+API_URL="https://$api.herokuapp.com"
+WEB_URL="https://$web.herokuapp.com"
+
+BUCKET="$PROJECT-$ENV"
+POLICY_BASE="s3-limited-access"
+POLICY="$POLICY_BASE-$ENV"
+ROLE="api-role-$ENV"
+USER="api-user-$ENV"
+
+function get_aws_output_config() {
+  echo "aws-config-$1.json"
+}
+
+AWS_OUTPUT_CONFIG=$(get_aws_output_config $ENV)

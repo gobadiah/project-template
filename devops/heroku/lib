@@ -1,0 +1,99 @@
+#!/usr/local/bin/zsh
+
+function get_aws_access_keys() {
+  AWS_ACCESS_KEY_ID=$(cat $AWS_OUTPUT_CONFIG | jq -r '.AccessKey.AccessKeyId')
+  AWS_SECRET_ACCESS_KEY=$(cat $AWS_OUTPUT_CONFIG | jq -r '.AccessKey.SecretAccessKey')
+}
+
+function heroku_login() {
+  heroku container:login
+}
+
+function create_web_app() {
+  heroku apps:list -t $PROJECT | grep -q $web
+  if [ $? -ne 0 ]
+  then
+    heroku create -t $PROJECT --region eu -a $web
+  fi
+}
+
+function destroy_web_app() {
+  heroku apps:list -t $PROJECT | grep -q $web
+  if [ $? -eq 0 ]
+  then
+    heroku apps:destroy -c $web -a $web
+  fi
+}
+
+function configure_web_app() {
+  if [[ ! -v API_URL || ! -v WEB_URL || ! -v GOOGLE_CLIENT_ID || ! -v GOOGLE_CLIENT_SECRET || ! -v FACEBOOK_CLIENT_ID || ! -v FACEBOOK_CLIENT_SECRET ]]
+  then
+    echo "Missing some env vars for web configuration:"
+    echo "API_URL=$API_URL WEB_URL=$WEB_URL GOOGLE_CLIENT_ID=$GOOGLE_CLIENT_ID GOOGLE_CLIENT_SECRET=$GOOGLE_CLIENT_SECRET FACEBOOK_CLIENT_ID=$FACEBOOK_CLIENT_ID FACEBOOK_CLIENT_SECRET=$FACEBOOK_CLIENT_SECRET"
+    exit 1
+  fi
+  heroku config:set -a $web API_URL=$API_URL
+  heroku config:set -a $web WEB_URL=$WEB_URL
+  heroku config:set -a $web GOOGLE_CLIENT_ID=$GOOGLE_CLIENT_ID
+  heroku config:set -a $web GOOGLE_CLIENT_SECRET=$GOOGLE_CLIENT_SECRET
+  heroku config:set -a $web FACEBOOK_CLIENT_ID=$FACEBOOK_CLIENT_ID
+  heroku config:set -a $web FACEBOOK_CLIENT_SECRET=$FACEBOOK_CLIENT_SECRET
+}
+
+function create_api_app() {
+  heroku apps:list -t $PROJECT | grep -q $api
+  if [ $? -ne 0 ]
+  then
+    heroku create -t $PROJECT --region eu -a $api
+    heroku addons:create -a $api heroku-postgresql:hobby-dev
+  fi
+}
+
+function destroy_api_app() {
+  heroku apps:list -t $PROJECT | grep -q $api
+  if [ $? -eq 0 ]
+  then
+    heroku apps:destroy -c $api -a $api
+  fi
+}
+
+function configure_api_app() {
+  if [[ $(heroku config:get -a $api SECRET_KEY) == "" ]]
+  then
+    SECRET_KEY=$(PYENV_VERSION=2.7.14 python2 -c "import string,random; uni=string.ascii_letters+string.digits+string.punctuation; print repr(''.join([random.SystemRandom().choice(uni) for i in range(random.randint(45,50))]))")
+    heroku config:set -a $api SECRET_KEY=$SECRET_KEY
+  fi
+  get_aws_access_keys
+  if [[ ! -v API_URL || ! -v WEB_URL || ! -v ENV || ! -v BUCKET || ! -v AWS_ACCESS_KEY_ID || ! -v AWS_SECRET_ACCESS_KEY ]]
+  then
+    echo "Missing some env vars for web configuration:"
+    echo "API_URL=$API_URL WEB_URL=$WEB_URL ENV=$ENV BUCKET=$BUCKET AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY"
+    exit 1
+  fi
+  heroku config:set -a $api API_URL=$API_URL
+  heroku config:set -a $api WEB_URL=$WEB_URL
+  heroku config:set -a $api ENV=$ENV
+  heroku config:set -a $api BUCKET=$BUCKET
+  heroku config:set -a $api AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
+  heroku config:set -a $api AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
+}
+
+function deploy_web_app() {
+  pushd "$SCRIPTPATH/../../web"
+
+  WEB_URL=$WEB_URL TAG=$ENV ./build_docker
+
+  docker tag $PROJECT/web:$ENV registry.heroku.com/$web/web
+  docker push registry.heroku.com/$web/web
+
+  popd
+}
+
+function deploy_api_app() {
+  pushd "$SCRIPTPATH/../../api2"
+
+  heroku container:push -a $api web
+  heroku run -a $api "python manage.py migrate" --type=worker
+
+  popd
+}
