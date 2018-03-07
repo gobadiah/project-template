@@ -19,8 +19,9 @@ def test_installed_apps():
     """Verify that required apps are installed."""
     assert 'django_extensions' in settings.INSTALLED_APPS
     assert 'jasonpi' in settings.INSTALLED_APPS
-    assert 'core' in settings.INSTALLED_APPS
     assert 'rest_framework' in settings.INSTALLED_APPS
+    assert 'core' in settings.INSTALLED_APPS
+    assert 'assets' in settings.INSTALLED_APPS
 
 
 def test_dj_database_url_called(mocker):

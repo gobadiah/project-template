@@ -57,8 +57,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_extensions',
     'jasonpi',
-    'core',
     'rest_framework',
+    'core',
+    'assets',
 ]
 
 if not DEBUG and 'SENTRY_DSN' in os.environ:
