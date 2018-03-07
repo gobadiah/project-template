@@ -13,12 +13,15 @@ This is a template for monorepo project with web, api, devops components, in the
 Add a `.env` file at the root of this project, it will be loaded using [direnv](https://direnv.net/) with the following variables : 
 
 * `PROJECT`: project name.
+* `SENTRY_DSN`: for [Sentry](https://sentry.io), used only in production-like environment.
 
 ## Getting started
 
 ## Components
 
 * `web`: This is a nextjs web app with all the good stuff. See `web/README.md`.
+
+* `api`: As it is well named, the api provides a RESTful api, [json:api](http://jsonapi.org/) compliant, with a [PostgreSQL](https://www.postgresql.org/) database.
 
 * `kb`: Knowledge base where we store every piece of information 
 
@@ -27,3 +30,7 @@ Add a `.env` file at the root of this project, it will be loaded using [direnv](
 * `.envrc` executed by [direnv](https://direnv.net/)
 
 * `.circle` contains the [CircleCI](https://circleci.com/) configuration file. See knowledge base in `kb` component.
+
+## Services
+
+* [Sentry](https://sentry.io) for crash reporting.

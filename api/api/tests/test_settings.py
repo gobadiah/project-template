@@ -10,6 +10,8 @@ import dj_database_url
 
 import pytest
 
+import raven
+
 from utils import reload, restore_environment
 
 
@@ -165,3 +167,30 @@ def test_locale_paths():
     assert settings.LOCALE_PATHS == (
         os.path.join(settings.BASE_DIR, 'locales'),
     )
+
+
+@restore_environment('ENV', 'SENTRY_DSN')
+def test_sentry_settings():
+    """Test that sentry is correctly configured.
+
+    There should be nothing if DEBUG or SENTRY_DSN not present in environment.
+    """
+    raven_app = 'raven.contrib.django.raven_compat'
+    dsn = 'some-dsn'
+
+    reload('api.settings')
+    from api import settings
+    assert raven_app not in settings.INSTALLED_APPS
+    assert not hasattr(settings, 'RAVEN_CONFIG')
+
+    os.environ['ENV'] = 'test'
+    os.environ['SENTRY_DSN'] = dsn
+
+    reload('api.settings')
+    from api import settings
+    assert raven_app in settings.INSTALLED_APPS
+    assert hasattr(settings, 'RAVEN_CONFIG')
+    assert settings.RAVEN_CONFIG == {
+        'dsn': dsn,
+        'release': raven.fetch_git_sha(os.path.join(settings.BASE_DIR, '..')),
+    }

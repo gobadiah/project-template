@@ -17,6 +17,8 @@ from corsheaders.defaults import default_headers as cors_default_headers
 
 import dj_database_url
 
+import raven
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -58,6 +60,13 @@ INSTALLED_APPS = [
     'core',
     'rest_framework',
 ]
+
+if not DEBUG and 'SENTRY_DSN' in os.environ:
+    INSTALLED_APPS.append('raven.contrib.django.raven_compat')
+    RAVEN_CONFIG = {
+        'dsn': os.environ['SENTRY_DSN'],
+        'release': raven.fetch_git_sha(os.path.dirname(BASE_DIR)),
+    }
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
