@@ -11,7 +11,7 @@ def test_user_serializer_fields():
     assert 'providers' in UserSerializer.Meta.fields
 
 
-def test_user_serializer_can_serializer(rf):
+def test_user_serializer_can_serialize(rf):
     """Test UserSerializer can serialize a simple User object."""
     request = rf.get('/')
     request.query_params = {}

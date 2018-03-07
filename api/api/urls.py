@@ -15,6 +15,8 @@ Including another URLconf
 
 """
 
+import assets.urls
+
 import core.urls
 
 from django.contrib import admin
@@ -23,6 +25,7 @@ from django.urls import include, path
 import jasonpi.urls
 
 urlpatterns = [
+    path('', include(assets.urls)),
     path('', include(core.urls)),
     path('', include(jasonpi.urls)),
     path('admin/doc/', include('django.contrib.admindocs.urls')),

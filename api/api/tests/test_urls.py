@@ -3,6 +3,8 @@
 import importlib
 import sys
 
+import assets.urls
+
 import core.urls
 
 import jasonpi
@@ -37,11 +39,11 @@ def test_urlpatterns(mocker):
     importlib.reload(sys.modules['api.urls'])
     from api.urls import urlpatterns
 
-    assert len(urlpatterns) == 5
+    assert len(urlpatterns) == 6
     mocker.stopall()
 
-    assert path.call_count == 5
-    assert include.call_count == 4
+    assert path.call_count == 6
+    assert include.call_count == 5
 
     # Django admin
     urls.assert_called_once()
@@ -59,11 +61,15 @@ def test_urlpatterns(mocker):
     include.assert_any_call(jasonpi.urls)
     path.assert_any_call('', jasonpi.urls)
 
+    # Assets
+    include.assert_any_call(assets.urls)
+    path.assert_any_call('', assets.urls)
+
     # Django docs
     include.assert_any_call('django.contrib.admindocs.urls')
     path.assert_any_call('admin/doc/', 'django.contrib.admindocs.urls')
 
-    assert urlpatterns == ['path'] * 5
+    assert urlpatterns == ['path'] * 6
 
     # api.settings will not be reloaded in other tests without this
     # and although django modules are unmocked after this test,
