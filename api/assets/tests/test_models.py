@@ -17,7 +17,12 @@ def test_asset_model():
     assert asset.owner.id is not None
     assert asset.url == 'https://some-url.com/path/to/asset.mp4'
     assert not asset.external
-    assert asset.content_type == 'video/mp4'
-    assert asset.meta == {
-        'etag': 'Hello',
+    assert asset.info == {
+        'content-type': 'video/mp4',
+        'content-length': 4557392,
+        'e-tag': 'zlfij234jjzfzef34erlfgej',
+        's3': {
+            'bucket': 'some-bucket',
+            'key': 'some-key',
+        },
     }

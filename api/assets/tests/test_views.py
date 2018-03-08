@@ -23,7 +23,7 @@ def test_assetviewset_handle_request(rf):
     response = view(request, pk=asset.id)
     data = response.data
     assert data['url'] == asset.url
-    assert data['content_type'] == asset.content_type
+    assert data['info'] == asset.info
     response.render()
     content = json.loads(response.content)
     assert content == {
@@ -32,7 +32,7 @@ def test_assetviewset_handle_request(rf):
             'id': str(asset.id),
             'attributes': {
                 'url': asset.url,
-                'content-type': asset.content_type,
+                'info': asset.info,
             },
         },
     }
@@ -54,7 +54,7 @@ def test_get_list_assetviewset(client):
         {
             'attributes': {
                 'url': asset.url,
-                'content-type': asset.content_type,
+                'info': asset.info,
             },
             'type': 'assets',
             'id': str(asset.id),

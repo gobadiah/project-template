@@ -31,7 +31,7 @@ def run_test_watch(ctx):
 
 def run_test_normal(ctx):
     """Test api without watching."""
-    ctx.run('pytest --flake8 %s' % coverage_args(), pty=True)
+    ctx.run('pytest --flake8 --reuse-db %s' % coverage_args(), pty=True)
 
 
 @task(clean)

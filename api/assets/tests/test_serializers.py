@@ -10,7 +10,7 @@ def test_asset_serializer_fields():
     """Test that AssetSerializer.Meta.fields contains the right elements."""
     assert AssetSerializer.Meta.fields == [
         'url',
-        'content_type',
+        'info',
     ]
 
 
@@ -21,7 +21,15 @@ def test_asset_serializer_can_serialize(rf):
     serializer = AssetSerializer(asset)
     assert serializer.data == {
         'url': 'https://some-url.com/path/to/asset.mp4',
-        'content_type': 'video/mp4',
+        'info': {
+            'content-type': 'video/mp4',
+            'content-length': 4557392,
+            'e-tag': 'zlfij234jjzfzef34erlfgej',
+            's3': {
+                'bucket': 'some-bucket',
+                'key': 'some-key',
+            },
+        },
     }
 
 
@@ -29,12 +37,20 @@ def test_asset_serializer_can_serialize(rf):
 def test_asset_serializer_can_deserialize():
     """Test AssetSerializer can deserialize basic data."""
     url = 'https://aws.s3.amazon.com/test/video.mp4'
-    content_type = 'video/mp4'
+    info = {
+        'content-type': 'video/mp4',
+        'content-length': 4557392,
+        'e-tag': 'zlfij234jjzfzef34erlfgej',
+        's3': {
+            'bucket': 'some-bucket',
+            'key': 'some-key',
+        },
+    }
     data = {
         'url': url,
-        'content_type': content_type,
+        'info': info,
     }
     serializer = AssetSerializer(data=data, partial=True)
     serializer.is_valid()
     assert serializer.validated_data['url'] == url
-    assert serializer.validated_data['content_type'] == content_type
+    assert serializer.validated_data['info'] == info

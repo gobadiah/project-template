@@ -19,13 +19,12 @@ class Asset(models.Model):
     )
     url = models.URLField()
     external = models.BooleanField(
-        help_text=_('Is this asset stored inside the company or outside'),
+        help_text=_('Is this asset controlled by the company or outside'),
     )
-    content_type = models.CharField(
-        max_length=255,
-        help_text=_('Asset content-type'),
-    )
-    meta = JSONField(
+    info = JSONField(
         default=dict,
-        help_text=_('Meta data associated with this asset'),
+        help_text=_('info associated with this asset,'
+                    'including storage information when relevant'),
     )
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)

@@ -14,5 +14,5 @@ class AssetSerializer(serializers.HyperlinkedModelSerializer):
         model = Asset
         fields = [
             'url',
-            'content_type',
+            'info',
         ]
