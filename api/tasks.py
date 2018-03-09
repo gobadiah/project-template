@@ -24,14 +24,23 @@ def coverage_args():
     )
 
 
+def args():
+    """Return pytest args."""
+    return (
+        '--flake8 '  # flake8 tests
+        '--ignore="*neomake*.py" '  # Neomake temp files
+        '%s ' % coverage_args()
+    )
+
+
 def run_test_watch(ctx):
     """Test api and watch for file changes."""
-    ctx.run('ptw -- --flake8 %s' % coverage_args(), pty=True)
+    ctx.run('ptw -- %s' % args(), pty=True)
 
 
 def run_test_normal(ctx):
     """Test api without watching."""
-    ctx.run('pytest --flake8 --reuse-db %s' % coverage_args(), pty=True)
+    ctx.run('pytest %s' % args(), pty=True)
 
 
 @task(clean)

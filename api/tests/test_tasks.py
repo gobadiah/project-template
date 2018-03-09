@@ -8,7 +8,7 @@ from invoke.tasks import Task
 
 from mock import MagicMock
 
-from tasks import clean
+from tasks import args, clean
 from tasks import coverage_args
 from tasks import run_test_normal
 from tasks import run_test_watch
@@ -32,6 +32,14 @@ def test_coverage_args():
         '--cov-report=xml:reports/coverage/coverage.xml '
         '--junitxml=reports/junit/api-tests-results.xml '
     )
+
+
+def test_args():
+    """Test args."""
+    val = args()
+    assert '--flake8' in val
+    assert '--ignore="*neomake*.py"' in val
+    assert coverage_args() in val
 
 
 def test_watch():

@@ -1,6 +1,6 @@
 """Test Core apps."""
 
-from core.apps import CoreConfig
+from ..apps import CoreConfig
 
 
 def test_core_config():

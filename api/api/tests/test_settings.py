@@ -171,7 +171,7 @@ def test_locale_paths():
 
 
 @restore_environment('ENV', 'SENTRY_DSN')
-def test_sentry_settings():
+def test_sentry_settings(mocker):
     """Test that sentry is correctly configured.
 
     There should be nothing if DEBUG or SENTRY_DSN not present in environment.
@@ -195,7 +195,15 @@ def test_sentry_settings():
         'release': raven.fetch_git_sha(os.path.join(settings.BASE_DIR, '..')),
     }
 
-    # TODO(michael)
-    # Add a test for docker (where there is no git available) :
-    # just mock raven.fetch_git_sha to raise, and check that
-    # release is 'docker'.
+    mocker.patch(
+        'raven.fetch_git_sha',
+        side_effect=raven.exceptions.InvalidGitRepository,
+    )
+    reload('api.settings')
+    from api import settings
+    assert raven_app in settings.INSTALLED_APPS
+    assert hasattr(settings, 'RAVEN_CONFIG')
+    assert settings.RAVEN_CONFIG == {
+        'dsn': dsn,
+        'release': 'docker',
+    }
