@@ -3,6 +3,7 @@
 import pytest
 
 from .factories import AssetFactory
+from ..models import Asset
 from ..serializers import AssetSerializer
 
 
@@ -12,6 +13,7 @@ def test_asset_serializer_fields():
         'url',
         'info',
     ]
+    assert AssetSerializer.Meta.model == Asset
 
 
 @pytest.mark.django_db

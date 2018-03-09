@@ -13,7 +13,7 @@ class UserFactory(factory.django.DjangoModelFactory):
 
         model = 'core.User'
 
-    email = 'jean-claude@example.com'
+    email = factory.Faker('email')
     password = factory.PostGenerationMethodCall(
         'set_password',
         default_password,
