@@ -1,0 +1,45 @@
+version: '3'
+services:
+  web:
+    build:
+      context: ./web
+      dockerfile: docker/Dockerfile
+      args:
+        SENTRY_DSN: ${SENTRY_DSN}
+        SENTRY_PUBLIC_DSN: ${SENTRY_PUBLIC_DSN}
+        WEB_URL: http://web:3000
+        BUCKET: ${PROJECT}-compose
+        AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+        GOOGLE_API_KEY: ${GOOGLE_API_KEY}
+        GOOGLE_UNRESTRICTED_API_KEY: ${GOOGLE_UNRESTRICTED_API_KEY}
+    environment:
+      API_URL: http://api:8000
+      WEB_URL: http://web:3000
+      ENV: compose
+      PROJECT: ${PROJECT}
+      SENTRY_DSN: ${SENTRY_DSN}
+    ports:
+      - "3000:3000"
+  api:
+    build:
+      context: ./api
+      dockerfile: docker/Dockerfile
+    depends_on:
+      - db
+    environment:
+      PORT: 8000
+      API_URL: http://api:8000
+      WEB_URL: http://web:3000
+      ENV: compose
+      PROJECT: ${PROJECT}
+      SENTRY_DSN: ${SENTRY_DSN}
+      DATABASE_URL: postgres://api:compose-db-password@db:5432/api
+      SECRET_KEY: the-docker-compose-secret-key
+    ports:
+      - "8000:8000"
+  db:
+    image: postgres:10.3-alpine
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: compose-db-password
+      POSTGRES_USER: api
