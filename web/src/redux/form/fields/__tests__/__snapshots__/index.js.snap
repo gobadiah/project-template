@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Field should match snapshot 1`] = `
+.emotion-0 {
+  color: blue;
+}
+
+.emotion-1 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  color: red;
+}
+
+<div
+  className="emotion-1 emotion-2"
+>
+  <label
+    htmlFor={undefined}
+  >
+    this is a label
+  </label>
+  <input
+    autoComplete="email"
+    className="emotion-0"
+    placeholder="support@example.com"
+    type="email"
+  />
+  <div>
+    Nah this I can't do
+  </div>
+  <div>
+    Be careful with that
+  </div>
+</div>
+`;
