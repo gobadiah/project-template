@@ -88,7 +88,7 @@ Test coverage is available in `reports/coverage` in various formats.
 
 ## Features
 
-* `toast`: Show the user a [toast](https://ux.stackexchange.com/questions/11998/what-is-a-toast-notification). Using [react-toastify](https://github.com/fkhadra/react-toastify).
+* `toastify`: Show the user a [toast](https://ux.stackexchange.com/questions/11998/what-is-a-toast-notification). Using [react-toastify](https://github.com/fkhadra/react-toastify).
 
 ```
 import { toast } from 'react-toastify';
@@ -97,3 +97,5 @@ import { toast } from 'react-toastify';
 
 toast.info('Show me a notification');
 ```
+
+* `forms`: Forms are handled using [redux-form](https://redux-form.com/7.3.0/docs/gettingstarted.md/) which is handling a lot of stuffs related to these stuffs. Forms are stored in redux state. To see examples look into `src/forms`.

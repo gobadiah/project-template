@@ -42,9 +42,12 @@ describe('createStore', () => {
     expect(mockComposeWithDevTools).toHaveBeenCalledTimes(1);
     expect(mockComposeWithDevTools).toHaveBeenCalledWith('thunkMiddleware');
 
+    const form = require('redux-form').reducer;
+
     const reducers = {
       auth: 'auth',
       api: mockReducer,
+      form,
     };
 
     expect(mockCombineReducers).toHaveBeenCalledTimes(1);
@@ -67,7 +70,7 @@ describe('createStore', () => {
     const defaultAuthState = require('../auth').defaultState;
     const state = undefined;
     const store = createStore(state);
-    expect(Object.keys(store.getState())).toEqual(['auth']);
+    expect(Object.keys(store.getState())).toEqual(['auth', 'form']);
     expect(store.getState().auth.equals(defaultAuthState)).toBe(true);
   });
 
@@ -77,9 +80,22 @@ describe('createStore', () => {
       auth: Map({
         userId: 7,
       }),
+      form: Map({}),
     };
     const store = createStore(state);
     expect(store.getState()).toEqual(state);
+  });
+
+  it('should return a store with given state and transform auth into immutable', () => {
+    const createStore = require('..').default;
+    const state = {
+      auth: {
+        userId: 7,
+      },
+      form: Map({}),
+    };
+    const store = createStore(state);
+    expect(store.getState().auth.get('userId')).toEqual(7);
   });
 
   it('should change the state after dispatching a simple action', () => {
@@ -89,12 +105,12 @@ describe('createStore', () => {
     const store = createStore(state);
     const { signin, signout } = require('../auth');
     store.dispatch(signin(8));
-    expect(Object.keys(store.getState())).toEqual(['auth']);
+    expect(Object.keys(store.getState())).toEqual(['auth', 'form']);
     expect(store.getState().auth.equals(Map({
       userId: 8,
     }))).toBe(true);
     store.dispatch(signout());
-    expect(Object.keys(store.getState())).toEqual(['auth']);
+    expect(Object.keys(store.getState())).toEqual(['auth', 'form']);
     expect(store.getState().auth.equals(defaultAuthState)).toBe(true);
   });
 });

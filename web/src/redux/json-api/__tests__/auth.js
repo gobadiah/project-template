@@ -53,6 +53,21 @@ describe('Redux', () => {
 
           expect(dispatch).toHaveBeenCalledWith('signin');
         });
+
+        it('should should call handleFormErrors when an error is thrown', async () => {
+          jest.mock('axios');
+          jest.mock('../../form');
+
+          const axios = require('axios');
+          const { handleFormErrors } = require('~/redux/form');
+          const data = {};
+          const error = {};
+          const dispatch = jest.fn();
+          axios.post.mockImplementationOnce(() => Promise.reject(error));
+          const { signin } = require('../..');
+          await expect(signin(dispatch)(data)).resolves.toBeUndefined();
+          expect(handleFormErrors).toHaveBeenCalled();
+        });
       });
 
       describe('register', () => {
@@ -86,10 +101,17 @@ describe('Redux', () => {
           expect(axios.post).toHaveBeenCalledTimes(1);
           expect(axios.post).toHaveBeenCalledWith(
             '/auth/register',
-            data,
+            {
+              data: {
+                type: 'users',
+                attributes: data,
+              },
+            },
             config.axios({
-              'Content-Type': 'application/vnd.api+json',
-              Accept: 'application/vnd.api+json',
+              headers: {
+                'Content-Type': 'application/vnd.api+json',
+                Accept: 'application/vnd.api+json',
+              },
             }),
           );
 
@@ -103,6 +125,21 @@ describe('Redux', () => {
           expect(signinAction).toHaveBeenCalledWith(id);
 
           expect(dispatch).toHaveBeenCalledWith('signin');
+        });
+
+        it('should should call handleFormErrors when an error is thrown', async () => {
+          jest.mock('axios');
+          jest.mock('../../form');
+
+          const axios = require('axios');
+          const { handleFormErrors } = require('~/redux/form');
+          const data = {};
+          const error = {};
+          const dispatch = jest.fn();
+          axios.post.mockImplementationOnce(() => Promise.reject(error));
+          const { register } = require('../..');
+          await expect(register(dispatch)(data)).resolves.toBeUndefined();
+          expect(handleFormErrors).toHaveBeenCalled();
         });
       });
     });

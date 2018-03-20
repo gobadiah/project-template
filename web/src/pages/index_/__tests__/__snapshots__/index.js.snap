@@ -58,5 +58,17 @@ exports[`Index should match snapshot 1`] = `
   >
     Generate error
   </a>
+  <a
+    href="/signin"
+    onClick={[Function]}
+  >
+    Signin
+  </a>
+  <a
+    href="/register"
+    onClick={[Function]}
+  >
+    Register
+  </a>
 </div>
 `;

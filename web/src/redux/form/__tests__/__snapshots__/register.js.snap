@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PlainRegisterForm should match snapshot 1`] = `
+<form
+  onSubmit={[MockFunction]}
+>
+  <Component
+    key="email"
+  />
+  <Component
+    autoComplete="new-password"
+    key="password"
+  />
+  <Component
+    autoComplete="new-password"
+    key="confirm_password"
+    label="Password confirmation"
+    name="confirm_password"
+  />
+  <Component
+    key="first_name"
+  />
+  <Component
+    key="last_name"
+  />
+  <Component
+    key="birthday"
+  />
+  <input
+    disabled={false}
+    type="submit"
+  />
+  <input
+    disabled={true}
+    onClick={[MockFunction]}
+    type="button"
+  />
+</form>
+`;

@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BaseForm should be subclass and render an empty form 1`] = `
+<form
+  onSubmit={[MockFunction]}
+>
+  <input
+    disabled={false}
+    type="submit"
+    value="Send"
+  />
+  <input
+    disabled={false}
+    onClick={[MockFunction]}
+    type="button"
+    value="Reset"
+  />
+  &lt;warning&gt;This is a warning&lt;/warning&gt;
+  &lt;error&gt;This is an error&lt;/error&gt;
+</form>
+`;

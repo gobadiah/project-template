@@ -1,0 +1,122 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RenderField should match snapshot 1`] = `
+.emotion-0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+<RenderField
+  cols={70}
+  column={false}
+  formatError={[Function]}
+  formatWarning={[Function]}
+  input={
+    Object {
+      "name": "example field",
+    }
+  }
+  label="Some example field"
+  meta={
+    Object {
+      "error": Array [
+        "This is one error",
+        "this is another",
+      ],
+      "touched": true,
+      "warning": Array [
+        "This is one warning",
+        "yet another",
+      ],
+    }
+  }
+  rows={7}
+  type="text"
+>
+  <Styled(div)>
+    <div
+      className="emotion-0 emotion-1"
+    >
+      <label
+        htmlFor="example field"
+        key="label"
+      />
+      <input
+        key="component"
+        name="example field"
+        type="text"
+      />
+      <div
+        key="error"
+      />
+      <div
+        key="warning"
+      />
+    </div>
+  </Styled(div)>
+</RenderField>
+`;
+
+exports[`RenderField should match snapshot with column=true 1`] = `
+.emotion-0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+<RenderField
+  cols={70}
+  column={true}
+  formatError={[Function]}
+  formatWarning={[Function]}
+  input={
+    Object {
+      "name": "example field",
+    }
+  }
+  label="Some example field"
+  meta={
+    Object {
+      "error": Array [
+        "This is one error",
+        "this is another",
+      ],
+      "touched": true,
+      "warning": Array [
+        "This is one warning",
+        "yet another",
+      ],
+    }
+  }
+  rows={7}
+  type="text"
+>
+  <Styled(div)>
+    <div
+      className="emotion-0 emotion-1"
+    >
+      <label
+        htmlFor="example field"
+        key="label"
+      />
+      <input
+        key="component"
+        name="example field"
+        type="text"
+      />
+      <div
+        key="error"
+      />
+      <div
+        key="warning"
+      />
+    </div>
+  </Styled(div)>
+</RenderField>
+`;
