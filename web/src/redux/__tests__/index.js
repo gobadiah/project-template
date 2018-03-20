@@ -42,7 +42,7 @@ describe('createStore', () => {
     expect(mockComposeWithDevTools).toHaveBeenCalledTimes(1);
     expect(mockComposeWithDevTools).toHaveBeenCalledWith('thunkMiddleware');
 
-    const form = require('redux-form/immutable').reducer;
+    const form = require('redux-form').reducer;
 
     const reducers = {
       auth: 'auth',
@@ -84,6 +84,18 @@ describe('createStore', () => {
     };
     const store = createStore(state);
     expect(store.getState()).toEqual(state);
+  });
+
+  it('should return a store with given state and transform auth into immutable', () => {
+    const createStore = require('..').default;
+    const state = {
+      auth: {
+        userId: 7,
+      },
+      form: Map({}),
+    };
+    const store = createStore(state);
+    expect(store.getState().auth.get('userId')).toEqual(7);
   });
 
   it('should change the state after dispatching a simple action', () => {

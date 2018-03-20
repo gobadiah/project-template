@@ -1,5 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+
+import { defaultPropTypes } from '~/components';
 
 export default class PureComponent extends React.PureComponent {
   componentDidMount() {
@@ -12,7 +13,4 @@ export default class PureComponent extends React.PureComponent {
   }
 }
 
-PureComponent.contextTypes = {
-  i18n: PropTypes.shape().isRequired,
-  t: PropTypes.func.isRequired,
-};
+PureComponent.contextTypes = defaultPropTypes;

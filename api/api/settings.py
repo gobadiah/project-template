@@ -39,7 +39,7 @@ def host(url):
     return urlparse(url).netloc.split(':')[0]
 
 
-ALLOWED_HOSTS = [] if 'API_URL' not in os.environ else [
+ALLOWED_HOSTS = ['*'] if 'API_URL' not in os.environ else [
     host(os.environ['API_URL']),
     'api.project-template.com',
 ]

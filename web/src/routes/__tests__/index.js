@@ -14,10 +14,12 @@ describe('Routes', () => {
 
     require('~/routes');
 
-    expect(mockRoutesAdd).toHaveBeenCalledTimes(3);
-    expect(mockRoutesAdd).toBeCalledWith('index', '/');
+    expect(mockRoutesAdd).toHaveBeenCalledTimes(5);
+    expect(mockRoutesAdd).toBeCalledWith('index', '/', 'index_');
     expect(mockRoutesAdd).toBeCalledWith('some-page');
     expect(mockRoutesAdd).toBeCalledWith('generate-error');
+    expect(mockRoutesAdd).toBeCalledWith('signin');
+    expect(mockRoutesAdd).toBeCalledWith('register');
 
     mockRoutes.Router.onRouteChangeStart();
     expect(mockStart).toHaveBeenCalledTimes(1);

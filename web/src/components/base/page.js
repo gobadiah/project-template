@@ -11,6 +11,15 @@ class Page extends React.PureComponent {
       user,
     };
   }
+
+  componentDidMount() {
+    const { setAxiosConfig } = this.props;
+    setAxiosConfig();
+  }
+
+  render() {
+    return null;
+  }
 }
 
 Page.propTypes = {

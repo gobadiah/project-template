@@ -86,7 +86,7 @@ def test_allowd_hosts_settings():
     """Test ALLOWED_HOSTS based on API_URL."""
     reload('api.settings')
     from api import settings
-    assert settings.ALLOWED_HOSTS == []
+    assert settings.ALLOWED_HOSTS == ['*']
 
     val = 'some-url.com'
     os.environ['API_URL'] = 'https://%s/' % val

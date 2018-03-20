@@ -1,7 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`SignInForm should match snapshot 1`] = `
+exports[`PlainSignInForm should match snapshot 1`] = `
 <form
   onSubmit={[MockFunction]}
-/>
+>
+  <Component />
+  <Component />
+  <input
+    type="submit"
+  />
+</form>
 `;

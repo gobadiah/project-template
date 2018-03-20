@@ -19,6 +19,8 @@ class Index extends Page {
         <SomePureComponent />
         <Link route='some-page'><a>Some page</a></Link>
         <Link route='generate-error'><a>Generate error</a></Link>
+        <Link route='signin'><a>Signin</a></Link>
+        <Link route='register'><a>Register</a></Link>
       </div>
     );
   }

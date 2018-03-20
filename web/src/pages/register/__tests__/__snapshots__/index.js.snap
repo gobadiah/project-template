@@ -1,0 +1,158 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Register should match snapshot 1`] = `
+.emotion-0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+<form
+  onSubmit={[Function]}
+>
+  <div
+    className="emotion-0 emotion-1"
+  >
+    <label
+      htmlFor="email"
+    >
+      Email
+    </label>
+    <input
+      autoComplete="email"
+      className={undefined}
+      name="email"
+      onBlur={[Function]}
+      onChange={[Function]}
+      onDragStart={[Function]}
+      onDrop={[Function]}
+      onFocus={[Function]}
+      placeholder={undefined}
+      type="email"
+      value=""
+    />
+  </div>
+  <div
+    className="emotion-0 emotion-1"
+  >
+    <label
+      htmlFor="password"
+    >
+      Password
+    </label>
+    <input
+      autoComplete="new-password"
+      className={undefined}
+      name="password"
+      onBlur={[Function]}
+      onChange={[Function]}
+      onDragStart={[Function]}
+      onDrop={[Function]}
+      onFocus={[Function]}
+      placeholder={undefined}
+      type="password"
+      value=""
+    />
+  </div>
+  <div
+    className="emotion-0 emotion-1"
+  >
+    <label
+      htmlFor="confirm_password"
+    >
+      Password confirmation
+    </label>
+    <input
+      autoComplete="new-password"
+      className={undefined}
+      name="confirm_password"
+      onBlur={[Function]}
+      onChange={[Function]}
+      onDragStart={[Function]}
+      onDrop={[Function]}
+      onFocus={[Function]}
+      placeholder={undefined}
+      type="password"
+      value=""
+    />
+  </div>
+  <div
+    className="emotion-0 emotion-1"
+  >
+    <label
+      htmlFor="first_name"
+    >
+      First name
+    </label>
+    <input
+      autoComplete="given-name"
+      className={undefined}
+      name="first_name"
+      onBlur={[Function]}
+      onChange={[Function]}
+      onDragStart={[Function]}
+      onDrop={[Function]}
+      onFocus={[Function]}
+      placeholder={undefined}
+      type="text"
+      value=""
+    />
+  </div>
+  <div
+    className="emotion-0 emotion-1"
+  >
+    <label
+      htmlFor="last_name"
+    >
+      Last name
+    </label>
+    <input
+      autoComplete="family-name"
+      className={undefined}
+      name="last_name"
+      onBlur={[Function]}
+      onChange={[Function]}
+      onDragStart={[Function]}
+      onDrop={[Function]}
+      onFocus={[Function]}
+      placeholder={undefined}
+      type="text"
+      value=""
+    />
+  </div>
+  <div
+    className="emotion-0 emotion-1"
+  >
+    <label
+      htmlFor="birthday"
+    >
+      Birthday
+    </label>
+    <input
+      autoComplete="bday"
+      className={undefined}
+      name="birthday"
+      onBlur={[Function]}
+      onChange={[Function]}
+      onDragStart={[Function]}
+      onDrop={[Function]}
+      onFocus={[Function]}
+      placeholder={undefined}
+      type="date"
+      value=""
+    />
+  </div>
+  <input
+    disabled={false}
+    type="submit"
+    value="Send"
+  />
+  <input
+    disabled={true}
+    onClick={[Function]}
+    type="button"
+    value="Reset"
+  />
+</form>
+`;

@@ -1,6 +1,9 @@
 ######
 # Custom
 ######
+# Ternjs
+.tern-port
+
 # Next
 .next
 

@@ -9,6 +9,6 @@ export default {
   api,
   web,
   port,
-  axios: args => axios({ api, ...(args || {}) }),
+  axios: (args = {}) => axios({ api, ...args }),
   dev: process.env.NODE_ENV !== 'production',
 };

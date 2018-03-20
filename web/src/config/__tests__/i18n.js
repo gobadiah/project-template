@@ -35,6 +35,32 @@ describe('I18n', () => {
       expect(i18n.toJSON()).toBe(null);
     });
 
+    it('should handle when namespace is given as an array', () => {
+      const i18n = require('~/config/i18n').default;
+      i18n.languages = ['fr', 'en'];
+      i18n.language = 'fr';
+      const req = {
+        i18n,
+      };
+      const namespaces = ['common', 'index'];
+      const result = i18n.getInitialProps(req, namespaces);
+      expect(result).toEqual({
+        i18n,
+        initialI18nStore: {
+          fr: {
+            common: {},
+            index: {},
+          },
+          en: {
+            common: {},
+            index: {},
+          },
+        },
+        initialLanguage: 'fr',
+      });
+      expect(i18n.toJSON()).toBe(null);
+    });
+
     it('should use the resource store when available', () => {
       const i18n = require('~/config/i18n').default;
       i18n.languages = ['fr', 'en'];

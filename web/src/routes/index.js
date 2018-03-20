@@ -3,9 +3,11 @@ import NProgress from 'nprogress';
 const routes = require('next-routes')();
 
 routes
-  .add('index', '/')
+  .add('index', '/', 'index_')
   .add('some-page')
-  .add('generate-error');
+  .add('generate-error')
+  .add('signin')
+  .add('register');
 
 const { Router } = routes;
 

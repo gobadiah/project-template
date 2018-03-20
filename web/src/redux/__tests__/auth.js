@@ -8,23 +8,23 @@ beforeEach(() => { jest.unmock('redux-actions'); jest.resetModules(); });
 
 describe('Auth reducer', () => {
   it('should combine actions signin and signout', () => {
-    const mockHandleAction = jest.fn(() => 98);
+    const mockHandleActions = jest.fn(() => 98);
     const mockCombineActions = jest.fn(() => 99);
 
     jest.mock('redux-actions', () => ({
-      handleAction: mockHandleAction,
+      handleActions: mockHandleActions,
       combineActions: mockCombineActions,
       createActions: jest.fn(x => x),
     }));
     // eslint-disable-next-line no-unused-expressions
     require('~/redux/auth').default;
-    expect(mockHandleAction).toHaveBeenCalledTimes(1);
-    expect(mockHandleAction.mock.calls[0][0]).toEqual(99);
-    const arg = mockHandleAction.mock.calls[0][1];
-    expect(arg.next(someAuthState, { payload: { userId: 4 } }).equals(Map({
+    expect(mockHandleActions).toHaveBeenCalledTimes(1);
+    expect(mockHandleActions.mock.calls[0][0]).toHaveProperty('99');
+    const next = mockHandleActions.mock.calls[0][0]['99'];
+    expect(next(someAuthState, { payload: { userId: 4 } }).equals(Map({
       userId: 4,
     }))).toBe(true);
-    expect(mockHandleAction.mock.calls[0][2].equals(defaultState)).toBe(true);
+    expect(mockHandleActions.mock.calls[0][1].equals(defaultState)).toBe(true);
   });
 
   it('should have a default state', () => {

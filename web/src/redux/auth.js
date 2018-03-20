@@ -1,4 +1,4 @@
-import { handleAction, combineActions } from 'redux-actions';
+import { handleActions, combineActions } from 'redux-actions';
 import { Map } from 'immutable';
 
 import { createActions } from './utils';
@@ -8,13 +8,14 @@ export const {
   signout,
 } = createActions({
   SIGNIN: id => ({ userId: id }),
-  SIGNOUT: () => ({ userId: undefined }),
+  SIGNOUT: () => ({ userId: null }),
 }, 'auth');
 
-export const defaultState = Map({ userId: undefined });
+export const defaultState = Map({ userId: null });
 
-export default handleAction(
-  combineActions(signin, signout),
-  { next: (state, { payload: { userId } }) => state.set('userId', userId) },
+export default handleActions(
+  {
+    [combineActions(signin, signout)]: (state, { payload: { userId } }) => state.set('userId', userId),
+  },
   defaultState,
 );
