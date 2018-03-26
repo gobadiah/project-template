@@ -4,7 +4,7 @@ import { extractCritical } from 'emotion-server';
 import nprogress from 'nprogress/nprogress.css';
 import { ToastContainer } from 'react-toastify';
 
-import { Sentry } from '~/sentry';
+import { Sentry } from '~/services/sentry';
 
 export default class MyDocument extends Document {
   static getInitialProps({ renderPage }) {

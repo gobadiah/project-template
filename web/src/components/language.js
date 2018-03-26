@@ -14,7 +14,8 @@ export const Lang = ({
   img,
 }, { i18n, t }) => (
   <div>
-    <input type='button' onClick={() => i18n.changeLanguage(lng)} value={t(`Switch to ${name}`)} /> <img src={img} alt='' />
+    <input type='button' onClick={() => i18n.changeLanguage(lng)} value={t(`Switch to ${name}`)} />
+    <img src={img} alt='' />
   </div>
 );
 

@@ -45,7 +45,7 @@ describe('Hoc', () => {
     const { translate } = require('react-i18next');
     const Page = {};
     const hoc = require('..').default;
-    const i18n = require('../../config/i18n').default;
+    const i18n = require('~/services/i18n').default;
     const result = hoc('page')(Page);
     expect(translate).toHaveBeenCalledTimes(1);
     expect(translate).toHaveBeenCalledWith(
@@ -59,7 +59,7 @@ describe('Hoc', () => {
 
   it('should call withRedux with our createStore', () => {
     const withRedux = require('next-redux-wrapper');
-    const createStore = require('~/redux').default;
+    const createStore = require('~/services/redux').default;
     const Page = {};
     const hoc = require('..').default;
     const component = hoc('page')(Page);
@@ -78,5 +78,62 @@ describe('Hoc', () => {
     expect(mockWithRedux).toHaveBeenCalledTimes(1);
     expect(mockWithRedux).toHaveBeenCalledWith(Page);
     expect(component).toBe(Page);
+  });
+
+  it('has an extraDispatchProps with a few props', () => {
+    const dispatch = jest.fn(x => x);
+    jest.mock('redux-json-api', () => ({
+      setAxiosConfig: jest.fn(x => x),
+      createResource: jest.fn(x => x),
+      updateResource: jest.fn(x => x),
+      reducer: () => {},
+    }));
+    const {
+      setAxiosConfig,
+      createResource,
+      updateResource,
+    } = require('redux-json-api');
+    jest.mock('../../services/axios', () => ({
+      config: jest.fn(() => 'config'),
+    }));
+    const { config } = require('~/services/axios');
+    jest.mock('../../auth', () => ({
+      signin: jest.fn(x => x),
+      register: jest.fn(x => x),
+      reducer: () => {},
+    }));
+    const { signin, register } = require('~/auth');
+    const { extraDispatchProps } = require('..');
+    const props = extraDispatchProps(dispatch);
+    expect(Object.keys(props)).toEqual([
+      'setAxiosConfig',
+      'create',
+      'update',
+      'signin',
+      'register',
+    ]);
+    expect(props.setAxiosConfig()).toEqual('config');
+    expect(config).toHaveBeenCalledTimes(1);
+    expect(setAxiosConfig).toHaveBeenCalledTimes(1);
+    expect(setAxiosConfig).toHaveBeenCalledWith('config');
+
+    const data = 'data';
+    expect(props.create(data)).toEqual(data);
+    expect(createResource).toHaveBeenCalledTimes(1);
+    expect(createResource).toHaveBeenCalledWith(data);
+
+    expect(props.update(data)).toEqual(data);
+    expect(updateResource).toHaveBeenCalledTimes(1);
+    expect(updateResource).toHaveBeenCalledWith(data);
+
+    expect(props.signin(data)).toEqual(data);
+    expect(signin).toHaveBeenCalledTimes(1);
+    expect(signin).toHaveBeenCalledWith(dispatch);
+
+    expect(props.register(data)).toEqual(data);
+    expect(register).toHaveBeenCalledTimes(1);
+    expect(register).toHaveBeenCalledWith(dispatch);
+
+    expect(dispatch).toHaveBeenCalledTimes(5);
   });
 });

@@ -18,7 +18,6 @@ describe('Config', () => {
       'api',
       'web',
       'port',
-      'axios',
       'dev',
     ]);
     expect(config.api).toEqual('http://127.0.0.1:8000');
@@ -26,12 +25,6 @@ describe('Config', () => {
     expect(config.port).toEqual(3000);
     expect(config.dev).toEqual(true);
     expect(config.port).toEqual(3000);
-    const axios = config.axios();
-    expect(axios).toEqual({
-      baseUrl: 'http://127.0.0.1:8000',
-      withCredentials: true,
-      headers: {},
-    });
   });
 
   testEnvConfig('api', 'API_URL');

@@ -8,10 +8,9 @@ import i18nextMiddleware, { LanguageDetector } from 'i18next-express-middleware'
 import proxy from 'express-http-proxy';
 
 import config from '~/config';
-import i18n, { availableLanguages, availableNamespaces } from '~/config/i18n';
+import i18n, { availableLanguages, availableNamespaces } from '~/services/i18n';
 import routes from '~/routes';
-
-import passport from '~/passport';
+import passport from '~/services/passport';
 
 export const options = {
   preload: availableLanguages,

@@ -7,7 +7,6 @@ exports[`Lang should match snapshot 1`] = `
     type="button"
     value="Switch to french"
   />
-   
   <img
     alt=""
     src="img"

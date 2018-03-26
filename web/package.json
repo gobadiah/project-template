@@ -87,6 +87,7 @@
     "eslint-plugin-react": "^7.7.0",
     "jest": "^22.4.2",
     "jest-emotion": "^9.0.0",
+    "jest-immutable-matchers": "^2.0.1",
     "jest-junit": "^3.6.0",
     "jsdom": "^11.6.2",
     "jsdom-global": "^3.0.2",

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { capture } from '~/sentry';
+import { capture } from '~/services/sentry';
 
 const Error = () => <div>An error occured</div>;
 

@@ -3,7 +3,7 @@ import React from 'react';
 import { Page } from '~/components/base';
 import hoc from '~/hoc';
 
-import RegisterForm from '~/redux/form/register';
+import { RegisterForm } from '~/auth';
 
 class Register extends Page {
   render() {

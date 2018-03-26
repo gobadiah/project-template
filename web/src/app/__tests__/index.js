@@ -34,8 +34,14 @@ describe('App integration', () => {
 describe('App unit', () => {
   it('should have options matching snapshot', () => {
     const { options } = require('..');
-    expect(options.backend.loadPath).toEqual(path.join(__dirname, '../../../locales/{{lng}}/{{ns}}.json'));
-    expect(options.backend.addPath).toEqual(path.join(__dirname, '../../../locales/{{lng}}/{{ns}}.missing.json'));
+    expect(options.backend.loadPath).toEqual(path.join(
+      __dirname,
+      '../../../locales/{{lng}}/{{ns}}.json',
+    ));
+    expect(options.backend.addPath).toEqual(path.join(
+      __dirname,
+      '../../../locales/{{lng}}/{{ns}}.missing.json',
+    ));
     delete options.backend.loadPath;
     delete options.backend.addPath;
     expect(options).toMatchSnapshot();
@@ -45,15 +51,15 @@ describe('App unit', () => {
     jest.resetModules();
     const availableLanguages = ['fr'];
     const availableNamespaces = ['common'];
-    require('~/config/i18n').availableLanguages = availableLanguages;
-    require('~/config/i18n').availableNamespaces = availableNamespaces;
-    const i18n = require('~/config/i18n').default;
+    require('~/services/i18n').availableLanguages = availableLanguages;
+    require('~/services/i18n').availableNamespaces = availableNamespaces;
+    const i18n = require('~/services/i18n').default;
     i18n.use.mockImplementation(() => i18n);
     i18n.init.mockImplementation(() => {});
 
     const mockBackend = 'backend';
 
-    jest.mock('../../config/i18n');
+    jest.mock('../../services/i18n');
     jest.mock('i18next-node-fs-backend', () => mockBackend);
 
     const LanguageDetector = 'LanguageDetector';
@@ -100,8 +106,8 @@ describe('App unit', () => {
       getRequestHandler: jest.fn(() => mockHandler),
     }));
 
-    const passport = require('~/passport').default;
-    jest.mock('../../passport');
+    const passport = require('~/services/passport').default;
+    jest.mock('../../services/passport');
     passport.mockImplementation(() => {});
 
     const express = require('express');
