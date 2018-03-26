@@ -1,8 +1,9 @@
+import { setAxiosConfig } from 'redux-json-api';
+
 import {
-  setAxiosConfig,
   createResource,
   updateResource,
-} from 'redux-json-api';
+} from 'redux-json-api/immutable';
 
 import config from '~/config';
 

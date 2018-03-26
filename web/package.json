@@ -64,7 +64,8 @@
     "redux-actions": "^2.2.1",
     "redux-devtools-extension": "^2.13.2",
     "redux-form": "^7.3.0",
-    "redux-json-api": "^2.0.0-beta.5",
+    "redux-immutable": "^4.0.0",
+    "redux-json-api": "https://github.com/gobadiah/redux-json-api#immutable-root-reducer",
     "redux-thunk": "^2.2.0",
     "serve-favicon": "^2.4.5",
     "webpack": "^4.0.0"

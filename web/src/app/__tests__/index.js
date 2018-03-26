@@ -6,7 +6,10 @@ import createApp from '..';
 describe('App integration', () => {
   let server;
 
-  beforeAll(() => createApp(false).then((value) => { server = value.listen(0); }));
+  beforeAll(() => {
+    jest.setTimeout(10000);
+    createApp(false).then((value) => { server = value.listen(0); });
+  });
 
   afterAll(() => { server.close(); });
 
