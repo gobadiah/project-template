@@ -59,6 +59,7 @@ class VideoPointFactory(factory.django.DjangoModelFactory):
         """VideoFactory Meta class."""
 
         model = VideoPoint
+        django_get_or_create = ('video', 'frame', 'time')
 
     video = factory.SubFactory(VideoFactory)
     frame = 3017

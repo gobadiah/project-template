@@ -1,7 +1,5 @@
 """Tennis models."""
 
-import collections
-
 from django.contrib.auth import get_user_model
 from django.contrib.postgres.fields import JSONField
 from django.db import models
@@ -60,7 +58,7 @@ class Exchange(models.Model):
     def winner(self):
         """Winning player in this exchange."""
         return ExchangePlayer.objects.get(
-            tennis_set=self,
+            exchange=self,
             is_winner=True,
         ).player
 
@@ -139,7 +137,7 @@ class Game(models.Model):
     @property
     def winner(self):
         """Winning player in this game."""
-        return GamePlayer.objects.get(tennis_set=self, is_winner=True).player
+        return GamePlayer.objects.get(game=self, is_winner=True).player
 
 
 class GamePlayer(models.Model):
@@ -235,12 +233,12 @@ class Match(models.Model):
     def score(self):
         """Score for this match."""
         return list(map(
-            lambda tennis_set: collections.OrderedDict(map(
+            lambda set: dict(map(
                 lambda setplayer: (setplayer.player_id, {
                     'games_won': setplayer.games_won,
                     'is_winner': setplayer.is_winner,
                 }),
-                tennis_set.setplayer_set.order_by('player_id'),
+                set.setplayer_set.order_by('player_id'),
             )),
             self.sets.order_by('index'),
         ))
@@ -293,7 +291,7 @@ class Player(models.Model):
     )
 
 
-class Set(models.Model):  # Noqa N801 (Capwords convention)
+class Set(models.Model):
     """A Tennis set."""
 
     match = models.ForeignKey(
@@ -335,13 +333,13 @@ class Set(models.Model):  # Noqa N801 (Capwords convention)
     @property
     def winner(self):
         """Winning player in this set."""
-        return SetPlayer.objects.get(tennis_set=self, is_winner=True).player
+        return SetPlayer.objects.get(set=self, is_winner=True).player
 
 
 class SetPlayer(models.Model):
     """Many-to-Many through model between Match and Player."""
 
-    tennis_set = models.ForeignKey(
+    set = models.ForeignKey(
         'tennis.Set',
         on_delete=models.CASCADE,
         help_text=_('Corresponding set'),

@@ -11,6 +11,8 @@ import jasonpi
 
 import mock
 
+import sports.urls
+
 from utils import clear_modules
 
 
@@ -64,6 +66,10 @@ def test_urlpatterns(mocker):
     # Assets
     include.assert_any_call(assets.urls)
     path.assert_any_call('', assets.urls)
+
+    # Sports
+    include.assert_any_call(sports.urls)
+    path.assert_any_call('', sports.urls)
 
     # Django docs
     include.assert_any_call('django.contrib.admindocs.urls')
