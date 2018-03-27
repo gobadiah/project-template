@@ -23,6 +23,7 @@ def test_installed_apps():
     assert 'core' in settings.INSTALLED_APPS
     assert 'assets' in settings.INSTALLED_APPS
     assert 'sports' in settings.INSTALLED_APPS
+    assert 'tennis' in settings.INSTALLED_APPS
 
 
 def test_dj_database_url_called(mocker):
