@@ -36,7 +36,8 @@ def test_coverage_args():
 
 def test_args():
     """Test args."""
-    val = args()
+    val = args(5)
+    assert '-n 5' in val
     assert '--flake8' in val
     assert '--ignore="*neomake*.py"' in val
     assert coverage_args() in val
@@ -47,7 +48,7 @@ def test_watch():
     ctx = Context()
     ctx.run = MagicMock()
     assert isinstance(run_test_watch, types.FunctionType)
-    run_test_watch(ctx)
+    run_test_watch(ctx, 4)
     ctx.run.assert_called_once()
 
 
@@ -56,11 +57,11 @@ def test_normal():
     ctx = Context()
     ctx.run = MagicMock()
     assert isinstance(run_test_normal, types.FunctionType)
-    run_test_normal(ctx)
+    run_test_normal(ctx, 8)
     ctx.run.assert_called_once()
 
 
-def run_simple_test(ctx):
+def run_simple_test(ctx, n):
     """Provide a fake implementation of a test run."""
     ctx.run('ok')
 
@@ -74,7 +75,7 @@ def test_test(mocker):
     assert type(tasks.test) == Task
     tasks.test(ctx)
     ctx.run.assert_called_once_with('ok')
-    tasks.run_test_normal.assert_called_once_with(ctx)
+    tasks.run_test_normal.assert_called_once_with(ctx, 4)
 
 
 def test_test_with_watch(mocker):
@@ -84,6 +85,6 @@ def test_test_with_watch(mocker):
     ctx = Context()
     ctx.run = MagicMock()
     assert type(tasks.test) == Task
-    tasks.test(ctx, watch=True)
+    tasks.test(ctx, watch=True, n=6)
     ctx.run.assert_called_once_with('ok')
-    tasks.run_test_watch.assert_called_once_with(ctx)
+    tasks.run_test_watch.assert_called_once_with(ctx, 6)

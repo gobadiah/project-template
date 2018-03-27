@@ -24,29 +24,36 @@ def coverage_args():
     )
 
 
-def args():
+def args(n):
     """Return pytest args."""
     return (
+        '-n %d '  # Number of process
         '--flake8 '  # flake8 tests
         '--ignore="*neomake*.py" '  # Neomake temp files
-        '%s ' % coverage_args()
+        '%s ' % (n, coverage_args())
     )
 
 
-def run_test_watch(ctx):
+def run_test_watch(ctx, n):
     """Test api and watch for file changes."""
-    ctx.run('ptw -- %s' % args(), pty=True)
+    ctx.run('ptw -- %s' % args(n), pty=True)
 
 
-def run_test_normal(ctx):
+def run_test_normal(ctx, n):
     """Test api without watching."""
-    ctx.run('pytest %s' % args(), pty=True)
+    ctx.run('pytest %s' % args(n), pty=True)
 
 
-@task(clean)
-def test(ctx, watch=False):
+@task(
+    clean,
+    help={
+        'n': 'Number of process',
+        'watch': 'Watch for file changes',
+    },
+)
+def test(ctx, watch=False, n=4):
     """Tests api project, generates test and coverage reports."""
     if watch:
-        run_test_watch(ctx)
+        run_test_watch(ctx, n)
     else:
-        run_test_normal(ctx)
+        run_test_normal(ctx, n)

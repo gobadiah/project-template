@@ -41,7 +41,7 @@ def test_drf_json_api_settings():
     assert settings.JSON_API_PLURALIZE_TYPES
 
 
-@restore_environment('ENV')
+@restore_environment('ENV', 'SECRET_KEY')
 def test_debug_settings_true():
     """Test DEBUG value in settings.
 
@@ -170,7 +170,7 @@ def test_locale_paths():
     )
 
 
-@restore_environment('ENV', 'SENTRY_DSN')
+@restore_environment('ENV', 'SENTRY_DSN', 'SECRET_KEY')
 def test_sentry_settings(mocker):
     """Test that sentry is correctly configured.
 
@@ -184,6 +184,7 @@ def test_sentry_settings(mocker):
     assert raven_app not in settings.INSTALLED_APPS
 
     os.environ['ENV'] = 'test'
+    os.environ['SECRET_KEY'] = 'some-secret-key'
     os.environ['SENTRY_DSN'] = dsn
 
     reload('api.settings')
