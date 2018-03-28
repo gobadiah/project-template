@@ -6,9 +6,14 @@ import createApp from '..';
 describe('App integration', () => {
   let server;
 
-  beforeAll(() => createApp(false).then((value) => { server = value.listen(0); }));
+  beforeAll(() => createApp(false).then((value) => {
+    server = value.listen(0);
+    jest.setTimeout(15000);
+  }));
 
-  afterAll(() => { server.close(); });
+  afterAll(() => {
+    server.close();
+  });
 
   it('should respond with 200 status for index and contain some french text', () =>
     request(server)

@@ -1,2 +1,2 @@
-// eslint-disable-next-line import/prefer-default-export
 export { default as unauthorizedHandler } from './unauthorized-handler';
+export { default as redirect } from './redirect';
