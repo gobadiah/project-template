@@ -32,13 +32,22 @@ export const extraDispatchProps = dispatch => ({
 export default (namespace, {
   mapStateToProps = noop,
   mapDispatchToProps = noop,
+  initialDispatch = noop,
+  needsLogin = true,
 } = {}) => (page) => {
   const namespaces = ['common', namespace];
   // eslint-disable-next-line no-param-reassign
   page.getInitialProps = args => reducePromises({
     namespaces,
+    needsLogin,
     ...args,
-  })(commonProps);
+  })(commonProps)
+    .then(firstValues => reducePromises({
+      namespaces,
+      needsLogin,
+      ...args,
+    })([initialDispatch])
+      .then(secondValues => Object.assign(firstValues, secondValues)));
   return withRedux(
     createStore,
     mapStateToProps,

@@ -22,22 +22,26 @@ describe('Hoc', () => {
     expect(result.getInitialProps()).toBeInstanceOf(Promise);
   });
 
-  it('add getInitialProps which uses reducePromises', () => {
+  it('add getInitialProps which uses reducePromises', async () => {
     const hoc = require('..').default;
-    const mockReducer = jest.fn();
+    const mockReducer = jest.fn(() => Promise.resolve({}));
     jest.mock('../reduce-promises', () => jest.fn(() => mockReducer));
+    const initialDispatch = Promise.resolve({});
     const x = {};
-    const result = hoc('x')(x);
-    result.getInitialProps({ some: 'args' });
+    // todo test for mapStateToProps and mapDispatchToProps
+    const result = hoc('x', { initialDispatch, needsLogin: false })(x);
+    await expect(result.getInitialProps({ some: 'args' })).resolves.toEqual({});
     const reducePromises = require('../reduce-promises');
-    expect(reducePromises).toHaveBeenCalledTimes(1);
+    expect(reducePromises).toHaveBeenCalledTimes(2);
     expect(reducePromises).toHaveBeenCalledWith({
       namespaces: ['common', 'x'],
       some: 'args',
+      needsLogin: false,
     });
     const getI18nInitialProps = require('../i18n').default;
-    expect(mockReducer).toHaveBeenCalledTimes(1);
+    expect(mockReducer).toHaveBeenCalledTimes(2);
     expect(mockReducer).toHaveBeenCalledWith([getI18nInitialProps]);
+    expect(mockReducer).toHaveBeenCalledWith([initialDispatch]);
     jest.dontMock('../reduce-promises');
   });
 
