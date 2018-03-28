@@ -29,6 +29,7 @@ from .models import \
     Match, \
     MatchPlayer, \
     Player, \
+    SessionPlayer, \
     Set, \
     SetPlayer, \
     Training
@@ -47,7 +48,7 @@ def loader(
     user.save()
     session = create_session(user, data)
     session.save()
-    players = create_players(data)
+    players = create_players(session, data)
     video = create_video(user, session)
     video.asset.save()
     video.asset_id = video.asset.id
@@ -60,6 +61,10 @@ def loader(
     exchanges = {}
     for player in players.values():
         player.save()
+        SessionPlayer.objects.get_or_create(
+            session=session,
+            player=player,
+        )
     for ex in data['list_of_exchanges']:
         if ex['game_mode'] == 'match':
             if 'game_id' not in ex:

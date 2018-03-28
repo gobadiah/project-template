@@ -4,6 +4,8 @@ import json
 
 from core.users.tests.factories import UserFactory
 
+from django.urls import reverse
+
 from jasonpi.auth import get_token
 
 import pytest
@@ -30,7 +32,7 @@ def test_sessionviewset_handle_request(rf):
     view = SessionViewSet.as_view({'get': 'retrieve'})
     response = view(request, pk=session.id)
     data = response.data
-    assert data == {}
+    assert data == {'videos': []}
 
 
 @pytest.mark.django_db
@@ -40,14 +42,28 @@ def test_get_list_sessionviewset(client):
     user = UserFactory()
     token = get_token(user=user)
     response = client.get(
-        '/sessions',
+        reverse('session-list'),
         HTTP_AUTHORIZATION='Bearer %s' % token,
     )
+    request = response.wsgi_request
     assert response.status_code == 200
     result = json.loads(response.content)
     assert result['data'] == [
         {
             'attributes': {
+            },
+            'relationships': {
+                'videos': {
+                    'data': [],
+                    'links': {
+                        'related': request.build_absolute_uri(
+                            reverse('session-videos-list', args=[session.id]),
+                        ),
+                    },
+                    'meta': {
+                        'count': 0,
+                    },
+                },
             },
             'type': 'sessions',
             'id': str(session.id),
@@ -82,7 +98,7 @@ def test_get_list_videoviewset(client):
     user = UserFactory()
     token = get_token(user=user)
     response = client.get(
-        '/videos',
+        reverse('video-list'),
         HTTP_AUTHORIZATION='Bearer %s' % token,
     )
     assert response.status_code == 200
@@ -124,7 +140,7 @@ def test_get_list_videopointviewset(client):
     user = UserFactory()
     token = get_token(user=user)
     response = client.get(
-        '/videopoints',
+        reverse('videopoint-list'),
         HTTP_AUTHORIZATION='Bearer %s' % token,
     )
     assert response.status_code == 200
@@ -133,7 +149,7 @@ def test_get_list_videopointviewset(client):
         {
             'attributes': {
             },
-            'type': 'videopoints',
+            'type': 'video-points',
             'id': str(videopoint.id),
         },
     ]

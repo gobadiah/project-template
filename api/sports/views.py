@@ -12,8 +12,8 @@ from .models import \
     VideoPoint
 from .serializers import \
     SessionSerializer, \
-    VideoSerializer, \
-    VideoPointSerializer
+    VideoPointSerializer, \
+    VideoSerializer
 
 
 class SessionViewSet(viewsets.ModelViewSet):

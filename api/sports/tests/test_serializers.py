@@ -18,7 +18,7 @@ from ..serializers import \
 
 def test_session_serializer_fields():
     """Test SessionSerializer.Meta is good."""
-    assert SessionSerializer.Meta.fields == []
+    assert SessionSerializer.Meta.fields == ['videos']
     assert SessionSerializer.Meta.model == Session
 
 
@@ -29,7 +29,7 @@ def test_session_serializer_can_serialize(rf):
     request.query_params = {}
     obj = SessionFactory()
     serializer = SessionSerializer(obj, context={'request': request})
-    assert serializer.data == {}
+    assert serializer.data == {'videos': []}
 
 
 def test_video_serializer_fields():

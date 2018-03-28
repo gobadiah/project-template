@@ -289,6 +289,27 @@ class Player(models.Model):
         default=dict,
         help_text=_('Extra data associated with this player'),
     )
+    sessions = models.ManyToManyField(
+        'sports.Session',
+        through='SessionPlayer',
+        related_name='players',
+        help_text=_('Sessions in which this player participated'),
+    )
+
+
+class SessionPlayer(models.Model):
+    """Many-to-Many through model between Session and Player."""
+
+    session = models.ForeignKey(
+        'sports.Session',
+        on_delete=models.CASCADE,
+        help_text=_('Corresponding session'),
+    )
+    player = models.ForeignKey(
+        'tennis.Player',
+        on_delete=models.CASCADE,
+        help_text=_('Corresponding player'),
+    )
 
 
 class Set(models.Model):

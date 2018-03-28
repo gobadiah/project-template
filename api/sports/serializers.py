@@ -1,5 +1,7 @@
 """Sports serializers."""
 
+from jasonpi.utils import resource_related_field
+
 from rest_framework_json_api import serializers
 
 from .models import \
@@ -11,11 +13,21 @@ from .models import \
 class SessionSerializer(serializers.HyperlinkedModelSerializer):
     """SessionSerializer."""
 
+    videos = resource_related_field(
+        Video,
+        'session',
+        'videos',
+    )
+
+    included_serializers = {
+        'videos': 'sports.serializers.VideoSerializer',
+    }
+
     class Meta(object):
         """SessionSerializer Meta class."""
 
         model = Session
-        fields = ()
+        fields = ['videos']
 
 
 class VideoSerializer(serializers.HyperlinkedModelSerializer):
@@ -25,7 +37,7 @@ class VideoSerializer(serializers.HyperlinkedModelSerializer):
         """VideoSerializer Meta class."""
 
         model = Video
-        fields = ()
+        fields = []
 
 
 class VideoPointSerializer(serializers.HyperlinkedModelSerializer):
@@ -35,4 +47,4 @@ class VideoPointSerializer(serializers.HyperlinkedModelSerializer):
         """VideoPointSerializer Meta class."""
 
         model = VideoPoint
-        fields = ()
+        fields = []

@@ -20,6 +20,7 @@ from ..models import \
     Match, \
     MatchPlayer, \
     Player, \
+    SessionPlayer, \
     Set, \
     SetPlayer, \
     Training
@@ -87,6 +88,12 @@ class ExchangePlayerFactory(factory.django.DjangoModelFactory):
     is_winner = True
     side = 'right'
 
+    @classmethod
+    def create(cls, **kwargs):
+        """Create a ExchangePlayer using the ExchangeFactory."""
+        exchange = ExchangeFactory()
+        return exchange.exchangeplayer_set.first()
+
 
 class GameFactory(factory.django.DjangoModelFactory):
     """Default Game factory."""
@@ -150,6 +157,12 @@ class GamePlayerFactory(factory.django.DjangoModelFactory):
     is_winner = True
     side = 'right'
     exchanges_won = 4
+
+    @classmethod
+    def create(cls, **kwargs):
+        """Create a GamePlayer using the GameFactory."""
+        game = GameFactory()
+        return game.gameplayer_set.first()
 
 
 class HitFactory(factory.django.DjangoModelFactory):
@@ -220,6 +233,12 @@ class MatchPlayerFactory(factory.django.DjangoModelFactory):
     is_winner = True
     sets_won = 2
 
+    @classmethod
+    def create(cls, **kwargs):
+        """Create a MatchPlayer using the MatchFactory."""
+        match = MatchFactory()
+        return match.matchplayer_set.first()
+
 
 class PlayerFactory(factory.django.DjangoModelFactory):
     """Default Player factory."""
@@ -240,6 +259,18 @@ class PlayerFactory(factory.django.DjangoModelFactory):
     user = factory.LazyAttribute(lambda o: o.user_)
     name = factory.LazyAttribute(lambda o: o.user_.first_name)
     email = factory.lazy_attribute(lambda o: o.user_.email)
+
+
+class SessionPlayerFactory(factory.django.DjangoModelFactory):
+    """Default SessionPlayer factory."""
+
+    class Meta(object):
+        """SessionPlayerFactory Meta class."""
+
+        model = SessionPlayer
+
+    session = factory.SubFactory('sports.tests.factories.SessionFactory')
+    player = factory.SubFactory('tennis.tests.factories.PlayerFactory')
 
 
 class SetFactory(factory.django.DjangoModelFactory):
@@ -303,6 +334,12 @@ class SetPlayerFactory(factory.django.DjangoModelFactory):
     player = factory.SubFactory('tennis.tests.factories.PlayerFactory')
     is_winner = True
     games_won = 5
+
+    @classmethod
+    def create(cls, **kwargs):
+        """Create a SetPlayer using the SetFactory."""
+        set_ = SetFactory()
+        return set_.setplayer_set.first()
 
 
 class TrainingFactory(factory.django.DjangoModelFactory):

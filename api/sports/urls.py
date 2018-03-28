@@ -19,6 +19,11 @@ sessions_router = routers.NestedDefaultRouter(
     lookup='session',
     trailing_slash=False,
 )
+sessions_router.register(
+    r'videos',
+    views.VideoViewSet,
+    base_name='session-videos',
+)
 
 videos_router = routers.NestedDefaultRouter(
     router,
