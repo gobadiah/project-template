@@ -24,10 +24,16 @@ from django.urls import include, path
 
 import jasonpi.urls
 
+import sports.urls
+
+import tennis.urls
+
 urlpatterns = [
     path('', include(assets.urls)),
     path('', include(core.urls)),
     path('', include(jasonpi.urls)),
+    path('', include(sports.urls)),
+    path('tennis/', include(tennis.urls, namespace='tennis')),
     path('admin/doc/', include('django.contrib.admindocs.urls')),
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
