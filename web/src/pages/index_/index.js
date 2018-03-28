@@ -4,7 +4,7 @@ import { Link } from '~/routes';
 import { Page } from '~/components/base';
 import hoc from '~/hoc';
 
-import Language from '~/components/language';
+import Language from '~/components/languages';
 import SomePureComponent from '~/components/some-pure-component';
 
 import s from './styles';
