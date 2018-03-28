@@ -4,9 +4,14 @@ import createApp from '~/app';
 
 let server;
 
-beforeAll(() => createApp(false).then((value) => { server = value.listen(0); }));
+beforeAll(() => createApp(false).then((value) => {
+  server = value.listen(0);
+  jest.setTimeout(15000);
+}));
 
-afterAll(() => { server.close(); });
+afterAll(() => {
+  server.close();
+});
 
 const testServer = (message, get, status, text, set = ['Accept', 'text/html']) => {
   it(message, () => request(server)
