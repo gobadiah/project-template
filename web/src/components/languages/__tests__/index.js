@@ -3,7 +3,8 @@ import 'jsdom-global/register';
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import Language, { Lang } from '../language';
+import Languages from '..';
+import Lang from '../lang';
 
 const setup = (component, props = {}) => {
   const i18n = {
@@ -17,14 +18,14 @@ const setup = (component, props = {}) => {
   };
 };
 
-describe('Language', () => {
+describe('Languages', () => {
   it('should match snapshot', () => {
-    const { wrapper } = setup(Language);
+    const { wrapper } = setup(Languages);
     expect(wrapper).toMatchSnapshot();
   });
 
   it('should contains two buttons', () => {
-    const { wrapper } = setup(Language);
+    const { wrapper } = setup(Languages);
     expect(wrapper.find(Lang)).toHaveLength(2);
   });
 });
