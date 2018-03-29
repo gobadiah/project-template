@@ -7,29 +7,35 @@ import {
   FirstNameField,
   LastNameField,
   PasswordField,
+  RankingField,
+  TennisClubField,
 } from '~/components/forms/fields';
+import { Flex } from '~/styles';
 import { Form } from '~/components/forms';
-
 import { PureComponent } from '~/components/base';
 
 class RegisterForm extends PureComponent {
   render() {
     return (
       <Form {...this.props}>
-        <EmailField key='email' />
-        <PasswordField
-          key='password'
-          autoComplete='new-password'
-        />
-        <PasswordField
-          key='confirm_password'
-          name='confirm_password'
-          label='Password confirmation'
-          autoComplete='new-password'
-        />
-        <FirstNameField key='first_name' />
-        <LastNameField key='last_name' />
-        <BirthdayField key='birthday' />
+        <Flex>
+          <FirstNameField />
+          <LastNameField />
+        </Flex>
+        <EmailField />
+        <Flex>
+          <PasswordField autoComplete='new-password' />
+          <PasswordField
+            name='confirm_password'
+            label='Password confirmation'
+            autoComplete='new-password'
+          />
+        </Flex>
+        <Flex>
+          <BirthdayField />
+          <RankingField />
+        </Flex>
+        <TennisClubField />
       </Form>
     );
   }

@@ -30,6 +30,10 @@ export default class MyDocument extends Document {
           }<style dangerouslySetInnerHTML={{ __html: this.props.css }} />
           { // eslint-disable-next-line react/no-danger
           }<style dangerouslySetInnerHTML={{ __html: nprogress }} />
+          <link
+            href='https://fonts.googleapis.com/css?family=Titillium+Web:400,700'
+            rel='stylesheet'
+          />
         </Head>
         <body>
           <Sentry />

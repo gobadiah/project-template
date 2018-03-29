@@ -1,13 +1,15 @@
 import React from 'react';
 
+import { Main } from '~/components';
 import { Page } from '~/components/base';
 import hoc from '~/hoc';
 import redirect from '~/utils/redirect';
 
 class Index extends Page {
   render() {
+    const { t } = this.props;
     return (
-      <div />
+      <Main title={t('index:title')} />
     );
   }
 }
