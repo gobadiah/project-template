@@ -5,3 +5,4 @@ export { default as LastNameField } from './last-name';
 export { default as BirthdayField } from './birthday';
 export { default as RankingField } from './ranking';
 export { default as TennisClubField } from './tennis-club';
+export * from './gender';
