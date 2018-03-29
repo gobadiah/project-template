@@ -56,4 +56,12 @@ injectGlobal`
     text-align: left;
     color: #b6b6b6;
   }
+
+  label {
+    font-size: 26px;
+    font-weight: bold;
+    line-height: 1.04;
+    text-align: left;
+    color: var(--dark-blue-grey);
+  }
 `;

@@ -1,11 +1,10 @@
-import _ from 'lodash';
-import React from 'react';
-import { css } from 'react-emotion';
 import { bool, number, shape, string } from 'prop-types';
+import { css } from 'react-emotion';
+import React from 'react';
+import _ from 'lodash';
 
+import { FlexCenter, FlexColumnCenter } from '~/styles';
 import { defaultPropTypes } from '~/components';
-
-import { FlexColumn, Flex } from '~/styles';
 
 import { Error, Warning } from '..';
 
@@ -27,7 +26,7 @@ const RenderField = ({
   type,
   required,
 }, { t }) => {
-  const container = column ? FlexColumn : Flex;
+  const container = column ? FlexColumnCenter : FlexCenter;
   const id = type === 'radio' ? `${input.name}_${input.value}` : undefined;
   const req = required ? ' *' : '';
   const lab = `${t(label)}${req}`;
@@ -52,6 +51,7 @@ const RenderField = ({
     { className },
     _.compact([
       component,
+      type === 'radio' && <label key='label' htmlFor={id}>{lab}</label>,
       touched && error && <Error key='error' error={error} />,
       touched && warning && <Warning key='warning' warning={warning} />,
     ]),

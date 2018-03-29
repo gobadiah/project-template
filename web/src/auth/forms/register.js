@@ -1,13 +1,18 @@
+import { css } from 'react-emotion';
 import { reduxForm } from 'redux-form';
 import React from 'react';
 
 import {
   BirthdayField,
   EmailField,
+  FemaleField,
   FirstNameField,
   LastNameField,
+  LeftHandedField,
+  MaleField,
   PasswordField,
   RankingField,
+  RightHandedField,
   TennisClubField,
 } from '~/components/forms/fields';
 import { Flex } from '~/styles';
@@ -36,6 +41,14 @@ class RegisterForm extends PureComponent {
           <RankingField />
         </Flex>
         <TennisClubField />
+        <Flex css='justify-content: space-between'>
+          <MaleField inputClassName={css`width: 282px`} />
+          <FemaleField inputClassName={css`width: 282px`} />
+        </Flex>
+        <Flex css='justify-content: space-between'>
+          <LeftHandedField inputClassName={css`width: 282px`} />
+          <RightHandedField inputClassName={css`width: 282px`} />
+        </Flex>
       </Form>
     );
   }
