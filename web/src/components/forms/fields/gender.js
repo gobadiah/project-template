@@ -5,7 +5,7 @@ import { Field } from 'redux-form';
 
 import RenderField from './render-field';
 
-const GenderField = ({ value, label, ...props }) => (
+export const GenderField = ({ value, label, ...props }) => (
   <Field
     value={value}
     name='gender'

@@ -8,5 +8,12 @@ describe('Utils', () => {
       };
       expect(currentLanguage(i18n)).toEqual('en');
     });
+
+    it('should return fr if language is not available', () => {
+      const i18n = {
+        languages: ['de'],
+      };
+      expect(currentLanguage(i18n)).toEqual('fr');
+    });
   });
 });

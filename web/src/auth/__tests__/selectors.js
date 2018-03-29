@@ -1,7 +1,5 @@
 import store, { user } from '~/services/redux/__fixtures__/store';
 
-import { a } from '../selectors';
-
 describe('currentUser', () => {
   it('should returns a denormalized user if userId is defined', () => {
     const { currentUser } = require('../selectors');
@@ -14,8 +12,4 @@ describe('currentUser', () => {
     state.auth = state.auth.set('userId', undefined);
     expect(currentUser(state)).toBeUndefined();
   });
-});
-
-test('a should be 5', () => {
-  expect(a).toBe(5);
 });

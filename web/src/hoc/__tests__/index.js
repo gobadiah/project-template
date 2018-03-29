@@ -1,3 +1,5 @@
+import { Map } from 'immutable';
+
 const mockWithRedux = jest.fn(x => x);
 
 jest.mock('next-redux-wrapper', () => jest.fn(() => mockWithRedux));
@@ -19,7 +21,14 @@ describe('Hoc', () => {
     const hoc = require('..').default;
     expect(Page.getInitialProps).toBeUndefined();
     const result = hoc()(Page);
-    expect(result.getInitialProps()).toBeInstanceOf(Promise);
+    const state = {
+      api: {},
+      auth: Map({ userId: 5 }),
+    };
+    const store = {
+      getState: jest.fn(() => state),
+    };
+    expect(result.getInitialProps({ store })).toBeInstanceOf(Promise);
   });
 
   it('add getInitialProps which uses reducePromises', async () => {
@@ -39,8 +48,9 @@ describe('Hoc', () => {
       needsLogin: false,
     });
     const getI18nInitialProps = require('../i18n').default;
+    const currentUser = require('../current-user').default;
     expect(mockReducer).toHaveBeenCalledTimes(2);
-    expect(mockReducer).toHaveBeenCalledWith([getI18nInitialProps]);
+    expect(mockReducer).toHaveBeenCalledWith([getI18nInitialProps, currentUser]);
     expect(mockReducer).toHaveBeenCalledWith([initialDispatch]);
     jest.dontMock('../reduce-promises');
   });

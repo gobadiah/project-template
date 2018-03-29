@@ -14,9 +14,11 @@ import { config } from '~/services/axios';
 
 import reducePromises from './reduce-promises';
 import getI18nInitialProps from './i18n';
+import currentUser from './current-user';
 
 const commonProps = [
   getI18nInitialProps,
+  currentUser,
 ];
 
 const noop = () => ({});
