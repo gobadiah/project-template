@@ -20,5 +20,5 @@ GenderField.propTypes = {
   value: string.isRequired,
 };
 
-export const MaleField = <GenderField value='male' label='Male' />;
-export const FemaleField = <GenderField value='female' label='Female' />;
+export const MaleField = () => <GenderField value='male' label='Male' />;
+export const FemaleField = () => <GenderField value='female' label='Female' />;
