@@ -1,3 +1,119 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Index should match snapshot 1`] = `<div />`;
+exports[`Index should match snapshot 1`] = `
+.emotion-3 {
+  background-color: Transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  overflow: hidden;
+  padding: 0;
+  width: 220px;
+  height: 100px;
+}
+
+.emotion-0 {
+  color: green;
+}
+
+.emotion-8 {
+  background-color: hotpink;
+}
+
+.emotion-6 {
+  position: relative;
+  width: 220px;
+  height: 100px;
+}
+
+.emotion-1 {
+  width: 100%;
+}
+
+.emotion-4 {
+  visibility: hidden;
+  opacity: 0;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  -webkit-transform: translateY(-2em);
+  -ms-transform: translateY(-2em);
+  transform: translateY(-2em);
+  z-index: -1;
+  -webkit-transition: all 0.3s ease-in-out 0s,visibility 0s linear 0.3s,z-index 0s linear 0.01s;
+  transition: all 0.3s ease-in-out 0s,visibility 0s linear 0.3s,z-index 0s linear 0.01s;
+}
+
+.emotion-7:hover .emotion-4,
+.emotion-7:focus .emotion-4,
+.emotion-7:focus-within .emotion-4 {
+  visibility: visible;
+  opacity: 1;
+  z-index: 1;
+  -webkit-transform: translateY(0%);
+  -ms-transform: translateY(0%);
+  transform: translateY(0%);
+  -webkit-transition-delay: 0s,0s,0.3s;
+  transition-delay: 0s,0s,0.3s;
+}
+
+<div
+  className="emotion-8"
+>
+  <div
+    className="emotion-0"
+  >
+    Hello world
+  </div>
+  <div
+    className="emotion-6 emotion-7"
+  >
+    <img
+      alt="fr"
+      className="emotion-1"
+      src="/static/build/329f5c89d4f13938971b9b0d8d35f296.png"
+    />
+    <div
+      className="emotion-4 emotion-5"
+    >
+      <button
+        className="emotion-3"
+        onClick={[Function]}
+      >
+        <img
+          alt="en"
+          className="emotion-1"
+          src="/static/build/1b46775dab5a7245b5969a5aa84e0dff.png"
+        />
+      </button>
+    </div>
+  </div>
+  <div>
+    This is a pure component
+  </div>
+  <a
+    href="/some-page"
+    onClick={[Function]}
+  >
+    Some page
+  </a>
+  <a
+    href="/generate-error"
+    onClick={[Function]}
+  >
+    Generate error
+  </a>
+  <a
+    href="/signin"
+    onClick={[Function]}
+  >
+    Signin
+  </a>
+  <a
+    href="/register"
+    onClick={[Function]}
+  >
+    Register
+  </a>
+</div>
+`;

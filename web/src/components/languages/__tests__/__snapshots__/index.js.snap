@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Lang should match snapshot 1`] = `
+.emotion-0 {
+  width: 100%;
+}
+
+<img
+  alt="fr"
+  className="emotion-0"
+  src="/static/build/329f5c89d4f13938971b9b0d8d35f296.png"
+/>
+`;
+
+exports[`Languages should match snapshot 1`] = `
+.emotion-0 {
+  background-color: Transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  overflow: hidden;
+  padding: 0;
+  width: 220px;
+  height: 100px;
+}
+
+<Styled(div)>
+  <Lang
+    className="
+  width: 220px;
+  height: 100px;
+"
+    lng="fr"
+  />
+  <Styled(div)>
+    <button
+      className="emotion-0"
+      key="en"
+      onClick={[Function]}
+    >
+      <Lang
+        className="
+  width: 220px;
+  height: 100px;
+"
+        lng="en"
+      />
+    </button>
+  </Styled(div)>
+</Styled(div)>
+`;

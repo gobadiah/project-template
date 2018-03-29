@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FemaleField shallow render should match snapshot 1`] = `
+<GenderField
+  label="Female"
+  value="female"
+/>
+`;
+
+exports[`GenderField shallow render should match snapshot 1`] = `
+<Field
+  component={[Function]}
+  label="Trans"
+  name="gender"
+  this="day"
+  type="radio"
+  value="trans"
+/>
+`;
+
+exports[`MaleField shallow render should match snapshot 1`] = `
+<GenderField
+  label="Male"
+  value="male"
+/>
+`;

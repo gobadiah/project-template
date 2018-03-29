@@ -1,4 +1,10 @@
-import { oneOfType, arrayOf, node, string } from 'prop-types';
+import {
+  arrayOf,
+  bool,
+  node,
+  oneOfType,
+  string,
+} from 'prop-types';
 import Head from 'next/head';
 import React from 'react';
 
@@ -11,6 +17,7 @@ import { Container } from './styles';
 const Main = ({
   children,
   containerClassName,
+  noContainer,
   title,
   titleBar,
 }, { i18n, user }) => (
@@ -19,10 +26,12 @@ const Main = ({
       <title>{title}</title>
     </Head>
     <Title i18n={i18n} user={user} />
+    { noContainer ? children :
     <Container className={containerClassName}>
       { titleBar && <TitleBar title={titleBar} /> }
       { children }
     </Container>
+    }
   </div>
 );
 
@@ -34,11 +43,13 @@ Main.propTypes = {
   containerClassName: string,
   title: string.isRequired,
   titleBar: string,
+  noContainer: bool,
 };
 
 Main.defaultProps = {
   containerClassName: '',
   titleBar: undefined,
+  noContainer: false,
 };
 
 Main.contextTypes = defaultPropTypes;

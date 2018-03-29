@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-import { Router } from '~/routes';
+import redirect from '~/utils/redirect';
 
 const unauthorizedHandler = ({
   res,
@@ -12,11 +12,7 @@ const unauthorizedHandler = ({
     throw err;
   }
   if (needsLogin) {
-    if (res) {
-      res.redirect(302, `/signin?returnUrl=${asPath}`);
-    } else {
-      Router.replace(`/signin?returnUrl=${asPath}`);
-    }
+    redirect(`/signin?returnUrl=${asPath}`, res);
   }
 };
 

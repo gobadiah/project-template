@@ -1,11 +1,10 @@
-import React from 'react';
 import { element } from 'prop-types';
+import React from 'react';
 
+import { PureComponent } from '~/components/base';
 import { availableLanguages } from '~/services/i18n';
 import { currentLanguage } from '~/utils';
 import { defaultPropTypes } from '~/components';
-
-import Lang from './lang';
 
 import {
   Menu,
@@ -13,8 +12,9 @@ import {
   button,
   size,
 } from './styles';
+import Lang from './lang';
 
-class Languages extends React.Component {
+class Languages extends PureComponent {
   constructor(props) {
     super(props);
     this.divs = {};
