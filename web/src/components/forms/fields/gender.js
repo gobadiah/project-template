@@ -5,20 +5,16 @@ import { Field } from 'redux-form';
 
 import RenderField from './render-field';
 
-const GenderField = ({ label, value }) => (
+const GenderField = props => (
   <Field
     value={value}
     name='gender'
     component={RenderField}
     type='radio'
     label={label}
+    {...props}
   />
 );
 
-GenderField.propTypes = {
-  label: string.isRequired,
-  value: string.isRequired,
-};
-
-export const MaleField = () => <GenderField value='male' label='Male' />;
-export const FemaleField = () => <GenderField value='female' label='Female' />;
+export const MaleField = props => <GenderField value='male' label='Male' {...props} />;
+export const FemaleField = props => <GenderField value='female' label='Female' {...props} />;
