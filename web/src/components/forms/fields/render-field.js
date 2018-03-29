@@ -37,16 +37,6 @@ const RenderField = ({
   const component = type === 'textarea' ?
     <textarea {...props} cols={cols} rows={rows} /> :
     <input {...props} />;
-  /*
-  console.log(
-    _.compact([
-      label && <label key='label' htmlFor={input.name}>{t(label)}</label>,
-      component,
-      touched && error && <Error key='error' error={error} />,
-      touched && warning && <Warning key='warning' warning={warning} />,
-    ]),
-  );
-  */
   return React.createElement(
     container,
     { className },
