@@ -1,11 +1,12 @@
 import React from 'react';
 
+import { Normal, Puce } from '~/styles/styled-components';
 import { defaultPropTypes } from '~/components';
 import UserIdentity from '~/components/user-identity';
 
-import { KeyStatsContainer } from './styles';
+import { KeyStatsContainer, KeyStatsTitle } from './styles';
 
-const KeyStats = (props, { user }) => (
+const KeyStats = (props, { t, user }) => (
   <KeyStatsContainer>
     <UserIdentity user={user} />
     <KeyStatsTitle>
