@@ -15,8 +15,10 @@ import { config } from '~/services/axios';
 import reducePromises from './reduce-promises';
 import getI18nInitialProps from './i18n';
 import currentUser from './current-user';
+import setupApi from './setup-api';
 
-const commonProps = [
+const commonDispatch = [
+  setupApi,
   getI18nInitialProps,
   currentUser,
 ];
@@ -43,7 +45,7 @@ export default (namespace, {
     namespaces,
     needsLogin,
     ...args,
-  })(commonProps)
+  })(commonDispatch)
     .then(firstValues => reducePromises({
       namespaces,
       needsLogin,

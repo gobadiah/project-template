@@ -49,8 +49,9 @@ describe('Hoc', () => {
     });
     const getI18nInitialProps = require('../i18n').default;
     const currentUser = require('../current-user').default;
+    const setupApi = require('../setup-api').default;
     expect(mockReducer).toHaveBeenCalledTimes(2);
-    expect(mockReducer).toHaveBeenCalledWith([getI18nInitialProps, currentUser]);
+    expect(mockReducer).toHaveBeenCalledWith([setupApi, getI18nInitialProps, currentUser]);
     expect(mockReducer).toHaveBeenCalledWith([initialDispatch]);
     jest.dontMock('../reduce-promises');
   });
