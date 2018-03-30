@@ -81,6 +81,9 @@ describe('App unit', () => {
     const favicon = require('serve-favicon');
     favicon.mockImplementation(() => 'favicon');
 
+    const mockCookieParser = jest.fn(() => 'cookie');
+    jest.mock('cookie-parser', () => mockCookieParser);
+
     const dev = false;
 
     const app = require('..').default;
@@ -139,14 +142,16 @@ describe('App unit', () => {
       '../../static',
       'favicon.ico',
     ));
+    expect(mockCookieParser).toHaveBeenCalledTimes(1);
 
     expect(i18nextMiddleware.handle).toHaveBeenCalledTimes(1);
     expect(i18nextMiddleware.handle).toHaveBeenCalledWith(i18n);
 
-    expect(mockServer.use).toHaveBeenCalledTimes(4);
+    expect(mockServer.use).toHaveBeenCalledTimes(5);
     expect(mockServer.use).toHaveBeenCalledWith('favicon');
     expect(mockServer.use).toHaveBeenCalledWith(handle);
     expect(mockServer.use).toHaveBeenCalledWith('/locales', mockStatic);
+    expect(mockServer.use).toHaveBeenCalledWith('cookie');
     // @todo test for proxy to be rightly called
     // expect(mockServer.use).toHaveBeenCalledWith('/api', 'proxy');
 

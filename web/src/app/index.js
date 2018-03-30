@@ -6,6 +6,7 @@ import favicon from 'serve-favicon';
 import fsBackend from 'i18next-node-fs-backend';
 import i18nextMiddleware, { LanguageDetector } from 'i18next-express-middleware';
 import proxy from 'express-http-proxy';
+import cookieParser from 'cookie-parser';
 
 import config from '~/config';
 import i18n, { availableLanguages, availableNamespaces } from '~/services/i18n';
@@ -35,6 +36,8 @@ export default dev => new Promise(resolve => i18n.use(LanguageDetector)
         server.use('/api', proxy(config.api));
 
         server.use(favicon(path.join(__dirname, '../static', 'favicon.ico')));
+
+        server.use(cookieParser());
 
         server.use(i18nextMiddleware.handle(i18n));
 
