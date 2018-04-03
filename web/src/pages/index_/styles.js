@@ -2,8 +2,6 @@ import { css } from 'react-emotion';
 
 export const foo = () => 'bar';
 
-export default {
-  helloWorld: css`
-    color: green;
-  `,
-};
+export const helloWorld = css`
+  color: green;
+`;

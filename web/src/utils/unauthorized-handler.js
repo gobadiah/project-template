@@ -12,7 +12,7 @@ const unauthorizedHandler = ({
     throw err;
   }
   if (needsLogin) {
-    redirect(`/signin?returnUrl=${asPath}`, res);
+    redirect(res, `/signin?returnUrl=${asPath}`);
   }
 };
 

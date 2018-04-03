@@ -14,4 +14,4 @@ class Register extends Page {
   }
 }
 
-export default hoc('register')(Register);
+export default hoc('register', { needsLogin: false })(Register);

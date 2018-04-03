@@ -1,10 +1,10 @@
 import { Router } from '~/routes';
 
-const redirect = (to, res) => {
+const redirect = (res, to, params) => {
   if (res) {
     res.redirect(302, to);
   } else {
-    Router.replace(to);
+    Router.pushRoute(to, params);
   }
 };
 

@@ -7,14 +7,16 @@ import hoc from '~/hoc';
 import Language from '~/components/languages';
 import SomePureComponent from '~/components/some-pure-component';
 
-import s from './styles';
+import { helloWorld } from './styles';
 
 class Index extends Page {
   render() {
-    const { t } = this.props;
+    const { t, user } = this.props;
     return (
       <div css='background-color: hotpink;'>
-        <div className={s.helloWorld}>{t('index:Hello world')}</div>
+        <div className={helloWorld}>
+          { user ? t('index:Hello', { user }) : t('index:Hello world') }
+        </div>
         <Language />
         <SomePureComponent />
         <Link route='some-page'><a>Some page</a></Link>
