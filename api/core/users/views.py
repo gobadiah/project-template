@@ -20,6 +20,20 @@ class UserViewSet(
     queryset = User.objects.order_by('id')
     serializer_class = UserSerializer
 
+    def get_object(self):
+        """Return the user object corresponding to the given primary key.
+
+        We override this method to allow for calls to /users/me.
+        """
+        pk = self.kwargs.get('pk')
+
+        if pk == 'me' and \
+                self.request.user and \
+                self.request.user.is_authenticated:
+            return self.request.user
+
+        return super(UserViewSet, self).get_object()
+
 
 class UserRelationshipView(RelationshipView):
     """User relationship view."""

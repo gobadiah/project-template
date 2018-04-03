@@ -34,4 +34,4 @@ class SignIn extends Page {
   }
 }
 
-export default hoc('sign-in')(SignIn);
+export default hoc('sign-in', { needsLogin: false })(SignIn);

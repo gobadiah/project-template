@@ -15,11 +15,10 @@ describe('App integration', () => {
     server.close();
   });
 
-  it('should respond with 200 status for index and contain some french text', () =>
+  it('should respond with 302 status for index because not logged in', () =>
     request(server)
       .get('/')
-      .expect(200)
-      .expect(/>Salut le monde !<\/div>/));
+      .expect(302));
 
   /**
     * @todo Mock the proxy call. It might not be straightforward.
@@ -161,13 +160,15 @@ describe('App unit', () => {
     expect(passport).toHaveBeenCalledTimes(1);
     expect(passport).toHaveBeenCalledWith(mockServer);
 
-    expect(mockServer.get).toHaveBeenCalledTimes(2);
+    expect(mockServer.get).toHaveBeenCalledTimes(3);
     expect(mockServer.get.mock.calls[0][0]).toEqual('/api');
     const func2 = mockServer.get.mock.calls[0][1];
     const res = {};
+    res.clearCookie = jest.fn();
     res.status = jest.fn(() => res);
     res.send = jest.fn(() => res);
     res.end = jest.fn();
+    res.redirect = jest.fn();
 
     func2(undefined, res);
     expect(res.status).toHaveBeenCalledTimes(1);
@@ -175,6 +176,22 @@ describe('App unit', () => {
     expect(res.send).toHaveBeenCalledTimes(1);
     expect(res.send).toHaveBeenCalledWith('Api endpoint');
     expect(res.end).toHaveBeenCalledTimes(1);
+
+    expect(mockServer.get.mock.calls[1][0]).toEqual('/signout');
+    const func3 = mockServer.get.mock.calls[1][1];
+    const req = {
+      get: jest.fn(() => 'http://testserver/signout'),
+    };
+    expect(func3(req, res)).toBeUndefined();
+    expect(res.redirect).toHaveBeenCalledTimes(1);
+    expect(res.redirect).toHaveBeenCalledWith(302, '/');
+    expect(res.clearCookie).toHaveBeenCalledWith('access_token');
+
+    req.get.mockImplementation(() => 'http://testserver/hello-world');
+    expect(func3(req, res)).toBeUndefined();
+    expect(req.get).toHaveBeenCalledWith('Referrer');
+    expect(res.redirect).toHaveBeenCalledTimes(2);
+    expect(res.redirect).toHaveBeenCalledWith(302, 'http://testserver/hello-world');
 
     expect(mockServer.get).toHaveBeenCalledWith('*', mockHandler);
 

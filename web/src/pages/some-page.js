@@ -18,4 +18,4 @@ class SomePage extends Page {
   }
 }
 
-export default hoc('index')(SomePage);
+export default hoc('index', { needsLogin: false })(SomePage);

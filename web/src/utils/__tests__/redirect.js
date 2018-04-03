@@ -10,24 +10,25 @@ describe('Utils', () => {
         redirect: jest.fn(),
       };
       const to = 'to';
-      expect(redirect(to, res)).toBeUndefined();
+      expect(redirect(res, to)).toBeUndefined();
       expect(res.redirect).toHaveBeenCalledTimes(1);
       expect(res.redirect).toHaveBeenCalledWith(302, to);
     });
 
-    it('should call Router replace when on client', () => {
+    it('should call Router pushRoute when on client', () => {
       const res = undefined;
       const to = 'to';
+      const params = 'params';
       jest.mock('../../routes', () => ({
         Router: {
-          replace: jest.fn(),
+          pushRoute: jest.fn(),
         },
       }));
       const redirect = require('../redirect').default;
       const { Router } = require('~/routes');
-      redirect(to, res);
-      expect(Router.replace).toHaveBeenCalledTimes(1);
-      expect(Router.replace).toHaveBeenCalledWith(to);
+      redirect(res, to, params);
+      expect(Router.pushRoute).toHaveBeenCalledTimes(1);
+      expect(Router.pushRoute).toHaveBeenCalledWith(to, params);
     });
   });
 });
