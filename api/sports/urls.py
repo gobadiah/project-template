@@ -2,9 +2,11 @@
 
 from django.urls import include, path
 
-from jasonpi.utils import resource_relationships
+from jasonpi.utils import one_to_one_relationship, resource_relationships
 
 from rest_framework_nested import routers
+
+import stats.views
 
 from . import views
 
@@ -45,6 +47,11 @@ urlpatterns = [
     # sessions
     path('', include(sessions_router.urls)),
     resource_relationships('session', views.SessionRelationshipView),
+    one_to_one_relationship(
+        'session',
+        'current_stats',
+        stats.views.StatsViewSet,
+    ),
 
     # videos
     path('', include(videos_router.urls)),

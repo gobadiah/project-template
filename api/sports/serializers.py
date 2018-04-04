@@ -4,6 +4,9 @@ from jasonpi.utils import resource_related_field
 
 from rest_framework_json_api import serializers
 
+from stats.models import Stats
+from stats.serializers import StatsSerializer
+
 from .models import \
     Session, \
     Video, \
@@ -19,7 +22,15 @@ class SessionSerializer(serializers.HyperlinkedModelSerializer):
         'videos',
     )
 
+    current_stats = resource_related_field(
+        Stats,
+        'session',
+        'current_stats',
+        many=False,
+    )
+
     included_serializers = {
+        'current_stats': StatsSerializer,
         'videos': 'sports.serializers.VideoSerializer',
     }
 
@@ -27,7 +38,10 @@ class SessionSerializer(serializers.HyperlinkedModelSerializer):
         """SessionSerializer Meta class."""
 
         model = Session
-        fields = ['videos']
+        fields = (
+            'videos',
+            'current_stats',
+        )
 
 
 class VideoSerializer(serializers.HyperlinkedModelSerializer):

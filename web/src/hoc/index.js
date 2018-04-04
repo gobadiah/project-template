@@ -27,7 +27,6 @@ export default (namespace, {
   initialDispatch = noop,
   needsLogin = true,
   endpoint,
-  type,
 } = {}) => (page) => {
   const namespaces = ['common', namespace];
 
@@ -36,14 +35,12 @@ export default (namespace, {
     namespaces,
     needsLogin,
     endpoint,
-    type,
     ...args,
   })(commonDispatch)
     .then(firstValues => reducePromises({
       namespaces,
       endpoint,
       needsLogin,
-      type,
       ...args,
     })([initialDispatch])
       .then(secondValues => Object.assign(firstValues, secondValues)));

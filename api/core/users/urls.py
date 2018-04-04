@@ -2,11 +2,13 @@
 
 from django.urls import include, path
 
-from jasonpi.utils import resource_relationships
+from jasonpi.utils import one_to_one_relationship, resource_relationships
 
 from rest_framework_nested import routers
 
 import sports.views
+
+import stats.views
 
 from . import views
 from ..views import ProviderViewSet
@@ -40,4 +42,5 @@ urlpatterns = [
     path('', include(router.urls)),
     path('', include(users_router.urls)),
     resource_relationships('user', views.UserRelationshipView),
+    one_to_one_relationship('user', 'current_stats', stats.views.StatsViewSet),
 ]

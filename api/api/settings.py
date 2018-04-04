@@ -61,6 +61,7 @@ INSTALLED_APPS = [
     'core',
     'assets',
     'sports',
+    'stats',
     'tennis',
 ]
 

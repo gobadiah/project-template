@@ -13,6 +13,8 @@ import mock
 
 import sports.urls
 
+import stats.urls
+
 import tennis.urls
 
 from utils import clear_modules
@@ -43,11 +45,11 @@ def test_urlpatterns(mocker):
     importlib.reload(sys.modules['api.urls'])
     from api.urls import urlpatterns
 
-    assert len(urlpatterns) == 8
+    assert len(urlpatterns) == 9
     mocker.stopall()
 
-    assert path.call_count == 8
-    assert include.call_count == 7
+    assert path.call_count == 9
+    assert include.call_count == 8
 
     # Django admin
     urls.assert_called_once()
@@ -73,6 +75,10 @@ def test_urlpatterns(mocker):
     include.assert_any_call(sports.urls)
     path.assert_any_call('', sports.urls)
 
+    # Stats
+    include.assert_any_call(stats.urls)
+    path.assert_any_call('', stats.urls)
+
     # Tennis
     include.assert_any_call(tennis.urls, namespace='tennis')
     path.assert_any_call('tennis/', tennis.urls)
@@ -81,7 +87,7 @@ def test_urlpatterns(mocker):
     include.assert_any_call('django.contrib.admindocs.urls')
     path.assert_any_call('admin/doc/', 'django.contrib.admindocs.urls')
 
-    assert urlpatterns == ['path'] * 8
+    assert urlpatterns == ['path'] * 9
 
     # api.settings will not be reloaded in other tests without this
     # and although django modules are unmocked after this test,

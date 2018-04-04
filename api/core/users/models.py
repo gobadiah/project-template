@@ -1,9 +1,14 @@
 """Core User model."""
 
+from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
 from jasonpi.base import BaseUser
+
+from stats.models import Stats
+
+from utils.property import model_property
 
 
 class User(BaseUser):
@@ -50,3 +55,20 @@ class User(BaseUser):
         null=True,
         blank=True,
     )
+
+    @model_property(Stats)
+    def current_stats(self):
+        """Return the current statistics for this object."""
+        return Stats.objects.filter(
+            content_type=ContentType.objects.get_for_model(User),
+            object_id=self.id,
+        ).order_by('-version', '-date').first()
+
+    def serializable_value(self, field_name):
+        """Serialize correctly model_properties.
+
+        without it the serialization is str(field) which is not correct.
+        """
+        if field_name == 'current_stats':
+            return self.current_stats.pk
+        return super(User, self).serializable_value(field_name)

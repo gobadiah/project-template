@@ -2,6 +2,11 @@ import React from 'react';
 import styled from 'react-emotion';
 
 import puce from '~/images/puce.png';
+import verticalSep from '~/images/verticalSep.png';
+import backArrow from '~/images/backArrow.png';
+import horizontalSep from '~/images/horizontalSep346.png';
+import blueRectangle from '~/images/blueRectangle.png';
+import blueRectangleRight from '~/images/blueRectangleRight.png';
 
 export const Flex = styled('div')`
   display: flex;
@@ -87,3 +92,63 @@ export const Puce = () => (
     '
   />
 );
+
+export const VerticalSeparation = () => (
+  <img
+    src={verticalSep}
+    alt=''
+    css='
+      margin-left: 22px;
+      margin-right: 15px;
+    '
+  />
+);
+
+export const BackArrow = () => (
+  <img
+    src={backArrow}
+    alt=''
+    css='
+      width: 14px;
+      height: 22px;
+      cursor: pointer;
+    '
+  />
+);
+
+export const HorizontalSeparation = () => (
+  <img
+    src={horizontalSep}
+    alt=''
+    css='
+      margin-top: 15px;
+      margin-bottom: 31px;
+    '
+  />
+);
+
+export const Score = styled('div')`
+  background-image: url(${props => (props.right ? blueRectangleRight : blueRectangle)});
+  width: 66px;
+  height: 23px;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.08;
+  letter-spacing: normal;
+  text-align: center;
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const ClearButton = styled('button')`
+  border: none;
+  cursor: pointer;
+  outline: none;
+  overflow: none;
+  background-color: Transparent;
+  background-repeat: no-repeat;
+`;
