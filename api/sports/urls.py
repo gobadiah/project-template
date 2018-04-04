@@ -56,6 +56,7 @@ urlpatterns = [
     # videos
     path('', include(videos_router.urls)),
     resource_relationships('video', views.VideoRelationshipView),
+    one_to_one_relationship('video', 'session', views.SessionViewSet),
 
     # videopoints
     path('', include(videopoints_router.urls)),

@@ -9,6 +9,7 @@ routes
   .add('signin')
   .add('register')
   .add('home')
+  .add('video', '/videos/:id')
   .add('session', '/sessions/:id');
 
 const { Router } = routes;

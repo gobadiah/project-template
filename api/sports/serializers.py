@@ -47,11 +47,22 @@ class SessionSerializer(serializers.HyperlinkedModelSerializer):
 class VideoSerializer(serializers.HyperlinkedModelSerializer):
     """VideoSerializer."""
 
+    session = resource_related_field(
+        Session,
+        'video',
+        'session',
+        many=False,
+    )
+
+    included_serializers = {
+        'session': SessionSerializer,
+    }
+
     class Meta(object):
         """VideoSerializer Meta class."""
 
         model = Video
-        fields = []
+        fields = ('session', )
 
 
 class VideoPointSerializer(serializers.HyperlinkedModelSerializer):

@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import denormalizer from 'json-api-denormalizer';
+import denormalizer, { removeCircularReferences } from 'json-api-denormalizer';
 
 import { read } from '~/utils';
 
@@ -14,14 +14,17 @@ export default ({
   const singular = !Array.isArray(result.body.data);
   const type = singular ? _.get(result, 'body.data.type') : _.get(result, 'body.data.0.type');
   const state = denormalizer(store.getState().api);
-  console.log(result.body);
+  let props;
   if (singular) {
-    return {
+    props = {
       [_.singularize(type)]: state[type][result.body.data.id],
     };
+  } else {
+    const ids = result.body.data.map(o => o.id);
+    props = {
+      [type]: ids.map(id => state[type][id]),
+    };
   }
-  const ids = result.body.data.map(o => o.id);
-  return {
-    [type]: ids.map(id => state[type][id]),
-  };
+  props.toJSON = () => removeCircularReferences(result);
+  return props;
 }))(typeof endpoint === 'string' ? endpoint : endpoint(query));
