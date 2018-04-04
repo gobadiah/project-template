@@ -37,15 +37,21 @@ describe('Hoc', () => {
     jest.mock('../reduce-promises', () => jest.fn(() => mockReducer));
     const initialDispatch = Promise.resolve({});
     const x = {};
+    const needsLogin = false;
+    const endpoint = 'endpoint';
+    const args = {
+      some: 'args',
+    };
     // todo test for mapStateToProps and mapDispatchToProps
-    const result = hoc('x', { initialDispatch, needsLogin: false })(x);
-    await expect(result.getInitialProps({ some: 'args' })).resolves.toEqual({});
+    const result = hoc('x', { initialDispatch, needsLogin, endpoint })(x);
+    await expect(result.getInitialProps(args)).resolves.toEqual({});
     const reducePromises = require('../reduce-promises');
     expect(reducePromises).toHaveBeenCalledTimes(2);
     expect(reducePromises).toHaveBeenCalledWith({
       namespaces: ['common', 'x'],
-      some: 'args',
-      needsLogin: false,
+      needsLogin,
+      endpoint,
+      ...args,
     });
     const getI18nInitialProps = require('../i18n').default;
     const currentUser = require('../current-user').default;

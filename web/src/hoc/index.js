@@ -24,6 +24,7 @@ export default (namespace, {
   mapDispatchToProps = noop,
   initialDispatch = noop,
   needsLogin = true,
+  endpoint,
 } = {}) => (page) => {
   const namespaces = ['common', namespace];
 
@@ -31,10 +32,12 @@ export default (namespace, {
   page.getInitialProps = args => reducePromises({
     namespaces,
     needsLogin,
+    endpoint,
     ...args,
   })(commonDispatch)
     .then(firstValues => reducePromises({
       namespaces,
+      endpoint,
       needsLogin,
       ...args,
     })([initialDispatch])
