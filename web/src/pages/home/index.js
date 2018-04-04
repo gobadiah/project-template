@@ -4,19 +4,22 @@ import { Main } from '~/components';
 import { Page } from '~/components/base';
 import hoc from '~/hoc';
 
-import { KeyStats } from './components';
 import { Container, LeftPanel, RightPanel } from './styles';
+import { KeyStats, RankingHistory, SessionsList } from './components';
 
 class Home extends Page {
   render() {
-    const { t } = this.props;
+    const { t, user } = this.props;
     return (
       <Main title={t('home:title')} noContainer >
         <Container>
           <LeftPanel>
             <KeyStats />
           </LeftPanel>
-          <RightPanel />
+          <RightPanel>
+            <RankingHistory />
+            <SessionsList sessions={user.sessions} />
+          </RightPanel>
         </Container>
       </Main>
     );

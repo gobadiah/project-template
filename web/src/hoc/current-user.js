@@ -25,7 +25,7 @@ const currentUser = ({
         return {
           user: currentUserSelector(store.getState()),
         };
-      }))('/users/me');
+      }))('/users/me?include=sessions');
     } else if (needsLogin) {
       redirect(res, `/signin?returnUrl=${asPath}`);
     }

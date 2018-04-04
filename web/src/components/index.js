@@ -14,3 +14,5 @@ export { default as Main } from './main';
 
 export { default as GoogleButton } from './buttons/google';
 export { default as FacebookButton } from './buttons/facebook';
+export { default as StatBar } from './stat-bar';
+export { default as Ranking } from './ranking';

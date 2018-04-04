@@ -7,7 +7,9 @@ routes
   .add('some-page')
   .add('generate-error')
   .add('signin')
-  .add('register');
+  .add('register')
+  .add('home')
+  .add('session', '/sessions/:id');
 
 const { Router } = routes;
 

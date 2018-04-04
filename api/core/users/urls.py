@@ -6,6 +6,8 @@ from jasonpi.utils import resource_relationships
 
 from rest_framework_nested import routers
 
+import sports.views
+
 from . import views
 from ..views import ProviderViewSet
 
@@ -26,6 +28,11 @@ users_router.register(
     r'providers',
     ProviderViewSet,
     base_name='user-providers',
+)
+users_router.register(
+    r'sessions',
+    sports.views.SessionViewSet,
+    base_name='user-sessions',
 )
 
 

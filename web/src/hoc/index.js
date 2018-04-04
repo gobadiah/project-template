@@ -9,12 +9,14 @@ import currentUser from './current-user';
 import setupApi from './setup-api';
 import crud from './crud';
 import extraDispatchToProps from './extraDispatchToProps';
+import data from './data';
 
 const commonDispatch = [
   crud,
   setupApi,
   getI18nInitialProps,
   currentUser,
+  data,
 ];
 
 const noop = () => ({});
@@ -24,6 +26,8 @@ export default (namespace, {
   mapDispatchToProps = noop,
   initialDispatch = noop,
   needsLogin = true,
+  endpoint,
+  type,
 } = {}) => (page) => {
   const namespaces = ['common', namespace];
 
@@ -31,11 +35,15 @@ export default (namespace, {
   page.getInitialProps = args => reducePromises({
     namespaces,
     needsLogin,
+    endpoint,
+    type,
     ...args,
   })(commonDispatch)
     .then(firstValues => reducePromises({
       namespaces,
+      endpoint,
       needsLogin,
+      type,
       ...args,
     })([initialDispatch])
       .then(secondValues => Object.assign(firstValues, secondValues)));

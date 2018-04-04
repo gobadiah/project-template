@@ -16,9 +16,9 @@ class Index extends Page {
 
 const initialDispatch = ({ store, res }) => {
   if (store.getState().auth.get('userId')) {
-    redirect('/home', res);
+    redirect(res, 'home');
   } else {
-    redirect('/signin', res);
+    redirect(res, 'signin');
   }
 };
 

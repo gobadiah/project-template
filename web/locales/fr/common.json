@@ -1,5 +1,6 @@
 {
   "Switch to english": "Passer en langue anglaise",
   "Switch to french": "Rester en langue française",
-  "This is a pure component": "Ceci est un composant pure"
+  "This is a pure component": "Ceci est un composant pure",
+  "age": "{{years}} ans"
 }
