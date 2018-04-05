@@ -6,7 +6,7 @@ jest.mock('redux-actions', () => ({
 
 describe('createActions', () => {
   it('should call redux-actions\'s createActions', () => {
-    const { createActions } = require('../utils');
+    const createActions = require('../create-actions').default;
     const value = {
       c: 'd',
     };
@@ -19,9 +19,4 @@ describe('createActions', () => {
       },
     });
   });
-});
-
-test('a exists', () => {
-  const { a } = require('../utils');
-  expect(a).toEqual(1);
 });

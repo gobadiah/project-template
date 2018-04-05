@@ -9,7 +9,7 @@ import { config } from '~/services/axios';
 import { errorHandler } from '~/utils/forms';
 import { redirect } from '~/utils';
 
-import { createActions } from './utils';
+import { createActions } from '~/utils';
 
 const {
   signin,
