@@ -15,6 +15,7 @@ const commonDispatch = [
   setupApi,
   getI18nInitialProps,
   currentUser,
+  data,
 ];
 
 const noop = () => ({});
