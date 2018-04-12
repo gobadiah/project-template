@@ -26,4 +26,4 @@ class Home extends Page {
   }
 }
 
-export default hoc('home', { endpoint: '/users/me/sessions' })(Home);
+export default hoc('home', { endpoint: '/users/me/tennis_sessions' })(Home);

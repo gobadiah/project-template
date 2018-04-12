@@ -353,7 +353,7 @@ def create_session(user, data):
         if surface not in available_surfaces:
             surface = None
         logger.info('loop', surface)
-    session.surface = surface
+    session.data['surface'] = surface
 
     return session
 

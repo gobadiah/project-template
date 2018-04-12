@@ -120,7 +120,11 @@ class PlayerSerializer(serializers.HyperlinkedModelSerializer):
         """PlayerSerializer Meta class."""
 
         model = Player
-        fields = []
+        fields = (
+            'id',
+            'name',
+            'data',
+        )
 
 
 # Extra Session methods

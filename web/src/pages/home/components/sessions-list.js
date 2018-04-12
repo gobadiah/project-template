@@ -37,7 +37,7 @@ const SessionsList = ({ sessions }, { t }) => (
                   {session.opponent}
                 </td>
                 <td>
-                  {session.surface}
+                  {t(session.data.surface)}
                 </td>
               </tr>
             </TBody>

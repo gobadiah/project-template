@@ -41,8 +41,9 @@ class SessionSerializer(serializers.HyperlinkedModelSerializer):
 
         model = Session
         fields = (
-            'videos',
             'current_stats',
+            'data',
+            'videos',
         )
 
 
