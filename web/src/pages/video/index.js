@@ -7,9 +7,11 @@ import videojs from 'video.js';
 
 import { Main } from '~/components';
 import { Page } from '~/components/base';
+import { Puce } from '~/styles';
 import hoc from '~/hoc';
 
-import { MainContainer } from './styles';
+import { MainContainer, Title, VideoContainer } from './styles';
+import { KeyMoments } from './components';
 
 class Video extends Page {
   constructor(props) {
@@ -41,16 +43,28 @@ class Video extends Page {
   }
 
   render() {
-    const { t } = this.props;
+    const { t, video } = this.props;
+    const moments = video.session.exchanges.map(exchange => ({
+      id: exchange.id,
+      time: moment.duration(exchange.start_at.time).asSeconds(),
+    }));
     return (
-      <Main title={t('video:title')}>
+      <Main title={t('video:title')} width={970}>
+        <style>{videoJSStyles}</style>
+        <Title>
+          <Puce />
+          {video.session.label}
+        </Title>
         <MainContainer>
-          <div>
-            <style>{videoJSStyles}</style>
+          <VideoContainer>
             <div data-vjs-player>
               <video ref={(node) => { this.videoNode = node; }} className='video-js' />
             </div>
-          </div>
+          </VideoContainer>
+          <KeyMoments
+            moments={moments}
+            onGoTo={time => this.player.currentTime(time)}
+          />
         </MainContainer>
       </Main>
     );

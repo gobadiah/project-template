@@ -3,7 +3,7 @@ import React from 'react';
 
 import { defaultPropTypes } from '~/components';
 
-import { Bg, Container, GreenBar, Label } from './styles';
+import { Bg, Container, GreenBar } from './styles';
 
 const StatBar = ({
   label,
