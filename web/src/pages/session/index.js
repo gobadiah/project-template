@@ -41,5 +41,5 @@ class Session extends Page {
 
 export default hoc(
   'session',
-  { endpoint: query => `/sessions/${query.id}?include=videos,current_stats` },
+  { endpoint: query => `/tennis/sessions/${query.id}?include=videos,current_stats` },
 )(Session);

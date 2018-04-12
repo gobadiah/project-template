@@ -1,5 +1,7 @@
 """Sports serializers."""
 
+from assets.models import Asset
+
 from jasonpi.utils import resource_related_field
 
 from rest_framework_json_api import serializers
@@ -47,6 +49,13 @@ class SessionSerializer(serializers.HyperlinkedModelSerializer):
 class VideoSerializer(serializers.HyperlinkedModelSerializer):
     """VideoSerializer."""
 
+    asset = resource_related_field(
+        Asset,
+        'video',
+        'asset',
+        many=False,
+    )
+
     session = resource_related_field(
         Session,
         'video',
@@ -55,6 +64,7 @@ class VideoSerializer(serializers.HyperlinkedModelSerializer):
     )
 
     included_serializers = {
+        'asset': 'assets.serializers.AssetSerializer',
         'session': SessionSerializer,
     }
 
@@ -62,7 +72,7 @@ class VideoSerializer(serializers.HyperlinkedModelSerializer):
         """VideoSerializer Meta class."""
 
         model = Video
-        fields = ('session', )
+        fields = ('asset', 'session')
 
 
 class VideoPointSerializer(serializers.HyperlinkedModelSerializer):
@@ -72,4 +82,4 @@ class VideoPointSerializer(serializers.HyperlinkedModelSerializer):
         """VideoPointSerializer Meta class."""
 
         model = VideoPoint
-        fields = []
+        fields = ('frame', 'time')

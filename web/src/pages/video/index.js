@@ -17,6 +17,8 @@ class Video extends Page {
 
     const { video } = props;
 
+    console.log('video', video);
+
     this.state = {
       marks: video.session.exchanges.map(exchange =>
         moment.duration(exchange.start_at.time).asSeconds()),
@@ -26,6 +28,9 @@ class Video extends Page {
   componentDidMount() {
     const { video } = this.props;
     const { url } = video.asset;
+
+    console.log('url', url);
+    console.log('type', video.content_type);
 
     const options = {
       fluid: true,
@@ -58,5 +63,6 @@ class Video extends Page {
 }
 
 export default hoc('video', {
-  endpoint: query => `/videos/${query.id}?include=session`,
+  endpoint: query =>
+    `/tennis/videos/${query.id}?include=session,session.exchanges,session.exchanges.start_at,asset`,
 })(Video);

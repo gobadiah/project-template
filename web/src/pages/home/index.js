@@ -9,7 +9,8 @@ import { KeyStats, RankingHistory, SessionsList } from './components';
 
 class Home extends Page {
   render() {
-    const { t, user } = this.props;
+    const { sessions, t } = this.props;
+    console.log('props =', this.props);
     return (
       <Main title={t('home:title')} noContainer >
         <Container>
@@ -18,7 +19,7 @@ class Home extends Page {
           </LeftPanel>
           <RightPanel>
             <RankingHistory />
-            <SessionsList sessions={user.sessions} />
+            <SessionsList sessions={sessions} />
           </RightPanel>
         </Container>
       </Main>
@@ -26,4 +27,4 @@ class Home extends Page {
   }
 }
 
-export default hoc('home')(Home);
+export default hoc('home', { endpoint: '/users/me/sessions' })(Home);

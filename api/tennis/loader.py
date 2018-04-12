@@ -10,6 +10,8 @@ from assets.models import Asset
 
 import boto3
 
+import botocore
+
 from core.models import User
 
 from django.db import transaction
@@ -48,7 +50,7 @@ def loader(
     user.save()
     session = create_session(user, data)
     session.save()
-    players = create_players(session, data)
+    players = create_players(data)
     video = create_video(user, session)
     video.asset.save()
     video.asset_id = video.asset.id
@@ -228,6 +230,7 @@ def setup_user(user):
     user.last_name = input('Last name [{}]: '.format(  # Noqa B322
         default_last_name,
     )) or default_last_name
+    user.birthday = datetime.date(1986, 2, 11)
     password = User.objects.make_random_password()
     user.set_password(password)
     logger.info('User {} has been created, '
@@ -369,21 +372,35 @@ def create_video(user, session, region='eu-west-3'):
         input('Video\'s key in Amazon S3 [{}]: '.format(  # Noqa B322
         default_key,
     )) or default_key
-    asset.url = 'http://{}.s3-aws-{}.amazonaws.com/{}'.format(
-        asset.info['s3']['bucket'],
-        region,
-        asset.info['s3']['key'],
-    )
+    #  asset.url = 'http://{}.s3-aws-{}.amazonaws.com/{}'.format(
+    #      asset.info['s3']['bucket'],
+    #      region,
+    #      asset.info['s3']['key'],
+    #  )
     # duration = datetime.timedelta(seconds=get_length(video.key))
     # video.duration = duration
     s3 = boto3.resource('s3')
     data = open(asset.info['s3']['key'], 'rb')
     mime_type = get_mime_type(asset.info['s3']['key'])
+    asset.info['Content-Type'] = mime_type
     s3.Bucket(asset.info['s3']['bucket']).put_object(
         Key=asset.info['s3']['key'],
         Body=data,
         ACL='public-read',
         ContentType=mime_type,
+    )
+    config = boto3.client('s3')._client_config
+    config.signature_version = botocore.UNSIGNED
+    asset.url = boto3.resource(
+        's3',
+        config=config,
+    ).meta.client.generate_presigned_url(
+        'get_object',
+        ExpiresIn=0,
+        Params={
+            'Bucket': asset.info['s3']['bucket'],
+            'Key': asset.info['s3']['key'],
+        },
     )
     video = Video(asset=asset, session=session)
     return video

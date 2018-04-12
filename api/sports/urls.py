@@ -1,5 +1,7 @@
 """Sports urls."""
 
+import assets.views
+
 from django.urls import include, path
 
 from jasonpi.utils import one_to_one_relationship, resource_relationships
@@ -57,6 +59,7 @@ urlpatterns = [
     path('', include(videos_router.urls)),
     resource_relationships('video', views.VideoRelationshipView),
     one_to_one_relationship('video', 'session', views.SessionViewSet),
+    one_to_one_relationship('video', 'asset', assets.views.AssetViewSet),
 
     # videopoints
     path('', include(videopoints_router.urls)),

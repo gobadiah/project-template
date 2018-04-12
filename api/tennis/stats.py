@@ -123,7 +123,6 @@ def service_session(session):
             lambda player: (player.id, {
                 'display': '180km/h',
                 'normalized': 0.7,
-            }).update({
                 'label': 'Service',
             }),
             session.players.all(),

@@ -2,9 +2,13 @@
 
 from django.urls import include, path
 
-from jasonpi.utils import resource_relationships
+from jasonpi.utils import \
+    one_to_one_relationship, \
+    resource_relationships
 
 from rest_framework_nested import routers
+
+import sports.views
 
 from . import views
 
@@ -21,6 +25,7 @@ router.register(r'sessions', views.SessionViewSet)
 router.register(r'sets', views.SetViewSet)
 router.register(r'setplayers', views.SetPlayerViewSet)
 router.register(r'trainings', views.TrainingViewSet)
+router.register(r'videos', views.VideoViewSet)
 
 exchanges_router = routers.NestedDefaultRouter(
     router,
@@ -126,6 +131,13 @@ trainings_router = routers.NestedDefaultRouter(
     trailing_slash=False,
 )
 
+videos_router = routers.NestedDefaultRouter(
+    router,
+    r'videos',
+    lookup='video',
+    trailing_slash=False,
+)
+
 app_name = 'tennis'
 urlpatterns = [
     path('', include(router.urls)),
@@ -139,6 +151,11 @@ urlpatterns = [
     resource_relationships(
         'exchangeplayer',
         views.ExchangePlayerRelationshipView,
+    ),
+    one_to_one_relationship(
+        'exchange',
+        'start_at',
+        sports.views.VideoPointViewSet,
     ),
 
     # games
@@ -180,4 +197,8 @@ urlpatterns = [
     # trainings
     path('', include(trainings_router.urls)),
     resource_relationships('training', views.TrainingRelationshipView),
+
+    # videos
+    path('', include(videos_router.urls)),
+    resource_relationships('videos', views.VideoRelationshipView),
 ]

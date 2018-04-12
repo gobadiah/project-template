@@ -5,6 +5,7 @@ from rest_framework import viewsets
 
 from rest_framework_json_api.views import RelationshipView
 
+from utils.me import get_user
 
 from .models import \
     Session, \
@@ -21,6 +22,17 @@ class SessionViewSet(viewsets.ModelViewSet):
 
     queryset = Session.objects.order_by('id')
     serializer_class = SessionSerializer
+
+    def get_queryset(self):
+        """Restrict queryset based on query params."""
+        queryset = self.queryset
+
+        if 'user_pk' in self.kwargs:
+            return queryset.filter(
+                owner_id=get_user(self.request, self.kwargs),
+            )
+
+        return queryset
 
 
 class SessionRelationshipView(RelationshipView):
