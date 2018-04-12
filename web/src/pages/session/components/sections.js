@@ -1,38 +1,29 @@
+import { arrayOf, func, number, string } from 'prop-types';
 import React from 'react';
 
-import { ClearButton, FlexCenter, FlexColumnCenter } from '~/styles';
-import { PureComponent } from '~/components/base';
+import { ClearButton, FlexColumnCenter } from '~/styles';
 import { defaultPropTypes } from '~/components';
 
-import { Section, SelectedBar } from './styles';
+import { Section, SectionsBar, SelectedBar } from './styles';
 
-class Sections extends PureComponent {
-  constructor(props) {
-    super(props);
+const Sections = ({ sectionIndex, sections, onSectionChange }) => (
+  <SectionsBar>
+    { sections.map((section, index) => (
+      <ClearButton key={section} onClick={() => onSectionChange(index)}>
+        <FlexColumnCenter>
+          <Section>{section}</Section>
+          <SelectedBar hidden={index !== sectionIndex} />
+        </FlexColumnCenter>
+      </ClearButton>
+    )) }
+  </SectionsBar>
+);
 
-    this.state = {
-      currentSection: 0,
-    };
-  }
-
-  render() {
-    const { currentSection } = this.state;
-    const { t } = this.context;
-    const sections = [t('session:KEY NUMBERS'), t('session:STATISTICS'), t('PERFORMANCES')];
-    return (
-      <FlexCenter>
-        { sections.map((section, index) => (
-          <ClearButton key={section} onClick={() => this.setState({ currentSection: index })}>
-            <FlexColumnCenter>
-              <Section>{section}</Section>
-              <SelectedBar hidden={index !== currentSection} />
-            </FlexColumnCenter>
-          </ClearButton>
-        )) }
-      </FlexCenter>
-    );
-  }
-}
+Sections.propTypes = {
+  sectionIndex: number.isRequired,
+  sections: arrayOf(string).isRequired,
+  onSectionChange: func.isRequired,
+};
 
 Sections.contextTypes = defaultPropTypes;
 

@@ -1,18 +1,14 @@
 import { shape } from 'prop-types';
 import React from 'react';
 
-import {
-  BackArrow,
-  ClearButton,
-  Flex,
-  Small,
-  VerticalSeparation,
-} from '~/styles';
+import { BackArrow, ClearButton, Small, VerticalSeparation } from '~/styles';
 import { Link } from '~/routes';
 import { defaultPropTypes } from '~/components';
 
+import { SessionTitleContainer as Container } from './styles';
+
 const SessionTitle = ({ session }) => (
-  <Flex>
+  <Container>
     <Link route='home'>
       <ClearButton>
         <BackArrow />
@@ -20,7 +16,7 @@ const SessionTitle = ({ session }) => (
     </Link>
     <VerticalSeparation />
     <Small>{session.label || 'Session'}</Small>
-  </Flex>
+  </Container>
 );
 
 SessionTitle.propTypes = {

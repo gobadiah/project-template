@@ -1,31 +1,47 @@
 import React from 'react';
 
-import { Flex, HorizontalSeparation } from '~/styles';
+import { HorizontalSeparation } from '~/styles';
 import { Page } from '~/components/base';
 import { Score, Main, UserScore } from '~/components';
 import { score } from '~/tennis/fixtures';
 import hoc from '~/hoc';
-import { Link } from '~/routes';
 
-import { Sections, SessionStats, SessionTitle } from './components';
-import { userScoreHeight } from './styles';
+import { PlayersStats, Sections, SessionStats, SessionTitle } from './components';
+import { UserScores, WatchVideo, containerWidth, userScoreHeight } from './styles';
+
+const statsBySection = {
+  0: ['service'],
+  1: [],
+  2: [],
+};
 
 class Session extends Page {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      currentSection: 0,
+    };
+  }
+
   render() {
-    const { session } = this.props;
-    const { t, user } = this.props;
+    const { session, t, user } = this.props;
+    const { currentSection } = this.state;
+    const sections = [
+      t('session:KEY NUMBERS'),
+      t('session:STATISTICS'),
+      t('session:PERFORMANCES'),
+    ];
     return (
-      <Main title={t('session:title', { session })}>
+      <Main title={t('session:title', { session })} width={containerWidth}>
         <SessionTitle session={session} />
         <HorizontalSeparation />
-        <Flex>
+        <UserScores>
           <UserScore user={user} height={userScoreHeight} />
           <Score score={score} />
           <UserScore user={user} right height={userScoreHeight} />
-        </Flex>
-        <Link route='video' params={{ id: session.videos[0].id }}>
-          <a>{t('session:Watch the video')}</a>
-        </Link>
+        </UserScores>
+        <WatchVideo session={session} />
         <HorizontalSeparation />
         <SessionStats
           session={session}
@@ -33,7 +49,15 @@ class Session extends Page {
             'duration',
           ]}
         />
-        <Sections />
+        <Sections
+          sectionIndex={currentSection}
+          sections={sections}
+          onSectionChange={index => this.setState({ currentSection: index })}
+        />
+        <PlayersStats
+          stats={statsBySection[currentSection]}
+          session={session}
+        />
       </Main>
     );
   }

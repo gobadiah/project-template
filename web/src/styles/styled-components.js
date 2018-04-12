@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'react-emotion';
 
-import puce from '~/images/puce.png';
-import verticalSep from '~/images/verticalSep.png';
 import backArrow from '~/images/backArrow.png';
-import horizontalSep from '~/images/horizontalSep346.png';
 import blueRectangle from '~/images/blueRectangle.png';
 import blueRectangleRight from '~/images/blueRectangleRight.png';
+import horizontalSep from '~/images/horizontalSep346.png';
+import puce from '~/images/puce.png';
+import verticalSep from '~/images/verticalSep.png';
 
 export const Flex = styled('div')`
   display: flex;
@@ -98,7 +98,7 @@ export const VerticalSeparation = () => (
     src={verticalSep}
     alt=''
     css='
-      margin-left: 22px;
+      margin-left: 15px;
       margin-right: 15px;
     '
   />
@@ -120,10 +120,7 @@ export const HorizontalSeparation = () => (
   <img
     src={horizontalSep}
     alt=''
-    css='
-      margin-top: 15px;
-      margin-bottom: 31px;
-    '
+    css='width: 900px'
   />
 );
 

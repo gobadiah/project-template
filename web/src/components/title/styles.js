@@ -5,7 +5,8 @@ import { Flex } from '~/styles';
 
 export const MainDiv = styled(Flex)`
   margin: auto;
-  marginTop: 43px;
+  margin-top: 43px;
+  margin-bottom: 49px;
   align-items: center;
   width: 333px;
   height: 114px;

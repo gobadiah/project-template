@@ -43,7 +43,7 @@ const RankingHistory = (props, { t }) => {
     y: (a * ranking) + b,
   });
   return (
-    <WhiteBox>
+    <WhiteBox css='margin-bottom: 16px'>
       <div
         style={{
           display: 'flex',

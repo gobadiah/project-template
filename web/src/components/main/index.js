@@ -2,6 +2,7 @@ import {
   arrayOf,
   bool,
   node,
+  number,
   oneOfType,
   string,
 } from 'prop-types';
@@ -20,6 +21,7 @@ const Main = ({
   noContainer,
   title,
   titleBar,
+  width,
 }, { i18n, user }) => (
   <div>
     <Head>
@@ -27,7 +29,7 @@ const Main = ({
     </Head>
     <Title i18n={i18n} user={user} />
     { noContainer ? children :
-    <Container className={containerClassName}>
+    <Container className={containerClassName} width={width}>
       { titleBar && <TitleBar title={titleBar} /> }
       { children }
     </Container>
@@ -44,12 +46,14 @@ Main.propTypes = {
   title: string.isRequired,
   titleBar: string,
   noContainer: bool,
+  width: number,
 };
 
 Main.defaultProps = {
   containerClassName: '',
   titleBar: undefined,
   noContainer: false,
+  width: undefined,
 };
 
 Main.contextTypes = defaultPropTypes;

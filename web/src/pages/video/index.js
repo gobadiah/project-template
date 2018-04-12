@@ -17,8 +17,6 @@ class Video extends Page {
 
     const { video } = props;
 
-    console.log('video', video);
-
     this.state = {
       marks: video.session.exchanges.map(exchange =>
         moment.duration(exchange.start_at.time).asSeconds()),
@@ -28,9 +26,6 @@ class Video extends Page {
   componentDidMount() {
     const { video } = this.props;
     const { url } = video.asset;
-
-    console.log('url', url);
-    console.log('type', video.content_type);
 
     const options = {
       fluid: true,

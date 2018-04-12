@@ -10,7 +10,6 @@ import { KeyStats, RankingHistory, SessionsList } from './components';
 class Home extends Page {
   render() {
     const { sessions, t } = this.props;
-    console.log('props =', this.props);
     return (
       <Main title={t('home:title')} noContainer >
         <Container>
