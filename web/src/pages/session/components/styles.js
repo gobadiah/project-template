@@ -30,7 +30,6 @@ export const StatContainer = styled(FlexColumn)`
 `;
 
 export const StatDisplay = styled('div')`
-  font-family: TitilliumWeb;
   font-size: 26px;
   font-weight: normal;
   font-style: normal;

@@ -1,17 +1,19 @@
 /* eslint-disable jsx-a11y/media-has-caption */
 
+import { css } from 'emotion';
 import React from 'react';
 import moment from 'moment';
 import videoJSStyles from 'video.js/dist/video-js.css';
 import videojs from 'video.js';
 
+import { CloseButton, Puce } from '~/styles';
+import { Link } from '~/routes';
 import { Main } from '~/components';
 import { Page } from '~/components/base';
-import { Puce } from '~/styles';
 import hoc from '~/hoc';
 
-import { MainContainer, Title, VideoContainer } from './styles';
 import { KeyMoments } from './components';
+import { MainContainer, Title, VideoContainer } from './styles';
 
 class Video extends Page {
   constructor(props) {
@@ -53,7 +55,10 @@ class Video extends Page {
         <style>{videoJSStyles}</style>
         <Title>
           <Puce />
-          {video.session.label}
+          <span css='margin-left: 13px;'>{video.session.label}</span>
+          <Link route='session' params={{ id: video.session.id }}>
+            <CloseButton className={css`margin-left: auto;`} />
+          </Link>
         </Title>
         <MainContainer>
           <VideoContainer>

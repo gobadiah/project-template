@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'react-emotion';
+import { func, string } from 'prop-types';
 
 import backArrow from '~/images/backArrow.png';
 import blueRectangle from '~/images/blueRectangle.png';
@@ -7,6 +8,7 @@ import blueRectangleRight from '~/images/blueRectangleRight.png';
 import horizontalSep from '~/images/horizontalSep346.png';
 import puce from '~/images/puce.png';
 import verticalSep from '~/images/verticalSep.png';
+import close from '~/images/close.png';
 
 export const Flex = styled('div')`
   display: flex;
@@ -87,8 +89,6 @@ export const Puce = () => (
     css='
       width: 16px;
       height: 16px;
-      margin-right: 8px;
-      margin-bottom: 5px;
     '
   />
 );
@@ -148,4 +148,24 @@ export const ClearButton = styled('button')`
   overflow: none;
   background-color: Transparent;
   background-repeat: no-repeat;
+  padding: 0;
 `;
+
+export const CloseButton = ({ className, onClick }) => (
+  <ClearButton onClick={onClick} className={className}>
+    <img
+      src={close}
+      alt=''
+    />
+  </ClearButton>
+);
+
+CloseButton.propTypes = {
+  className: string,
+  onClick: func.isRequired,
+};
+
+CloseButton.defaultProps = {
+  className: '',
+  onClick: () => {},
+};
