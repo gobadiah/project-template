@@ -1,10 +1,11 @@
 import React from 'react';
 
-import { Normal, Puce, WhiteBox } from '~/styles';
+import { Puce, WhiteBox } from '~/styles';
 import { defaultPropTypes } from '~/components';
 import puce from '~/images/puce.png';
 
 import rankingHistory from './fixtures/history';
+import { Normal } from './styles';
 
 const numberOfLines = 5;
 const width = 503;
@@ -47,11 +48,11 @@ const RankingHistory = (props, { t }) => {
       <div
         style={{
           display: 'flex',
-          alignItems: 'flex-end',
+          alignItems: 'center',
         }}
       >
         <Puce />
-        <Normal>{t('Kincube ranking history')}</Normal>
+        <Normal css='margin-left: 5px'>{t('Kincube ranking history')}</Normal>
       </div>
       <svg width={width} height={height} style={{ marginTop: '42px' }}>
         {

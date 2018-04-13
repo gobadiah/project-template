@@ -2,13 +2,15 @@ import { arrayOf, shape } from 'prop-types';
 import React from 'react';
 
 import { Link } from '~/routes';
-import { FlexEnd, Puce, Small, WhiteBox } from '~/styles';
+import { Puce, WhiteBox } from '~/styles';
 import { defaultPropTypes } from '~/components';
 
 import {
+  SessionTitle,
   SessionsListTable as Table,
   SessionsListTHead as THead,
   SessionsListTBody as TBody,
+  Small,
 } from './styles';
 
 const SessionsList = ({ sessions }, { t }) => (
@@ -16,10 +18,10 @@ const SessionsList = ({ sessions }, { t }) => (
     { sessions.map(session => (
       <Link route='session' params={{ id: session.id }} key={session.id}>
         <div css='cursor: pointer;'>
-          <FlexEnd>
+          <SessionTitle>
             <Puce />
             <Small>{t('home:Session title', session)}</Small>
-          </FlexEnd>
+          </SessionTitle>
           <Table>
             <THead>
               <tr>

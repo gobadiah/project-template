@@ -1,12 +1,13 @@
 import React from 'react';
 
-import { Normal, Puce } from '~/styles/styled-components';
+import { Puce } from '~/styles/styled-components';
 import { Ranking, StatBar, defaultPropTypes } from '~/components';
 import UserIdentity from '~/components/user-identity';
 
 import {
   KeyStatsContainer,
   KeyStatsTitle,
+  Normal,
   statBarWidth,
 } from './styles';
 
@@ -15,7 +16,7 @@ const KeyStats = (props, { t, user }) => (
     <UserIdentity user={user} />
     <KeyStatsTitle>
       <Puce />
-      <Normal>{t('Kincube ranking')}</Normal>
+      <Normal css='margin-left: 5px'>{t('Kincube ranking')}</Normal>
     </KeyStatsTitle>
     <Ranking main={3456} secondary={12322} />
     <KeyStatsTitle>

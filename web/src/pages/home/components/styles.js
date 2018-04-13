@@ -1,11 +1,17 @@
 import styled from 'react-emotion';
 
-import { FlexEnd, WhiteBox } from '~/styles/styled-components';
+import {
+  Normal as BaseNormal,
+  Small as BaseSmall,
+  WhiteBox,
+} from '~/styles/styled-components';
+import { Flex } from '~/styles';
 
 export const KeyStatsContainer = styled(WhiteBox)`
 `;
 
-export const KeyStatsTitle = styled(FlexEnd)`
+export const KeyStatsTitle = styled(Flex)`
+  align-items: center;
   margin-top: 31px;
 `;
 
@@ -36,4 +42,16 @@ export const SessionsListTBody = styled('tbody')`
   letter-spacing: normal;
   text-align: left;
   color: var(--dark-blue-grey);
+`;
+
+export const Normal = styled(BaseNormal)`
+  margin-left: 5px;
+`;
+
+export const Small = styled(BaseSmall)`
+  margin-left: 5px;
+`;
+
+export const SessionTitle = styled(Flex)`
+  align-items: center;
 `;

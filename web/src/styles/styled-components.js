@@ -55,12 +55,10 @@ export const WhiteBox = styled(FlexColumn)`
   padding: 28px;
 `;
 
-export const Normal = styled('span')`
+export const Normal = styled('div')`
   font-size: 30px;
   font-weight: bold;
-  line-height: 0.97;
   text-align: left;
-  color: #0e1e35;
   color: var(--dark-blue-grey);
 `;
 
