@@ -1,5 +1,6 @@
 export { default as SignInForm } from './forms/signin';
 export { default as RegisterForm } from './forms/register';
+export { default as AccountForm } from './forms/account';
 export {
   default as reducer,
   register,

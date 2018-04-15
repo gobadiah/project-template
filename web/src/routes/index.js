@@ -6,6 +6,7 @@ routes
   .add('index', '/', 'index_')
   .add('some-page')
   .add('generate-error')
+  .add('account')
   .add('signin')
   .add('register')
   .add('home')
