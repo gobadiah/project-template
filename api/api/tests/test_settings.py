@@ -41,6 +41,31 @@ def test_drf_json_api_settings():
     assert settings.JSON_API_PLURALIZE_TYPES
 
 
+@restore_environment('PROJECT')
+def test_project_value():
+    """Test settings has project value."""
+    reload('api.settings')
+    from api import settings
+    assert settings.PROJECT == 'project-template'
+    os.environ['PROJECT'] = 'google'
+    reload('api.settings')
+    from api import settings
+    assert settings.PROJECT == 'google'
+
+
+@restore_environment('ENV', 'SECRET_KEY')
+def test_env_value():
+    """Test settings has env value."""
+    reload('api.settings')
+    from api import settings
+    assert settings.ENV == 'development'
+    os.environ['ENV'] = 'staging'
+    os.environ['SECRET_KEY'] = 'secret'
+    reload('api.settings')
+    from api import settings
+    assert settings.ENV == 'staging'
+
+
 @restore_environment('ENV', 'SECRET_KEY')
 def test_debug_settings_true():
     """Test DEBUG value in settings.
@@ -56,6 +81,17 @@ def test_debug_settings_true():
     reload('api.settings')
     from api import settings
     assert not settings.DEBUG
+
+
+@restore_environment('ENV', 'PROJECT', 'SECRET_KEY')
+def test_bucket_value():
+    """Test bucket is formed from ENV and PROJECT."""
+    os.environ['SECRET_KEY'] = 'secret'
+    os.environ['ENV'] = 'test'
+    os.environ['PROJECT'] = 'google'
+    reload('api.settings')
+    from api import settings
+    assert settings.BUCKET == 'google-test'
 
 
 @restore_environment('ENV', 'SECRET_KEY')

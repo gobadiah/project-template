@@ -135,6 +135,7 @@ exports[`SomePage should match snapshot 1`] = `
                 ],
                 "languageChanged": Array [
                   [Function],
+                  [Function],
                 ],
                 "loaded": Array [
                   [Function],
@@ -4007,6 +4008,7 @@ exports[`SomePage should match snapshot 1`] = `
                     [Function],
                   ],
                   "languageChanged": Array [
+                    [Function],
                     [Function],
                   ],
                   "loaded": Array [

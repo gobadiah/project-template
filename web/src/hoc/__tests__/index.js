@@ -57,8 +57,15 @@ describe('Hoc', () => {
     const currentUser = require('../current-user').default;
     const setupApi = require('../setup-api').default;
     const crud = require('../crud').default;
+    const data = require('../data').default;
     expect(mockReducer).toHaveBeenCalledTimes(2);
-    expect(mockReducer).toHaveBeenCalledWith([crud, setupApi, getI18nInitialProps, currentUser]);
+    expect(mockReducer).toHaveBeenCalledWith([
+      crud,
+      setupApi,
+      getI18nInitialProps,
+      currentUser,
+      data,
+    ]);
     expect(mockReducer).toHaveBeenCalledWith([initialDispatch]);
     jest.dontMock('../reduce-promises');
   });

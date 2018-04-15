@@ -9,6 +9,7 @@ import currentUser from './current-user';
 import setupApi from './setup-api';
 import crud from './crud';
 import extraDispatchToProps from './extraDispatchToProps';
+import data from './data';
 
 const commonDispatch = [
   crud,

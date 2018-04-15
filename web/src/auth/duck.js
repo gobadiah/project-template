@@ -1,15 +1,13 @@
 import { Map } from 'immutable';
-import { Router } from '~/routes';
 import { handleActions, combineActions } from 'redux-actions';
 import { hydrateStore } from 'redux-json-api';
 import NProgress from 'nprogress';
 import axios from 'axios';
 
+import { Router } from '~/routes';
 import { config } from '~/services/axios';
+import { createActions, redirect } from '~/utils';
 import { errorHandler } from '~/utils/forms';
-import { redirect } from '~/utils';
-
-import { createActions } from '~/utils';
 
 const {
   signin,

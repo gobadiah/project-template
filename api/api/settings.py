@@ -33,6 +33,9 @@ DEBUG = 'ENV' not in os.environ
 SECRET_KEY = os.environ['SECRET_KEY'] if not DEBUG else \
     'z9k=cw5ycxs&-^c4oal1w7ivi(=_@!4tmncx0%5#g_=8_w$z(a'
 
+ENV = os.environ.get('ENV', 'development')
+PROJECT = os.environ.get('PROJECT', 'project-template')
+
 
 def host(url):
     """Extract host from url."""
@@ -168,6 +171,7 @@ APPEND_SLASH = False  # Play well with javascript sdk
 
 # Jasonpi
 USER_SERIALIZER = 'core.serializers.UserSerializer'
+BUCKET = '%s-%s' % (PROJECT, ENV)
 
 # Cors
 CORS_ALLOW_HEADERS = cors_default_headers + (

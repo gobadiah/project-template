@@ -192,6 +192,7 @@ exports[`Index should match snapshot 1`] = `
                   [Function],
                   [Function],
                   [Function],
+                  [Function],
                 ],
                 "loaded": Array [
                   [Function],
@@ -4085,6 +4086,7 @@ exports[`Index should match snapshot 1`] = `
                     [Function],
                   ],
                   "languageChanged": Array [
+                    [Function],
                     [Function],
                     [Function],
                     [Function],

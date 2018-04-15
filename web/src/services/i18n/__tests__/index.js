@@ -107,6 +107,7 @@ describe('I18n', () => {
     jest.mock('i18next', () => ({
       init: jest.fn(),
       isInitialized: true,
+      on: jest.fn(),
     }));
     const i18n = require('..').default;
     expect(i18n.init).not.toHaveBeenCalled();
