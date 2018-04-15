@@ -9,6 +9,7 @@ jest.mock('../../utils', () => ({
   read: jest.fn(() => 'readFunc'),
   update: jest.fn(() => 'updateFunc'),
   destroy: jest.fn(() => 'destroyFunc'),
+  createActions: jest.fn(() => ({ signin: 'signin', signout: 'signout' })),
 }));
 
 const setup = ({ req } = { req: undefined }) => {
