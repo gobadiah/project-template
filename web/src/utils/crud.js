@@ -22,9 +22,7 @@ export const wrapper = func => ({
   needsLogin,
   res,
   store,
-  successMessage,
-  errorMessage,
-}) => (handler = p => p) => (...args) => {
+}) => (handler = p => p, { errorMessage, successMessage } = {}) => (...args) => {
   if (!res) {
     NProgress.start();
   }
