@@ -1,4 +1,5 @@
 import NProgress from 'nprogress';
+import { toast } from 'react-toastify';
 import {
   createResource,
   readEndpoint,
@@ -21,6 +22,8 @@ export const wrapper = func => ({
   needsLogin,
   res,
   store,
+  successMessage,
+  errorMessage,
 }) => (handler = p => p) => (...args) => {
   if (!res) {
     NProgress.start();
@@ -28,11 +31,17 @@ export const wrapper = func => ({
   return handler((dispatch || store.dispatch)(func(...args)).then((result) => {
     if (!res) {
       NProgress.done();
+      if (successMessage) {
+        toast.success(successMessage);
+      }
     }
     return result;
   })).catch((err) => {
     if (!res) {
       NProgress.done();
+      if (errorMessage) {
+        toast.error(errorMessage);
+      }
     }
     return unauthorizedHandler({
       err,
