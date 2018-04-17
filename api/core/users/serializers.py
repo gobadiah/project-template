@@ -60,3 +60,8 @@ class UserSerializer(JPIUserSerializer):
             'club',
             'ranking',
         )
+
+    class JSONAPIMeta(object):
+        """UserSerializer JSONAPIMeta class."""
+
+        included_resources = ('picture', )

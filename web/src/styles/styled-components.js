@@ -18,6 +18,14 @@ export const FlexColumn = styled(Flex)`
   flex-direction: column;
 `;
 
+export const FlexAlignedCenter = styled(Flex)`
+  align-items: center;
+`;
+
+export const FlexColumnAlignedCenter = styled(FlexColumn)`
+  align-items: center;
+`;
+
 export const FlexCenter = styled(Flex)`
   align-items: center;
   justify-content: center;

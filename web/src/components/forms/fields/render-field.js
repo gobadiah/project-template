@@ -1,9 +1,9 @@
 import { bool, number, shape, string } from 'prop-types';
+import { css } from 'react-emotion';
 import React from 'react';
 import _ from 'lodash';
-import styled, { css } from 'react-emotion';
 
-import { Flex, FlexColumn } from '~/styles';
+import { FlexAlignedCenter, FlexColumnAlignedCenter } from '~/styles';
 import { defaultPropTypes } from '~/components';
 
 import { Error, Warning } from '..';
@@ -26,7 +26,7 @@ const RenderField = ({
   type,
   required,
 }, { t }) => {
-  const container = column ? FlexColumn : Flex;
+  const container = column ? FlexColumnAlignedCenter : FlexAlignedCenter;
   const id = type === 'radio' ? `${input.name}_${input.value}` : undefined;
   const req = required ? ' *' : '';
   const lab = `${t(label)}${req}`;
@@ -46,9 +46,7 @@ const RenderField = ({
       />
     );
   return React.createElement(
-    styled(container)`
-      align-items: center;
-    `,
+    container,
     { className },
     _.compact([
       component,
