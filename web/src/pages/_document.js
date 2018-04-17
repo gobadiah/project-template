@@ -2,7 +2,7 @@ import React from 'react';
 import Document, { Head, Main, NextScript } from 'next/document';
 import { extractCritical } from 'emotion-server';
 import nprogress from 'nprogress/nprogress.css';
-import { ToastContainer } from 'react-toastify';
+import toastify from 'react-toastify/dist/ReactToastify.css';
 
 import { Sentry } from '~/services/sentry';
 
@@ -30,12 +30,13 @@ export default class MyDocument extends Document {
           }<style dangerouslySetInnerHTML={{ __html: this.props.css }} />
           { // eslint-disable-next-line react/no-danger
           }<style dangerouslySetInnerHTML={{ __html: nprogress }} />
+          { // eslint-disable-next-line react/no-danger
+          }<style dangerouslySetInnerHTML={{ __html: toastify }} />
         </Head>
         <body>
           <Sentry />
           <Main />
           <NextScript />
-          <ToastContainer />
         </body>
       </html>
     );

@@ -1,4 +1,5 @@
 import React from 'react';
+import { ToastContainer } from 'react-toastify';
 
 import { Page } from '~/components/base';
 import hoc from '~/hoc';
@@ -9,7 +10,10 @@ class SignIn extends Page {
   render() {
     const { signin } = this.props;
     return (
-      <SignInForm onSubmit={signin} />
+      <div>
+        <SignInForm onSubmit={signin} />
+        <ToastContainer />
+      </div>
     );
   }
 }

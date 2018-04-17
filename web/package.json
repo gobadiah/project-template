@@ -62,7 +62,7 @@
     "react-emotion": "^9.0.2",
     "react-i18next": "^7.4.0",
     "react-redux": "^5.0.7",
-    "react-toastify": "^3.3.4",
+    "react-toastify": "^4.0.0-rc.4",
     "redux": "^3.7.2",
     "redux-actions": "^2.2.1",
     "redux-devtools-extension": "^2.13.2",

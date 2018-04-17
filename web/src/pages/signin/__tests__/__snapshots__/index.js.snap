@@ -8,56 +8,59 @@ exports[`SignIn should match snapshot 1`] = `
   display: flex;
 }
 
-<form
-  onSubmit={[Function]}
->
-  <div
-    className="emotion-0 emotion-1"
+<div>
+  <form
+    onSubmit={[Function]}
   >
-    <label
-      htmlFor="email"
+    <div
+      className="emotion-0 emotion-1"
     >
-      Email
-    </label>
-    <input
-      autoComplete="email"
-      className={undefined}
-      name="email"
-      onBlur={[Function]}
-      onChange={[Function]}
-      onDragStart={[Function]}
-      onDrop={[Function]}
-      onFocus={[Function]}
-      placeholder={undefined}
-      type="email"
-      value=""
-    />
-  </div>
-  <div
-    className="emotion-0 emotion-1"
-  >
-    <label
-      htmlFor="password"
+      <label
+        htmlFor="email"
+      >
+        Email
+      </label>
+      <input
+        autoComplete="email"
+        className={undefined}
+        name="email"
+        onBlur={[Function]}
+        onChange={[Function]}
+        onDragStart={[Function]}
+        onDrop={[Function]}
+        onFocus={[Function]}
+        placeholder={undefined}
+        type="email"
+        value=""
+      />
+    </div>
+    <div
+      className="emotion-0 emotion-1"
     >
-      Password
-    </label>
+      <label
+        htmlFor="password"
+      >
+        Password
+      </label>
+      <input
+        autoComplete="current-password"
+        className={undefined}
+        name="password"
+        onBlur={[Function]}
+        onChange={[Function]}
+        onDragStart={[Function]}
+        onDrop={[Function]}
+        onFocus={[Function]}
+        placeholder={undefined}
+        type="password"
+        value=""
+      />
+    </div>
     <input
-      autoComplete="current-password"
-      className={undefined}
-      name="password"
-      onBlur={[Function]}
-      onChange={[Function]}
-      onDragStart={[Function]}
-      onDrop={[Function]}
-      onFocus={[Function]}
-      placeholder={undefined}
-      type="password"
-      value=""
+      type="submit"
+      value="Sign in"
     />
-  </div>
-  <input
-    type="submit"
-    value="Sign in"
-  />
-</form>
+  </form>
+  <div />
+</div>
 `;
