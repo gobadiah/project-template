@@ -1,5 +1,7 @@
 """Models for assets."""
 
+import boto3
+
 from django.contrib.auth import get_user_model
 from django.contrib.postgres.fields import JSONField
 from django.db import models
@@ -28,3 +30,18 @@ class Asset(models.Model):
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    @classmethod
+    def get_info(cls, bucket, key):
+        """Generate an info dict from a bucket and a key."""
+        s3 = boto3.client('s3')
+        response = s3.get_object(Bucket=bucket, Key=key)
+        return {
+            's3': {
+                'bucket': bucket,
+                'key': key,
+            },
+            'Content-Type': response['ContentType'],
+            'Content-Length': response['ContentLength'],
+            'ETag': response['ETag'],
+        }

@@ -1,25 +1,25 @@
 import { shape } from 'prop-types';
 import React from 'react';
 
-import { Flex, FlexColumn } from '~/styles';
+import { Flex } from '~/styles';
 import { GreenHyphen, Small } from '~/styles/styled-components';
+import { age } from '~/utils';
 import { defaultPropTypes } from '~/components';
 import ProfilePicture from '~/components/profile-picture';
-import { age } from '~/utils';
 
-import { BottomContainer, pictureSide } from './styles';
+import { Age, BottomContainer, Ranking, RightContainer, pictureSide } from './styles';
 
 const UserIdentity = ({ user }, { t }) => (
   <Flex>
-    <ProfilePicture user={user} side={pictureSide} />
-    <FlexColumn>
+    <ProfilePicture picture={user.picture} side={pictureSide} />
+    <RightContainer>
       <Small>{`${user.first_name} ${user.last_name}`}</Small>
       <BottomContainer>
-        <Small>{ age(t, user.birthday) }</Small>
+        <Age>{ age(t, user.birthday) }</Age>
         <GreenHyphen />
-        <Small>{ user.ranking }</Small>
+        <Ranking>{ user.ranking }</Ranking>
       </BottomContainer>
-    </FlexColumn>
+    </RightContainer>
   </Flex>
 );
 

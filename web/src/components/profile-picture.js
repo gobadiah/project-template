@@ -3,11 +3,11 @@ import { number, shape } from 'prop-types';
 
 import { defaultPropTypes } from '~/components';
 
-const ProfilePicture = ({ side, user }, { t }) => (
-  user.picture ?
+const ProfilePicture = ({ side, picture }, { t }) => (
+  picture ?
     <img
       alt={t('Profile picture')}
-      src={user.picture.url}
+      src={picture.url}
       css={`
         width: ${side}px;
         height: ${side}px;
@@ -20,10 +20,11 @@ const ProfilePicture = ({ side, user }, { t }) => (
 
 ProfilePicture.propTypes = {
   side: number.isRequired,
-  user: shape().isRequired,
+  picture: shape(),
 };
 
 ProfilePicture.defaultProps = {
+  picture: undefined,
 };
 
 ProfilePicture.contextTypes = defaultPropTypes;

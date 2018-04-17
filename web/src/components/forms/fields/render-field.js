@@ -1,9 +1,9 @@
 import { bool, number, shape, string } from 'prop-types';
-import { css } from 'react-emotion';
 import React from 'react';
 import _ from 'lodash';
+import styled, { css } from 'react-emotion';
 
-import { FlexCenter, FlexColumnCenter } from '~/styles';
+import { Flex, FlexColumn } from '~/styles';
 import { defaultPropTypes } from '~/components';
 
 import { Error, Warning } from '..';
@@ -26,16 +26,15 @@ const RenderField = ({
   type,
   required,
 }, { t }) => {
-  const container = column ? FlexColumnCenter : FlexCenter;
+  const container = column ? FlexColumn : Flex;
   const id = type === 'radio' ? `${input.name}_${input.value}` : undefined;
   const req = required ? ' *' : '';
   const lab = `${t(label)}${req}`;
   const props = {
     autoComplete,
-    className: `${inputClassName} ${type === 'radio' && css`width: 32px`}`,
+    className: `${inputClassName || ''} ${(type === 'radio' && css`width: 32px`) || ''}`,
     key: 'component',
     placeholder: lab,
-    type,
     id,
     ...input,
   };
@@ -47,7 +46,9 @@ const RenderField = ({
       />
     );
   return React.createElement(
-    container,
+    styled(container)`
+      align-items: center;
+    `,
     { className },
     _.compact([
       component,

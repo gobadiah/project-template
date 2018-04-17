@@ -1,5 +1,7 @@
 """Core users urls."""
 
+import assets.views
+
 from django.urls import include, path
 
 from jasonpi.utils import one_to_one_relationship, resource_relationships
@@ -50,4 +52,5 @@ urlpatterns = [
     path('', include(users_router.urls)),
     resource_relationships('user', views.UserRelationshipView),
     one_to_one_relationship('user', 'current_stats', stats.views.StatsViewSet),
+    one_to_one_relationship('user', 'picture', assets.views.AssetViewSet),
 ]

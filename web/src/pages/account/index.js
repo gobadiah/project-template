@@ -1,29 +1,35 @@
 import React from 'react';
 
 import { AccountForm } from '~/auth';
-import { Line } from '~/styles';
-import { Link } from '~/routes';
 import { Main } from '~/components';
 import { Page } from '~/components/base';
+import { Router } from '~/routes';
 import hoc from '~/hoc';
 
 import { containerClassName } from './styles';
 
 class Account extends Page {
   render() {
-    const { t } = this.props;
-    const { signin } = this.props;
+    const { t, user } = this.props;
+    const { create, update } = this.props;
+    const onSubmit = values => update(p => p.then(result => console.log('ok', result))
+      .catch(err => console.log('pas ok', err)), {
+      successMessage: t('You informations have been correctly saved !'),
+      errorMessage: t('There was an error saving your informations'),
+    })({
+      type: 'users',
+      id: user.id,
+      attributes: values,
+    });
+
     return (
       <Main
         title={t('account:title')}
         titleBar={t('account:Edit my informations')}
+        titleBarOnClose={() => Router.pushRoute('home')}
         containerClassName={containerClassName}
       >
-        <AccountForm onSubmit={signin} />
-        <Line />
-        <Link route='register'>
-          <a>{t('account:Create your account')}</a>
-        </Link>
+        <AccountForm initialValues={user} create={create} onSubmit={onSubmit} />
       </Main>
     );
   }

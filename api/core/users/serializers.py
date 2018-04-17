@@ -1,11 +1,12 @@
 """Core users serializers."""
 
+from assets.models import Asset
+from assets.serializers import AssetSerializer
+
 from core.models import User
 
 from jasonpi.serializers import UserSerializer as JPIUserSerializer
 from jasonpi.utils import resource_related_field
-
-from rest_framework import serializers
 
 from sports.models import Session
 from sports.serializers import SessionSerializer
@@ -33,16 +34,15 @@ class UserSerializer(JPIUserSerializer):
     included_serializers = {
         'sessions': SessionSerializer,
         'current_stats': StatsSerializer,
+        'picture': AssetSerializer,
     }
 
-    picture = serializers.SerializerMethodField()
-
-    def get_picture(self, obj):
-        """Return the user picture url if available."""
-        if obj.picture:
-            return obj.picture.url
-        else:
-            return None
+    picture = resource_related_field(
+        Asset,
+        'user',
+        'picture',
+        many=False,
+    )
 
     class Meta(object):
         """UserSerializer Meta class."""

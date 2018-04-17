@@ -7,6 +7,7 @@ export const Button = styled('button')`
   display: flex;
   align-items: center;
   justify-content: space-around;
+  position: relative;
   font-size: 26px;
   font-weight: bold;
   line-height: 1.04;
@@ -15,11 +16,21 @@ export const Button = styled('button')`
   cursor: pointer;
   outline: none;
   border: none;
+  background-color: var(--dark-blue-grey);
 `;
 
 export const arrowRight = css`
   width: 20px;
   height: 11px;
+  position: absolute;
+  right: 17px;
+`;
+
+export const imgLeft = css`
+  max-width: 20px;
+  max-height: 20px;
+  position: absolute;
+  left: 24px;
 `;
 
 export const google = css`

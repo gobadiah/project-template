@@ -1,6 +1,6 @@
 import styled, { css } from 'react-emotion';
 
-import { FlexCenter } from '~/styles';
+import { ClearButton, FlexCenter } from '~/styles';
 
 export const MainDiv = styled(FlexCenter)`
   position: relative;
@@ -18,9 +18,8 @@ export const MainDiv = styled(FlexCenter)`
   border-top-right-radius: 5px;
 `;
 
-export const CloseButton = styled('button')`
+export const CloseButton = styled(ClearButton)`
   position: absolute;
-  display: flex;
   top: 37px;
   right: 34px;
   width: 16px;

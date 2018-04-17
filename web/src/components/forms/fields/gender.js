@@ -1,7 +1,6 @@
-import React from 'react';
-import { string } from 'prop-types';
-
 import { Field } from 'redux-form';
+import { string } from 'prop-types';
+import React from 'react';
 
 import RenderField from './render-field';
 

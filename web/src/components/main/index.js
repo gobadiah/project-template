@@ -1,6 +1,7 @@
 import {
   arrayOf,
   bool,
+  func,
   node,
   number,
   oneOfType,
@@ -21,6 +22,7 @@ const Main = ({
   noContainer,
   title,
   titleBar,
+  titleBarOnClose,
   width,
 }, { i18n, user }) => (
   <div>
@@ -30,7 +32,7 @@ const Main = ({
     <Title i18n={i18n} user={user} />
     { noContainer ? children :
     <Container className={containerClassName} width={width}>
-      { titleBar && <TitleBar title={titleBar} /> }
+      { titleBar && <TitleBar onClose={titleBarOnClose} title={titleBar} /> }
       { children }
     </Container>
     }
@@ -45,6 +47,7 @@ Main.propTypes = {
   containerClassName: string,
   title: string.isRequired,
   titleBar: string,
+  titleBarOnClose: func,
   noContainer: bool,
   width: number,
 };
@@ -52,6 +55,7 @@ Main.propTypes = {
 Main.defaultProps = {
   containerClassName: '',
   titleBar: undefined,
+  titleBarOnClose: undefined,
   noContainer: false,
   width: undefined,
 };

@@ -25,7 +25,7 @@ const currentUser = ({
         return {
           user: currentUserSelector(store.getState()),
         };
-      }))('/users/me');
+      }))('/users/me?include=picture');
     } else if (needsLogin) {
       redirect(res, `/signin?returnUrl=${asPath}`);
     }

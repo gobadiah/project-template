@@ -8,6 +8,7 @@ import arrowRight from './images/arrow-right.png';
 import {
   Button,
   arrowRight as arrowRightClassName,
+  imgLeft,
 } from './styles';
 
 const RoundButton = ({
@@ -17,7 +18,7 @@ const RoundButton = ({
   onClick,
 }) => (
   <Button className={className} onClick={onClick}>
-    { src && <img src={src} alt='' /> }
+    { src && <img src={src} alt='' className={imgLeft} /> }
     <span>{text}</span>
     <img
       src={arrowRight}
@@ -31,13 +32,14 @@ RoundButton.propTypes = {
   className: string,
   src: string,
   text: string,
-  onClick: func.isRequired,
+  onClick: func,
 };
 
 RoundButton.defaultProps = {
   className: '',
   src: undefined,
   text: '',
+  onClick: undefined,
 };
 
 RoundButton.contextTypes = defaultPropTypes;

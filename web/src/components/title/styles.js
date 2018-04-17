@@ -31,6 +31,18 @@ export const Kin = () => (
   </span>
 );
 
+export const languages = css`
+  position: absolute;
+  top: 33px;
+  right: 47px;
+`;
+
+export const myAccount = css`
+  position: absolute;
+  top: 33px;
+  left: 40px;
+`;
+
 export const Cube = () => (
   <span>Cube</span>
 );
