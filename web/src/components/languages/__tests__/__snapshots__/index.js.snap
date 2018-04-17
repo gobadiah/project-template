@@ -5,11 +5,18 @@ exports[`Lang should match snapshot 1`] = `
   width: 100%;
 }
 
-<img
-  alt="fr"
-  className="emotion-0"
-  src="/static/build/329f5c89d4f13938971b9b0d8d35f296.png"
-/>
+<Styled(div)
+  main={false}
+>
+  <Styled(img)
+    alt="fr"
+    className="emotion-0"
+    src="/static/build/329f5c89d4f13938971b9b0d8d35f296.png"
+  />
+  <Styled(span)>
+    FR
+  </Styled(span)>
+</Styled(div)>
 `;
 
 exports[`Languages should match snapshot 1`] = `
@@ -20,17 +27,20 @@ exports[`Languages should match snapshot 1`] = `
   outline: none;
   overflow: hidden;
   padding: 0;
-  width: 220px;
-  height: 100px;
+  width: 133px;
+  height: 60px;
 }
 
-<Styled(div)>
+<Styled(div)
+  className=""
+>
   <Lang
     className="
-  width: 220px;
-  height: 100px;
+  width: 133px;
+  height: 60px;
 "
     lng="fr"
+    main={true}
   />
   <Styled(div)>
     <button
@@ -40,10 +50,11 @@ exports[`Languages should match snapshot 1`] = `
     >
       <Lang
         className="
-  width: 220px;
-  height: 100px;
+  width: 133px;
+  height: 60px;
 "
         lng="en"
+        main={false}
       />
     </button>
   </Styled(div)>

@@ -30,7 +30,6 @@ export const wrapper = func => ({
     if (!res) {
       NProgress.done();
       if (successMessage) {
-        console.log('toasting', toast);
         toast.success(successMessage);
       }
     }

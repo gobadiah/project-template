@@ -12,8 +12,7 @@ class Account extends Page {
   render() {
     const { t, user } = this.props;
     const { create, update } = this.props;
-    const onSubmit = values => update(p => p.then(result => console.log('ok', result))
-      .catch(err => console.log('pas ok', err)), {
+    const onSubmit = values => update(p => p, {
       successMessage: t('You informations have been correctly saved !'),
       errorMessage: t('There was an error saving your informations'),
     })({
