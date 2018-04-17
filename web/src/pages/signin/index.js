@@ -1,5 +1,4 @@
 import React from 'react';
-import { ToastContainer } from 'react-toastify';
 
 import { FacebookButton, GoogleButton, Main } from '~/components';
 import { Line, SocialDiv } from '~/styles';

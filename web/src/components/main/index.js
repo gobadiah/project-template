@@ -30,7 +30,6 @@ const Main = ({
     <Head>
       <title>{title}</title>
     </Head>
-    <ToastContainer />
     <Title i18n={i18n} user={user} />
     { noContainer ? children :
     <Container className={containerClassName} width={width}>
@@ -38,6 +37,7 @@ const Main = ({
       { children }
     </Container>
     }
+    <ToastContainer />
   </div>
 );
 

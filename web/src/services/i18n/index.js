@@ -5,7 +5,15 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 import moment from 'moment';
 
 export const availableLanguages = ['fr', 'en'];
-export const availableNamespaces = ['common', 'index'];
+export const availableNamespaces = [
+  'common',
+  'index',
+  'home',
+  'account',
+  'sign-in',
+  'session',
+  'video',
+];
 
 const detection = {
   order: ['querystring', 'cookie', 'localStorage', 'navigator', 'header'],

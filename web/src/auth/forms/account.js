@@ -69,7 +69,7 @@ const AccountForm = ({
       />
       <FirstRow>
         <ProfilePicture picture={picture} side={80} />
-        <PictureLabel htmlFor='react-s3-uploader'>{t('account: Upload a picture')}</PictureLabel>
+        <PictureLabel htmlFor='react-s3-uploader'>{t('account:Upload a picture')}</PictureLabel>
         <SocialDiv>
           <GoogleButton linked={false} />
           <FacebookButton linked={false} />
@@ -85,11 +85,17 @@ const AccountForm = ({
         <EmailField />
       </Row>
       <Row>
-        <PasswordField />
+        <PasswordField name='old_password' />
       </Row>
       <Row>
-        <PasswordField />
-        <PasswordField />
+        <PasswordField
+          label='New password'
+          autoComplete='new-password'
+        />
+        <PasswordField
+          name='confirm_password'
+          label='Password confirmation'
+        />
       </Row>
       <Row>
         <BirthdayField />

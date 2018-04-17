@@ -120,8 +120,8 @@ export const GoogleButton = ({ linked }) => (
       src={google}
       alt=''
       css={`
-        width: ${size}px;
-        height: ${size}px;
+        max-width: ${size}px;
+        max-height: ${size}px;
       `}
     />
   </ClearButton>
@@ -143,8 +143,8 @@ export const FacebookButton = ({ linked }) => (
       src={facebook}
       alt=''
       css={`
-        width: ${size}px;
-        height: ${size}px;
+        max-width: ${size}px;
+        max-height: ${size}px;
       `}
     />
   </ClearButton>
