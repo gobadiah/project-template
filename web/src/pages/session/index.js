@@ -2,17 +2,18 @@ import React from 'react';
 
 import { HorizontalSeparation, Normal } from '~/styles';
 import { Page } from '~/components/base';
-import { Score, Main, UserScore } from '~/components';
+import { Score, Main } from '~/components';
 import { score } from '~/tennis/fixtures';
 import hoc from '~/hoc';
 
-import { PlayersStats, Sections, SessionStats, SessionTitle } from './components';
+import { PlayersStats, Sections, SessionStats, SessionTitle, HeatMap } from './components';
 import { UserScores, WatchVideo, containerWidth, userScoreHeight } from './styles';
 
 const statsBySection = {
   0: ['service', 'service'],
   1: ['service'],
-  2: [],
+  2: ['service'],
+  3: ['service'],
 };
 
 class Session extends Page {
@@ -31,8 +32,24 @@ class Session extends Page {
       t('session:KEY NUMBERS'),
       t('session:STATISTICS'),
       t('session:PERFORMANCES'),
+      t('session:HEAT MAP')
     ];
-    console.log(session);
+
+    console.log(sections);
+    console.log(currentSection);
+    var sectionInfo;
+    if (currentSection != 3){
+        sectionInfo = <PlayersStats
+                        stats={statsBySection[currentSection]}
+                        session={session}
+                      />;
+    } else {
+      sectionInfo = <HeatMap
+                      stats={statsBySection[currentSection]}
+                      session={session}
+                    />;
+    }
+    console.log(sectionInfo);
     return (
 
       <Main title={t('session:title', { session })} width={containerWidth}>
@@ -56,10 +73,7 @@ class Session extends Page {
           sections={sections}
           onSectionChange={index => this.setState({ currentSection: index })}
         />
-        <PlayersStats
-          stats={statsBySection[currentSection]}
-          session={session}
-        />
+        {sectionInfo}
       </Main>
     );
   }
