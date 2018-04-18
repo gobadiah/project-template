@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { HorizontalSeparation } from '~/styles';
+import { HorizontalSeparation, Normal } from '~/styles';
 import { Page } from '~/components/base';
 import { Score, Main, UserScore } from '~/components';
 import { score } from '~/tennis/fixtures';
@@ -10,8 +10,8 @@ import { PlayersStats, Sections, SessionStats, SessionTitle } from './components
 import { UserScores, WatchVideo, containerWidth, userScoreHeight } from './styles';
 
 const statsBySection = {
-  0: ['service'],
-  1: [],
+  0: ['service', 'service'],
+  1: ['service'],
   2: [],
 };
 
@@ -32,14 +32,16 @@ class Session extends Page {
       t('session:STATISTICS'),
       t('session:PERFORMANCES'),
     ];
+    console.log(session);
     return (
+
       <Main title={t('session:title', { session })} width={containerWidth}>
         <SessionTitle session={session} />
         <HorizontalSeparation />
         <UserScores>
-          <UserScore user={user} height={userScoreHeight} />
+          <Normal> {session.players[0]['name']} </Normal>
           <Score score={score} />
-          <UserScore user={user} right height={userScoreHeight} />
+          <Normal> {session.players[1]['name']} </Normal>
         </UserScores>
         <WatchVideo session={session} />
         <HorizontalSeparation />
@@ -65,5 +67,5 @@ class Session extends Page {
 
 export default hoc(
   'session',
-  { endpoint: query => `/tennis/sessions/${query.id}?include=videos,current_stats` },
+  { endpoint: query => `/tennis/sessions/${query.id}?include=videos,current_stats,players` },
 )(Session);
