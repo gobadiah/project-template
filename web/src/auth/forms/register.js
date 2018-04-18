@@ -18,9 +18,12 @@ import {
 import { Flex } from '~/styles';
 import { Form } from '~/components/forms';
 import { PureComponent } from '~/components/base';
+import { RoundButton } from '~/components';
 
 class RegisterForm extends PureComponent {
   render() {
+    const { t } = this.context;
+
     return (
       <Form {...this.props}>
         <Flex>
@@ -49,6 +52,7 @@ class RegisterForm extends PureComponent {
           <LeftHandedField inputClassName={css`width: 282px`} />
           <RightHandedField inputClassName={css`width: 282px`} />
         </Flex>
+        <RoundButton text={t('I create my account')} className={css`width: 100%`} />
       </Form>
     );
   }
