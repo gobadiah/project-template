@@ -2,10 +2,10 @@
 
 import pytest
 
-from ..models import User
+from .factories import UserFactory
 
 
 @pytest.mark.django_db
 def test_user_model():
     """Test User creation and saving to db."""
-    User.objects.create()
+    UserFactory()

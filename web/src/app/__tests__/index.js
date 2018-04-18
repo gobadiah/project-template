@@ -6,15 +6,19 @@ import createApp from '..';
 describe('App integration', () => {
   let server;
 
-  beforeAll(() => createApp(false).then((value) => { server = value.listen(0); }));
+  beforeAll(() => createApp(false).then((value) => {
+    server = value.listen(0);
+    jest.setTimeout(15000);
+  }));
 
-  afterAll(() => { server.close(); });
+  afterAll(() => {
+    server.close();
+  });
 
-  it('should respond with 200 status for index and contain some french text', () =>
+  it('should respond with 302 status for index because not logged in', () =>
     request(server)
       .get('/')
-      .expect(200)
-      .expect(/>Salut le monde !<\/div>/));
+      .expect(302));
 
   /**
     * @todo Mock the proxy call. It might not be straightforward.
@@ -76,6 +80,9 @@ describe('App unit', () => {
     const favicon = require('serve-favicon');
     favicon.mockImplementation(() => 'favicon');
 
+    const mockCookieParser = jest.fn(() => 'cookie');
+    jest.mock('cookie-parser', () => mockCookieParser);
+
     const dev = false;
 
     const app = require('..').default;
@@ -134,14 +141,16 @@ describe('App unit', () => {
       '../../static',
       'favicon.ico',
     ));
+    expect(mockCookieParser).toHaveBeenCalledTimes(1);
 
     expect(i18nextMiddleware.handle).toHaveBeenCalledTimes(1);
     expect(i18nextMiddleware.handle).toHaveBeenCalledWith(i18n);
 
-    expect(mockServer.use).toHaveBeenCalledTimes(4);
+    expect(mockServer.use).toHaveBeenCalledTimes(5);
     expect(mockServer.use).toHaveBeenCalledWith('favicon');
     expect(mockServer.use).toHaveBeenCalledWith(handle);
     expect(mockServer.use).toHaveBeenCalledWith('/locales', mockStatic);
+    expect(mockServer.use).toHaveBeenCalledWith('cookie');
     // @todo test for proxy to be rightly called
     // expect(mockServer.use).toHaveBeenCalledWith('/api', 'proxy');
 
@@ -151,13 +160,15 @@ describe('App unit', () => {
     expect(passport).toHaveBeenCalledTimes(1);
     expect(passport).toHaveBeenCalledWith(mockServer);
 
-    expect(mockServer.get).toHaveBeenCalledTimes(2);
+    expect(mockServer.get).toHaveBeenCalledTimes(3);
     expect(mockServer.get.mock.calls[0][0]).toEqual('/api');
     const func2 = mockServer.get.mock.calls[0][1];
     const res = {};
+    res.clearCookie = jest.fn();
     res.status = jest.fn(() => res);
     res.send = jest.fn(() => res);
     res.end = jest.fn();
+    res.redirect = jest.fn();
 
     func2(undefined, res);
     expect(res.status).toHaveBeenCalledTimes(1);
@@ -165,6 +176,22 @@ describe('App unit', () => {
     expect(res.send).toHaveBeenCalledTimes(1);
     expect(res.send).toHaveBeenCalledWith('Api endpoint');
     expect(res.end).toHaveBeenCalledTimes(1);
+
+    expect(mockServer.get.mock.calls[1][0]).toEqual('/signout');
+    const func3 = mockServer.get.mock.calls[1][1];
+    const req = {
+      get: jest.fn(() => 'http://testserver/signout'),
+    };
+    expect(func3(req, res)).toBeUndefined();
+    expect(res.redirect).toHaveBeenCalledTimes(1);
+    expect(res.redirect).toHaveBeenCalledWith(302, '/');
+    expect(res.clearCookie).toHaveBeenCalledWith('access_token');
+
+    req.get.mockImplementation(() => 'http://testserver/hello-world');
+    expect(func3(req, res)).toBeUndefined();
+    expect(req.get).toHaveBeenCalledWith('Referrer');
+    expect(res.redirect).toHaveBeenCalledTimes(2);
+    expect(res.redirect).toHaveBeenCalledWith(302, 'http://testserver/hello-world');
 
     expect(mockServer.get).toHaveBeenCalledWith('*', mockHandler);
 

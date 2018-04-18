@@ -6,8 +6,13 @@ from jasonpi.utils import resource_related_field
 
 from rest_framework_json_api import serializers
 
-from sports.models import Session
-from sports.serializers import SessionSerializer as BaseSessionSerializer
+from sports.models import \
+    Session, \
+    VideoPoint
+from sports.serializers import \
+    SessionSerializer as BaseSessionSerializer, \
+    VideoPointSerializer, \
+    VideoSerializer as BaseVideoSerializer
 
 from utils.property import model_property
 
@@ -28,11 +33,24 @@ from .models import \
 class ExchangeSerializer(serializers.HyperlinkedModelSerializer):
     """ExchangeSerializer."""
 
+    start_at = resource_related_field(
+        VideoPoint,
+        'exchange',
+        'start_at',
+        many=False,
+        read_only=True,
+        namespace='tennis',
+    )
+
+    included_serializers = {
+        'start_at': VideoPointSerializer,
+    }
+
     class Meta(object):
         """ExchangeSerializer Meta class."""
 
         model = Exchange
-        fields = []
+        fields = ('start_at', )
 
 
 class ExchangePlayerSerializer(serializers.HyperlinkedModelSerializer):
@@ -102,7 +120,11 @@ class PlayerSerializer(serializers.HyperlinkedModelSerializer):
         """PlayerSerializer Meta class."""
 
         model = Player
-        fields = []
+        fields = (
+            'id',
+            'name',
+            'data',
+        )
 
 
 # Extra Session methods
@@ -154,11 +176,12 @@ class SessionSerializer(BaseSessionSerializer):
     )
 
     included_serializers = {
+        **BaseSessionSerializer.included_serializers,
         'trainings': 'tennis.serializers.TrainingSerializer',
         'players': 'tennis.serializers.PlayerSerializer',
         'matches': 'tennis.serializers.MatchSerializer',
         'exchanges': 'tennis.serializers.ExchangeSerializer',
-        **BaseSessionSerializer.included_serializers,
+        'videos': 'tennis.serializers.VideoSerializer',
     }
 
     label = serializers.SerializerMethodField()
@@ -167,16 +190,14 @@ class SessionSerializer(BaseSessionSerializer):
         """Serialize session label."""
         return 'Session'
 
-    class Meta(object):
+    class Meta(BaseSessionSerializer.Meta):
         """SessionSerializer Meta class."""
 
-        model = Session
-        fields = (
+        fields = BaseSessionSerializer.Meta.fields + (
             'id',
             'date',
             'place',
             'duration',
-            'videos',
             'trainings',
             'matches',
             'players',
@@ -213,3 +234,12 @@ class TrainingSerializer(serializers.HyperlinkedModelSerializer):
 
         model = Training
         fields = []
+
+
+class VideoSerializer(BaseVideoSerializer):
+    """Tennis VideoSerializer."""
+
+    included_serializers = {
+        **BaseVideoSerializer.included_serializers,
+        'session': 'tennis.serializers.SessionSerializer',
+    }

@@ -66,6 +66,17 @@ describe('Redux', () => {
         it('should make a post request and then dispatch two actions', async () => {
           jest.mock('axios');
           jest.mock('redux-json-api');
+          jest.mock('nprogress');
+          jest.mock('../../routes', () => ({
+            Router: {
+              pushRoute: jest.fn(),
+              router: {
+                query: {
+                  returnUrl: '/home',
+                },
+              },
+            },
+          }));
 
           const axios = require('axios');
           const id = 6;
@@ -81,6 +92,7 @@ describe('Redux', () => {
           const { hydrateStore } = require('redux-json-api');
           hydrateStore.mockImplementationOnce(() => 'hydrateStore');
 
+          const { Router } = require('~/routes');
           const { config } = require('~/services/axios');
           const { signin } = require('../duck');
 
@@ -91,10 +103,74 @@ describe('Redux', () => {
 
           expect(axios.post).toHaveBeenCalledTimes(1);
           expect(axios.post).toHaveBeenCalledWith(
-            '/api/auth/signin',
+            '/auth/signin',
             data,
             config(),
           );
+
+          expect(Router.pushRoute).toHaveBeenCalledTimes(1);
+          expect(Router.pushRoute).toHaveBeenCalledWith(Router.router.query.returnUrl, undefined);
+
+          expect(hydrateStore).toHaveBeenCalledTimes(1);
+          expect(hydrateStore).toHaveBeenCalledWith(result.data);
+
+          expect(dispatch).toHaveBeenCalledTimes(2);
+          expect(dispatch).toHaveBeenCalledWith('hydrateStore');
+
+          expect(dispatch).toHaveBeenCalledWith({
+            type: 'web/auth/SIGNIN',
+            payload: {
+              userId: 6,
+            },
+          });
+        });
+
+        it('should make a post request and then dispatch two actions / no returnUrl', async () => {
+          jest.mock('axios');
+          jest.mock('redux-json-api');
+          jest.mock('nprogress');
+          jest.mock('../../routes', () => ({
+            Router: {
+              pushRoute: jest.fn(),
+              router: {
+                query: {
+                },
+              },
+            },
+          }));
+
+          const axios = require('axios');
+          const id = 6;
+          const result = {
+            data: {
+              data: {
+                id,
+              },
+            },
+          };
+          axios.post.mockImplementationOnce(() => Promise.resolve(result));
+
+          const { hydrateStore } = require('redux-json-api');
+          hydrateStore.mockImplementationOnce(() => 'hydrateStore');
+
+          const { Router } = require('~/routes');
+          const { config } = require('~/services/axios');
+          const { signin } = require('../duck');
+
+          const dispatch = jest.fn();
+          const data = {};
+
+          await expect(signin(dispatch)(data)).resolves.toBeUndefined();
+
+          expect(axios.post).toHaveBeenCalledTimes(1);
+          expect(axios.post).toHaveBeenCalledWith(
+            '/auth/signin',
+            data,
+            config(),
+          );
+
+          expect(Router.pushRoute).toHaveBeenCalledTimes(1);
+          expect(Router.pushRoute).toHaveBeenCalledWith('/', undefined);
 
           expect(hydrateStore).toHaveBeenCalledTimes(1);
           expect(hydrateStore).toHaveBeenCalledWith(result.data);
@@ -155,7 +231,7 @@ describe('Redux', () => {
 
           expect(axios.post).toHaveBeenCalledTimes(1);
           expect(axios.post).toHaveBeenCalledWith(
-            '/api/auth/register',
+            '/auth/register',
             {
               data: {
                 type: 'users',

@@ -6,7 +6,7 @@ import { required } from '~/utils/forms/validators';
 
 import RenderField from './render-field';
 
-export default () => (
+export default props => (
   <Field
     key='email'
     name='email'
@@ -15,5 +15,6 @@ export default () => (
     autoComplete='email'
     label='Email'
     validate={[required]}
+    {...props}
   />
 );

@@ -1,31 +1,35 @@
-import React from 'react';
-import { arrayOf, func, string } from 'prop-types';
-
+import { arrayOf, bool, func, string } from 'prop-types';
 import { reduxForm } from 'redux-form';
-
-import { defaultPropTypes } from '~/components';
-
-import { Error, Warning } from '~/components/forms';
+import React from 'react';
 
 import { EmailField, PasswordField } from '~/components/forms/fields';
+import { Form } from '~/components/forms';
+import { Link } from '~/routes';
+import { RoundButton, defaultPropTypes } from '~/components';
 
-const SignInForm = ({
-  error,
-  handleSubmit,
-  warning,
-}, { t }) => (
-  <form onSubmit={handleSubmit}>
+import { BottomContainer, ForgottenPassword, signInClassName } from './styles';
+
+const SignInForm = (props, { t }) => (
+  <Form {...props} className={signInClassName}>
     <EmailField />
     <PasswordField />
-    <input type='submit' value={t('Sign in')} />
-    <Warning warning={warning} />
-    <Error error={error} />
-  </form>
+    <BottomContainer>
+      <Link route='password-forgotten'>
+        <ForgottenPassword>{t('Password forgotten')}</ForgottenPassword>
+      </Link>
+      <RoundButton
+        text={t('Connect me')}
+        type='submit'
+        disabled={props.submitting}
+      />
+    </BottomContainer>
+  </Form>
 );
 
 SignInForm.propTypes = {
   error: arrayOf(string),
   handleSubmit: func.isRequired,
+  submitting: bool.isRequired,
   warning: arrayOf(string),
 };
 

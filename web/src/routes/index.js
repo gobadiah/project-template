@@ -6,8 +6,12 @@ routes
   .add('index', '/', 'index_')
   .add('some-page')
   .add('generate-error')
+  .add('account')
   .add('signin')
-  .add('register');
+  .add('register')
+  .add('home')
+  .add('video', '/videos/:id')
+  .add('session', '/sessions/:id');
 
 const { Router } = routes;
 

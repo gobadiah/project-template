@@ -5,7 +5,7 @@ import config from '../config';
 const testAxios = (message, { req, headers }, Cookie, empty) => {
   it(message, () => {
     expect(config(empty ? undefined : { req, headers })).toEqual({
-      baseUrl: generalConfig.api,
+      baseURL: generalConfig.api,
       withCredentials: true,
       headers: Object.assign({}, headers, Cookie ? { Cookie } : {}),
     });

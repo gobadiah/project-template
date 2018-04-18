@@ -45,7 +45,7 @@ const runExpectations = (provider, args, done) => {
       access_token: 'accessToken',
     },
     {
-      baseUrl: 'http://127.0.0.1:8000',
+      baseURL: 'http://127.0.0.1:8000',
       headers: {},
       withCredentials: true,
     },

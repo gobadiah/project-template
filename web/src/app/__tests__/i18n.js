@@ -4,9 +4,14 @@ import createApp from '~/app';
 
 let server;
 
-beforeAll(() => createApp(false).then((value) => { server = value.listen(0); }));
+beforeAll(() => createApp(false).then((value) => {
+  server = value.listen(0);
+  jest.setTimeout(15000);
+}));
 
-afterAll(() => { server.close(); });
+afterAll(() => {
+  server.close();
+});
 
 const testServer = (message, get, status, text, set = ['Accept', 'text/html']) => {
   it(message, () => request(server)
@@ -19,14 +24,14 @@ const testServer = (message, get, status, text, set = ['Accept', 'text/html']) =
 describe('App', () => {
   testServer(
     'should return english when specifying lng query parameter',
-    '/?lng=en',
+    '/some-page?lng=en',
     200,
     />Hello world !<\/div>/,
   );
 
   testServer(
     'should return english when specifying Accept-Language header',
-    '/',
+    '/some-page',
     200,
     />Hello world !<\/div>/,
     ['Accept-Language', 'en'],
@@ -34,7 +39,7 @@ describe('App', () => {
 
   testServer(
     'should return english when specifying i18next cookie',
-    '/',
+    '/some-page',
     200,
     />Hello world !<\/div>/,
     ['Cookie', 'i18next=en'],
@@ -42,7 +47,7 @@ describe('App', () => {
 
   testServer(
     'should prioritize query over header',
-    '/?lng=fr',
+    '/some-page?lng=fr',
     200,
     />Salut le monde !<\/div>/,
     ['Accept-Language', 'en'],

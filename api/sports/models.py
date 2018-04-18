@@ -1,9 +1,14 @@
 """Sports models."""
 
 from django.contrib.auth import get_user_model
+from django.contrib.contenttypes.models import ContentType
 from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+
+from stats.models import Stats
+
+from utils.property import model_property
 
 User = get_user_model()
 
@@ -27,6 +32,23 @@ class Session(models.Model):
         default=dict,
         help_text=_('Additionnal data regarding this session'),
     )
+
+    @model_property(Stats)
+    def current_stats(self):
+        """Return the current statistics for this object."""
+        return Stats.objects.filter(
+            content_type=ContentType.objects.get_for_model(Session),
+            object_id=self.id,
+        ).order_by('-version', '-date').first()
+
+    def serializable_value(self, field_name):
+        """Serialize correctly model_properties.
+
+        without it the serialization is str(field) which is not correct.
+        """
+        if field_name == 'current_stats':
+            return self.current_stats.pk
+        return super(User, self).serializable_value(field_name)
 
 
 class Video(models.Model):

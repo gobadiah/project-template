@@ -4,7 +4,7 @@ import generalConfig from '~/config';
 
 export default ({ headers = {}, req } = {}) => {
   const config = {
-    baseUrl: generalConfig.api,
+    baseURL: generalConfig.api,
     withCredentials: true,
     headers,
   };

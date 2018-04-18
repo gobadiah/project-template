@@ -1,12 +1,14 @@
 import { Map } from 'immutable';
 import { handleActions, combineActions } from 'redux-actions';
 import { hydrateStore } from 'redux-json-api';
+import { toast } from 'react-toastify';
+import NProgress from 'nprogress';
 import axios from 'axios';
 
+import { Router } from '~/routes';
 import { config } from '~/services/axios';
+import { createActions, redirect } from '~/utils';
 import { errorHandler } from '~/utils/forms';
-
-import { createActions } from './utils';
 
 const {
   signin,
@@ -28,24 +30,38 @@ export default handleActions(
   defaultState,
 );
 
-const post = (dispatch, path, data, headers) => axios.post(
-  path,
-  data,
-  config({ headers }),
-).then((result) => {
-  dispatch(hydrateStore(result.data));
-  dispatch(signin(result.data.data.id));
-}).catch(errorHandler);
+const post = (dispatch, path, data, headers, errorMessage) => {
+  // This will probably be called only on client. So we can call NProgress
+  NProgress.start();
+  return axios.post(
+    path,
+    data,
+    config({ headers }),
+  ).then((result) => {
+    dispatch(hydrateStore(result.data));
+    dispatch(signin(result.data.data.id));
+    const returnUrl = Router.router.query.returnUrl || '/';
+    redirect(undefined, returnUrl);
+  }).catch((err) => {
+    if (errorMessage) {
+      toast.error(errorMessage);
+    }
+    NProgress.done();
+    errorHandler(err);
+  });
+};
 
-const signinAction = dispatch => data => post(dispatch, '/api/auth/signin', data);
+const signinAction = dispatch => (data, { errorMessage } = {}) =>
+  post(dispatch, '/auth/signin', data, undefined, errorMessage);
 export { signinAction as signin, signout };
 
-export const register = dispatch => attributes => post(dispatch, '/api/auth/register', {
-  data: {
-    type: 'users',
-    attributes,
-  },
-}, {
-  'Content-Type': 'application/vnd.api+json',
-  Accept: 'application/vnd.api+json',
-});
+export const register = dispatch => (attributes, { errorMessage } = {}) =>
+  post(dispatch, '/auth/register', {
+    data: {
+      type: 'users',
+      attributes,
+    },
+  }, {
+    'Content-Type': 'application/vnd.api+json',
+    Accept: 'application/vnd.api+json',
+  }, errorMessage);

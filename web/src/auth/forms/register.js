@@ -1,35 +1,54 @@
+import { css } from 'react-emotion';
 import { reduxForm } from 'redux-form';
 import React from 'react';
 
 import {
   BirthdayField,
   EmailField,
+  FemaleField,
   FirstNameField,
   LastNameField,
+  LeftHandedField,
+  MaleField,
   PasswordField,
+  RankingField,
+  RightHandedField,
+  TennisClubField,
 } from '~/components/forms/fields';
+import { Flex } from '~/styles';
 import { Form } from '~/components/forms';
-
 import { PureComponent } from '~/components/base';
 
 class RegisterForm extends PureComponent {
   render() {
     return (
       <Form {...this.props}>
-        <EmailField key='email' />
-        <PasswordField
-          key='password'
-          autoComplete='new-password'
-        />
-        <PasswordField
-          key='confirm_password'
-          name='confirm_password'
-          label='Password confirmation'
-          autoComplete='new-password'
-        />
-        <FirstNameField key='first_name' />
-        <LastNameField key='last_name' />
-        <BirthdayField key='birthday' />
+        <Flex>
+          <FirstNameField />
+          <LastNameField />
+        </Flex>
+        <EmailField />
+        <Flex>
+          <PasswordField autoComplete='new-password' />
+          <PasswordField
+            name='confirm_password'
+            label='Password confirmation'
+            autoComplete='new-password'
+          />
+        </Flex>
+        <Flex>
+          <BirthdayField />
+          <RankingField />
+        </Flex>
+        <TennisClubField />
+        <Flex css='justify-content: space-between'>
+          <MaleField inputClassName={css`width: 282px`} />
+          <FemaleField inputClassName={css`width: 282px`} />
+        </Flex>
+        <Flex css='justify-content: space-between'>
+          <LeftHandedField inputClassName={css`width: 282px`} />
+          <RightHandedField inputClassName={css`width: 282px`} />
+        </Flex>
       </Form>
     );
   }

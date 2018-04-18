@@ -6,7 +6,9 @@ from rest_framework import viewsets
 
 from rest_framework_json_api.views import RelationshipView
 
-from sports.models import Session
+from sports.models import \
+    Session, \
+    Video
 
 from .models import \
     Exchange, \
@@ -32,7 +34,8 @@ from .serializers import \
     SessionSerializer, \
     SetPlayerSerializer, \
     SetSerializer, \
-    TrainingSerializer
+    TrainingSerializer, \
+    VideoSerializer
 
 
 class ExchangeViewSet(viewsets.ModelViewSet):
@@ -192,3 +195,19 @@ class TrainingRelationshipView(RelationshipView):
     """Training relationship view."""
 
     queryset = Training.objects.order_by('id')
+
+
+class VideoViewSet(viewsets.ModelViewSet):
+    """Tennis VideoViewSet."""
+
+    queryset = Video.objects.filter(
+        Q(session__trainings__isnull=False) |
+        Q(session__matches__isnull=False),
+    ).order_by('date')
+    serializer_class = VideoSerializer
+
+
+class VideoRelationshipView(RelationshipView):
+    """Video relationship view."""
+
+    queryset = Video.objects.order_by('id')

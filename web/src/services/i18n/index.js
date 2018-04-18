@@ -2,8 +2,18 @@ import i18n from 'i18next';
 import backend from 'i18next-xhr-backend';
 import LanguageDetector from 'i18next-browser-languagedetector';
 
+import moment from 'moment';
+
 export const availableLanguages = ['fr', 'en'];
-export const availableNamespaces = ['common', 'index'];
+export const availableNamespaces = [
+  'common',
+  'index',
+  'home',
+  'account',
+  'sign-in',
+  'session',
+  'video',
+];
 
 const detection = {
   order: ['querystring', 'cookie', 'localStorage', 'navigator', 'header'],
@@ -50,6 +60,8 @@ if (process.browser) {
 if (!i18n.isInitialized) {
   i18n.init(options);
 }
+
+i18n.on('languageChanged', lng => moment.locale(lng));
 
 i18n.getInitialProps = (req, nss) => {
   let namespaces = nss;

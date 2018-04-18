@@ -40,8 +40,8 @@ describe('unauthorizedHandler', () => {
       },
     });
 
-    expect(Router.replace).toHaveBeenCalledTimes(1);
-    expect(Router.replace).toHaveBeenCalledWith(`/signin?returnUrl=${asPath}`);
+    expect(Router.pushRoute).toHaveBeenCalledTimes(1);
+    expect(Router.pushRoute).toHaveBeenCalledWith(`/signin?returnUrl=${asPath}`, undefined);
   });
 
   it('should do nothing for 401 error an needsLogin false', () => {
@@ -61,7 +61,7 @@ describe('unauthorizedHandler', () => {
       needsLogin: false,
     });
     expect(res.redirect).not.toHaveBeenCalled();
-    expect(Router.replace).not.toHaveBeenCalled();
+    expect(Router.pushRoute).not.toHaveBeenCalled();
   });
 
   it('should rethrow if this is not a 401 http error', () => {

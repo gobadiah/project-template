@@ -16,6 +16,8 @@ const reducer = combineReducers({
 });
 
 export default (state) => {
+  // When re-creating state on client from serialized state from server,
+  // we need to make immutable every component that want to be.
   if (state && state.auth && !isImmutable(state.auth)) {
     state.auth = fromJS(state.auth); // eslint-disable-line no-param-reassign
   }
