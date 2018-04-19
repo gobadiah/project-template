@@ -1,0 +1,30 @@
+version: 2
+defaults: &defaults
+  working_directory: ~/project
+jobs:
+  build:
+    docker:
+      - image: docker:17.05.0-ce-git
+    steps:
+      - checkout
+  test:
+    docker:
+      - image: docker:17.05.0-ce-git
+    steps:
+      - checkout
+  deploy:
+    docker:
+      - image: docker:17.05.0-ce-git
+    steps:
+      - checkout
+workflows:
+  version: 2
+  core:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
+      - deploy:
+          requires:
+            - test
