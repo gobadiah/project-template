@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { defaultPropTypes } from '~/components';
+import { defaultPropTypes } from '../prop-types';
 
 export default class PureComponent extends React.PureComponent {
   componentDidMount() {
