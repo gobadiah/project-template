@@ -6,12 +6,18 @@ ENV_NODE_COUNT=3
 MASTER_SIZE=${MASTER_SIZE:=t2.medium}
 NODE_SIZE=${NODE_SIZE:=t2.nano}
 
-zparseopts -dev=DEV -cluster-name:=CLUSTER_NAME h=HELP -help=HELP
+zparseopts -dev=DEV -cluster-name:=CLUSTER_NAME h=HELP -help=HELP -wait=WAIT
 
 function print_help() {
   print "Usage: "
   print -n "[NODE_COUNT=6] [NODE_SIZE=m5.large] [MASTER_SIZE=t2.nano] "
-  print    "[ZONES=us-west-1b] create_cluster [--dev] --cluster-name example"
+  print -n "[ZONES=us-west-1b] create_cluster [--dev] "
+  print -n "--cluster-name example.k8s.local "
+  print    "[--wait]"
+  print
+  print "Creates a k8s cluster."
+  print '  --dev flag builds a smaller cluster.'
+  print '  --wait flag waits for cluster to be read.'
   print
   print "Default values are:"
   print " > ZONES: $ZONES"
@@ -57,3 +63,18 @@ kops create cluster \
   --node-size $NODE_SIZE \
   --name ${CLUSTER_NAME[2]} \
   --yes
+
+if [[ "$WAIT" != "--wait" ]]; then
+  exit 0
+fi
+
+while true
+do
+  kops validate cluster 2>&1 >/dev/null
+  if [ $? -eq 0 ]; then
+    break
+  fi
+  sleep 5
+done
+
+kops validate cluster
