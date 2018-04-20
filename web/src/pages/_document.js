@@ -6,6 +6,15 @@ import toastify from 'react-toastify/dist/ReactToastify.css';
 
 import { Sentry } from '~/services/sentry';
 
+const removeSourceMaps = (source) => {
+  /* The way we import css here (using babel inline-import plugin, cf .babelrc)
+   * doesn't allow for requesting map, since the map file is usually not accessible through http.
+   * We remove the sourceMappingURL here to prevent annoying useless extra request for mapping.
+   */
+  const remove = /sourceMappingURL=.*.map/;
+  return source.replace(remove, '');
+};
+
 export default class MyDocument extends Document {
   static getInitialProps({ renderPage }) {
     const page = renderPage();
@@ -29,9 +38,9 @@ export default class MyDocument extends Document {
           { // eslint-disable-next-line react/no-danger
           }<style dangerouslySetInnerHTML={{ __html: this.props.css }} />
           { // eslint-disable-next-line react/no-danger
-          }<style dangerouslySetInnerHTML={{ __html: nprogress }} />
+          }<style dangerouslySetInnerHTML={{ __html: removeSourceMaps(nprogress) }} />
           { // eslint-disable-next-line react/no-danger
-          }<style dangerouslySetInnerHTML={{ __html: toastify }} />
+          }<style dangerouslySetInnerHTML={{ __html: removeSourceMaps(toastify) }} />
         </Head>
         <body>
           <Sentry />
