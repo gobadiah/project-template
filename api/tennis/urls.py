@@ -33,6 +33,11 @@ exchanges_router = routers.NestedDefaultRouter(
     lookup='exchange',
     trailing_slash=False,
 )
+exchanges_router.register(
+    r'hits',
+    views.HitViewSet,
+    base_name='exchange-hits',
+)
 
 exchangeplayers_router = routers.NestedDefaultRouter(
     router,

@@ -131,6 +131,31 @@ def service_session(session):
 
 
 @register_session
+def mean_speed_of_hits(session):
+    players = session.players.all()
+    result = {}
+    for player_i in players:
+        result[player_i.id] = {}
+        session.matches.
+        """hits = session.hits.filter(hitter=player_i)
+        for type_of_hit in ["forehand", "backhand", "service", "volley"]:
+            special_hits = [hit for hit in hits if (hit.data["type_of_hit"] \
+                            == type_of_hit or type_of_hit == "all") and \
+                            (hit.data["considered_for_score"] or \
+                             session.type_of_session == "training")]
+            mean_speed = sum(hit.data["mean_speed"] for hit in special_hits) \
+                         / len(special_hits) if len(special_hits) > 0 \
+                         else None
+            result[player_i.id][type_of_hit] = mean_speed"""
+    return {'speed_of_hits':
+                {'label': 'speed_hits',
+                'display' : str(10)},
+            }
+
+
+
+
+@register_session
 def duration_session(session):
     """Compute the duration of a tennis session."""
     return {

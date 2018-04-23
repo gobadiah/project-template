@@ -42,15 +42,23 @@ class ExchangeSerializer(serializers.HyperlinkedModelSerializer):
         namespace='tennis',
     )
 
+    hits = resource_related_field(
+        Hit,
+        'exchange',
+        'hits',
+        namespace='tennis',
+    )
+
     included_serializers = {
         'start_at': VideoPointSerializer,
+        'hits': 'tennis.serializers.HitSerializer',
     }
 
     class Meta(object):
         """ExchangeSerializer Meta class."""
 
         model = Exchange
-        fields = ('start_at', )
+        fields = ('start_at', 'hits', )
 
 
 class ExchangePlayerSerializer(serializers.HyperlinkedModelSerializer):
@@ -90,8 +98,7 @@ class HitSerializer(serializers.HyperlinkedModelSerializer):
         """HitSerializer Meta class."""
 
         model = Hit
-        fields = []
-
+        fields = ('data', )
 
 class MatchSerializer(serializers.HyperlinkedModelSerializer):
     """MatchSerializer."""
