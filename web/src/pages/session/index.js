@@ -11,9 +11,9 @@ import { UserScores, WatchVideo, containerWidth, userScoreHeight } from './style
 
 const statsBySection = {
   0: ['service', 'service'],
-  1: ['service'],
-  2: ['service'],
-  3: ['service'],
+  1: ['meanhitspeed', 'meanservicespeed', 'maxservicespeed'],
+  2: [],
+  3: [],
 };
 
 class Session extends Page {
@@ -35,8 +35,7 @@ class Session extends Page {
       t('session:HEAT MAP')
     ];
 
-    console.log(sections);
-    console.log(currentSection);
+
     var sectionInfo;
     if (currentSection != 3){
         sectionInfo = <PlayersStats
@@ -49,7 +48,6 @@ class Session extends Page {
                       session={session}
                     />;
     }
-    console.log(sectionInfo);
     return (
 
       <Main title={t('session:title', { session })} width={containerWidth}>

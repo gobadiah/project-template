@@ -9,6 +9,8 @@ from django.utils import timezone
 
 from sports.models import Session
 
+from .models import Hit
+
 from stats.models import Stats
 
 user_generators = {}
@@ -132,25 +134,94 @@ def service_session(session):
 
 @register_session
 def mean_speed_of_hits(session):
+    """
+        calculate stat on hits for session per player
+            - the mean speed of hits per player in a session
+            - the mean service speed per player in a session
+            - the max service speed per player in a session
+            
+        TODO : distinguish between in match and in training in session
+
+    """
+    # get all the players in the session
     players = session.players.all()
-    result = {}
+
+    data = {}
     for player_i in players:
-        result[player_i.id] = {}
-        session.matches.
-        """hits = session.hits.filter(hitter=player_i)
-        for type_of_hit in ["forehand", "backhand", "service", "volley"]:
-            special_hits = [hit for hit in hits if (hit.data["type_of_hit"] \
-                            == type_of_hit or type_of_hit == "all") and \
-                            (hit.data["considered_for_score"] or \
-                             session.type_of_session == "training")]
-            mean_speed = sum(hit.data["mean_speed"] for hit in special_hits) \
-                         / len(special_hits) if len(special_hits) > 0 \
-                         else None
-            result[player_i.id][type_of_hit] = mean_speed"""
-    return {'speed_of_hits':
-                {'label': 'speed_hits',
-                'display' : str(10)},
-            }
+        data[player_i.id] = {'all': [],
+                                'forehand': [],
+                                'backhand': [],
+                                'overhead':[],
+                                'volley': [],
+                                'service': []}
+
+    #@michael : do you have doc on the syntax : exchange__in ?
+    list_of_hits = Hit.objects.filter(exchange__in=session.exchanges)
+
+    # Get all info in data to calculate mean speed per type of hits
+    for hit in list_of_hits:
+        hitter = hit.hitter.id
+        mean_speed = hit.data["mean_speed"]
+        type_of_hit = hit.data["type_of_hit"]
+        data[hitter]["all"].append(mean_speed)
+        data[hitter][type_of_hit].append(mean_speed)
+
+
+    #@michael can we import numpy in djang ? and use np.mean() ?
+    def calculate_mean(this_list):
+        """
+            calculate mean value of list
+        """
+        if len(this_list) == 0:
+            return 0
+        else:
+            return sum(this_list) / len(this_list)
+
+    def add_normalized_value(stat_dict):
+        """
+            add normalized parameter to stat dict
+             value / max_value
+        """
+        for this_stat in stat_dict:
+            max_value = max([stat_dict[this_stat][player_id]["value"] for \
+                                player_id in stat_dict[this_stat]])
+            for player_id in stat_dict[this_stat]:
+                stat_dict[this_stat][player_id]["normalized"] = \
+                        stat_dict[this_stat][player_id]["value"] / max_value
+        return stat_dict
+
+
+    result = {"meanhitspeed":
+                dict(map(
+                    lambda player: (player.id, {
+                        'value': calculate_mean(data[player.id]["all"]),
+                        'display': "%0.1fkmh" % (calculate_mean(data[player.id]["all"])),
+                        'label': 'Mean hit speed',
+                    }),
+                    players,
+                )),
+                "meanservicespeed":
+                    dict(map(
+                        lambda player: (player.id, {
+                            'value': calculate_mean(data[player.id]["service"]),
+                            'display': '%0.1fkm/h' % (calculate_mean(data[player.id]["service"])),
+                            'label': 'Mean service speed',
+                        }),
+                        session.players.all(),
+                    )),
+                "maxservicespeed":
+                    dict(map(
+                        lambda player: (player.id, {
+                            'value': max(data[player.id]["service"]),
+                            'display': '%0.1fkm/h' % (max(data[player.id]["service"])),
+                            'label': 'Mean service speed',
+                        }),
+                        session.players.all(),
+                    )),
+                }
+
+    add_normalized_value(result)
+    return result
 
 
 
