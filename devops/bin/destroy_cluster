@@ -1,0 +1,34 @@
+#!/bin/zsh
+
+zparseopts -cluster-name:=CLUSTER_NAME h=HELP -help=HELP
+
+function print_help() {
+  print "Usage: "
+  print "destroy_cluster --cluster-name example.k8s.local"
+  print
+  print "Destroys a cluster."
+}
+
+if [[ "$HELP" != "" ]]; then
+  print_help
+  exit 0
+fi
+
+if [[ "$CLUSTER_NAME" == "" ]]; then
+  >&2 print -P "%F{red}--cluster-name argument must be given.%f"
+  exit 1
+fi
+
+color=blue
+
+print -P "%F{$color}"
+print -P "Destroying cluster %F{yellow}${CLUSTER_NAME[2]}%F{$color} ..."
+print -P "%f"
+
+kops delete cluster ${CLUSTER_NAME[2]} --yes
+
+if [ $? -eq 0 ]; then
+  print -P "%F{green}Done !%f"
+else
+  print -P "%F{red}Error while destroying cluster.%f"
+fi

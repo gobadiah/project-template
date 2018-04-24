@@ -1,0 +1,8 @@
+#!/bin/zsh
+
+SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
+ROOT="$SCRIPTPATH/.."
+
+source $ROOT/aws/kops
+
+setup_kops
