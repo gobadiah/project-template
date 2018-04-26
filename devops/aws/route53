@@ -1,0 +1,32 @@
+#!/bin/zsh
+
+function redirect_subdomain() {
+  subdomain=$1
+  target=$2
+
+  change_batch=$(cat <<-EOM
+{
+  "Comment": "Adding a CNAME record through command line script",
+  "Changes": [
+    {
+    "Action": "UPSERT",
+    "ResourceRecordSet": {
+        "Name": "$subdomain",
+        "Type": "CNAME",
+        "TTL": 3600,
+        "ResourceRecords": [
+            {
+                "Value": "$target"
+            }
+        ]
+      }
+    }
+  ]
+}
+EOM
+)
+  echo $change_batch
+  aws route53 change-resource-record-sets \
+    --hosted-zone-id $HOSTED_ZONE_ID \
+    --change-batch "$change_batch"
+}
