@@ -1,0 +1,21 @@
+#!/bin/zsh
+
+# exit on error
+set -e
+
+color=blue
+
+# Path to this file, so we don't have to worry about where this script was
+# called from.
+SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
+
+source $SCRIPTPATH/lib/config
+
+print -nP "%F{$color}"
+print -nP "Destroy the k8s cluster... "
+destroy_cluster --cluster-name $CLUSTER_NAME
+print -P "%F{green}done.%F{$color}"
+
+print -nP "Delete the cluster entry in vault at %F{yellow}$VAULT_CLUSTER_PATH%F{$color}... "
+vault delete $VAULT_CLUSTER_PATH
+print -P "%F{green}done.%F{$color}"
