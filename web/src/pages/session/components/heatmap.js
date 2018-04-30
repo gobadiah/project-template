@@ -26,25 +26,13 @@ class HeatMap extends PureComponent {
   }
 
   handleClick(type){
-      var list_type_of_hits = ["service", "forehand", "backhand", "volley", "overhead"]
-      if (type === "player")
-      {
-        var this_player = this.state.right_player;
-        // console.log(this_player);
-        if (this_player)
-        {
-          this_player = false
-        }
-        else
-        {
-          this_player = true
-        }
-        this.setState({right_player:this_player})
+      list_type_of_hits = ["service" , "forehand" , "backhand" , "volley" , "overhead"]
+      if (type === "player") {
+        this.setState({right_player: !this.state.right_player})
       }
-      if (list_type_of_hits.indexOf(type) >= 0)
-      {
-        var this_type_of_hits = this.state.type_of_hit;
-        var index = this_type_of_hits.indexOf(type);
+      if (list_type_of_hits.indexOf(type) >= 0) {
+        const this_type_of_hits = this.state.type_of_hit;
+        const index = this_type_of_hits.indexOf(type);
         if (index > -1) {
           this_type_of_hits.splice(index, 1);
         }
@@ -61,9 +49,10 @@ class HeatMap extends PureComponent {
 
   renderOptions(type){
      /* TODO : should take t as argument for translation*/
+     const { t } = this.context;
      return (
        <RoundButton
-         text={type}
+         text={t(type)}
          className={css`width: 100%`} value={type}
          onClick={() => this.handleClick(type)}
          />
@@ -76,7 +65,7 @@ class HeatMap extends PureComponent {
   renderCourt(this_type) {
 
     /* TODO : Explain metrics*/
-    var dimensions =[[[0, 0], [2377, 0]],
+    const dimensions =[[[0, 0], [2377, 0]],
             [[0, 1097], [2377, 1097]],
             [[0, 0], [0, 1097]],
             [[2377, 0], [2377, 1097]],
@@ -90,10 +79,10 @@ class HeatMap extends PureComponent {
             [[2377-30, 1097 / 2], [2377, 1097 / 2]]
           ];
 
-      var origin_x = 200;
-      var origin_y = 200;
+      const origin_x = 200;
+      const origin_y = 200;
 
-      var rect = [[0,0], [2377,1097]]
+      const rect = [[0,0], [2377,1097]]
 
       //console.log(hits.data);
       if (this_type === "lines"){
@@ -107,7 +96,7 @@ class HeatMap extends PureComponent {
                                                       }))
       }
       if (this_type === "back"){
-        var res = React.createElement("rect",{x:rect[0][0] + origin_x ,
+        const res = React.createElement("rect" ,{x: rect[0][0] + origin_x ,
                                            y:rect[0][1] + origin_y,
                                            width:rect[1][0],
                                            height:rect[1][1],
@@ -119,11 +108,16 @@ class HeatMap extends PureComponent {
   }
   render() {
 
+    const viewBoxWidth = 2800; // Because it's the size of my screen
+    const viewBoxHeight = 1500; // Because that's my preferred number
+    const viewBoxTop = 0;
+    const viewBoxLeft = 0;
+    const viewBox = `${viewBoxTop} ${viewBoxLeft} ${viewBoxWidth} ${viewBoxHeight}`;
 
     return (
      <Container>
         <Container>
-        <svg viewBox ="0 0 2800 1500">
+        <svg viewBox ={viewBox}>
           {this.renderCourt("back")}
           {this.renderCourt("lines")}
         </svg>
