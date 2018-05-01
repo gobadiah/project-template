@@ -15,7 +15,7 @@ print -nP "%F{$color}"
 print -nP "Create a k8s cluster, this can take up to a few minutes... "
 if [[ "$(kubectl config current-context)" == "$CLUSTER_NAME" ]]; then
   print -nP "%F{cyan}Cluster is already current context%F{$color} "
-elif kubectl config get-contexts | grep -q " $CLUSTER_NAME "; then
+elif kubectl config get-contexts 2>/dev/null | grep -q " $CLUSTER_NAME "; then
   print -nP "%F{cyan}Cluster is already created, setting current context to it %F{$color}"
   silent kubectl config use-context $CLUSTER_NAME
 else
@@ -40,4 +40,14 @@ print -P "%F{green}done.%F{$color}"
 
 print -nP "Configuring k8s auth backend for this cluster in vault... "
 silent vault-k8s-config
+print -P "%F{green}done.%F{$color}"
+
+print -nP "Peering the cluster vpc to vault vpc... "
+VAULT_VPC=$(aws ec2 describe-security-groups |
+  jq -r '.SecurityGroups[] | select(.GroupName=="masters.vault.k8s.local") | .VpcId')
+if [[ "$VAULT_VPC" != "" ]]; then
+  VPC=$(aws ec2 describe-security-groups |
+  jq -r ".SecurityGroups[] | select(.GroupName==\"masters.$CLUSTER_NAME\") | .VpcId")
+  aws ec2 create-vpc-peering-connection --vpc-id $VPC --peer-vpc-id $VAULT_VPC
+fi
 print -P "%F{green}done.%F{$color}"

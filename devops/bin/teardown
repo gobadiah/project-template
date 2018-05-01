@@ -12,10 +12,18 @@ SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
 source $SCRIPTPATH/lib/config
 
 print -nP "%F{$color}"
-print -nP "Destroy the k8s cluster... "
-destroy_cluster --cluster-name $CLUSTER_NAME
+print -nP "Destroy the k8s cluster %F{yellow}$CLUSTER_NAME%F{$color}... "
+silent destroy_cluster --cluster-name $CLUSTER_NAME
 print -P "%F{green}done.%F{$color}"
 
 print -nP "Delete the cluster entry in vault at %F{yellow}$VAULT_CLUSTER_PATH%F{$color}... "
-vault delete $VAULT_CLUSTER_PATH
+silent vault delete $VAULT_CLUSTER_PATH
+print -P "%F{green}done.%F{$color}"
+
+print -nP "Delete the cluster entry in vault at %F{yellow}aws/$CLUTER_NAME%F{$color}... "
+silent vault secrets disable aws/$CLUSTER_NAME
+print -P "%F{green}done.%F{$color}"
+
+print -nP "Delete the cluster entry in vault at %F{yellow}kubernetes/$CLUTER_NAME%F{$color}... "
+silent vault auth disable kubernetes/$CLUSTER_NAME
 print -P "%F{green}done.%F{$color}"
