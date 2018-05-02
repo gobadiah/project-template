@@ -2,12 +2,12 @@ import React from 'react';
 
 import { HorizontalSeparation, Normal } from '~/styles';
 import { Page } from '~/components/base';
-import { Score, Main, UserScore } from '~/components';
+import { Score, Main } from '~/components';
 import { score } from '~/tennis/fixtures';
 import hoc from '~/hoc';
 
 import { PlayersStats, Sections, SessionStats, SessionTitle } from './components';
-import { UserScores, WatchVideo, containerWidth, userScoreHeight } from './styles';
+import { UserScores, WatchVideo, containerWidth } from './styles';
 
 const statsBySection = {
   0: ['service', 'service'],
@@ -25,23 +25,22 @@ class Session extends Page {
   }
 
   render() {
-    const { session, t, user } = this.props;
+    const { session, t } = this.props;
     const { currentSection } = this.state;
     const sections = [
       t('session:KEY NUMBERS'),
       t('session:STATISTICS'),
       t('session:PERFORMANCES'),
     ];
-    console.log(session);
     return (
 
       <Main title={t('session:title', { session })} width={containerWidth}>
         <SessionTitle session={session} />
         <HorizontalSeparation />
         <UserScores>
-          <Normal> {session.players[0]['name']} </Normal>
+          <Normal> {session.players[0].name} </Normal>
           <Score score={score} />
-          <Normal> {session.players[1]['name']} </Normal>
+          <Normal> {session.players[1].name} </Normal>
         </UserScores>
         <WatchVideo session={session} />
         <HorizontalSeparation />
