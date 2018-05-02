@@ -12,6 +12,30 @@ SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
 source $SCRIPTPATH/lib/config
 
 print -nP "%F{$color}"
+
+VAULT_VPC=$(aws ec2 describe-vpcs \
+  --filters "Name=tag:Name,Values=vault.k8s.local" | jq -r ".Vpcs[].VpcId")
+VPC=$(aws ec2 describe-vpcs \
+  --filters "Name=tag:Name,Values=$CLUSTER_NAME" | jq -r ".Vpcs[].VpcId")
+if [[ "$VAULT_VPC" != "" && "$VPC" != "" ]]; then
+  print -nP "Removing route from vault route tables... "
+  vpc_cidr=$(aws ec2 describe-vpcs | jq -r ".Vpcs[] | select(.VpcId==\"$VPC\") | .CidrBlock")
+  aws ec2 describe-route-tables |
+    jq -r ".RouteTables[] | select(.VpcId==\"$VAULT_VPC\") | .RouteTableId" |
+    xargs -I {} aws ec2 delete-route \
+      --destination-cidr-block $vpc_cidr \
+      --route-table-id {} 2>&1 >/dev/null || true
+  print -P "%F{green}done.%F{$color}"
+
+  print -nP "Deleting peering connection... "
+  aws ec2 describe-vpc-peering-connections |
+    jq -r ".VpcPeeringConnections[] | select(.AccepterVpcInfo.VpcId==\"$VAULT_VPC\" and .RequesterVpcInfo.VpcId==\"$VPC\") | .VpcPeeringConnectionId" |
+    xargs -I {} aws ec2 delete-vpc-peering-connection --vpc-peering-connection-id {} >/dev/null
+  print -P "%F{green}done.%F{$color}"
+fi
+
+teardown_aws_postgres --db-name main
+
 print -nP "Destroy the k8s cluster %F{yellow}$CLUSTER_NAME%F{$color}... "
 silent destroy_cluster --cluster-name $CLUSTER_NAME
 print -P "%F{green}done.%F{$color}"
