@@ -6,13 +6,14 @@ import { Score, Main } from '~/components';
 import { score } from '~/tennis/fixtures';
 import hoc from '~/hoc';
 
-import { PlayersStats, Sections, SessionStats, SessionTitle } from './components';
-import { UserScores, WatchVideo, containerWidth } from './styles';
+import { PlayersStats, Sections, SessionStats, SessionTitle, HeatMap } from './components';
+import { UserScores, WatchVideo, containerWidth, userScoreHeight } from './styles';
 
 const statsBySection = {
   0: ['service', 'service'],
-  1: ['service'],
+  1: ['meanhitspeed', 'meanservicespeed', 'maxservicespeed'],
   2: [],
+  3: [],
 };
 
 class Session extends Page {
@@ -31,7 +32,21 @@ class Session extends Page {
       t('session:KEY NUMBERS'),
       t('session:STATISTICS'),
       t('session:PERFORMANCES'),
+      t('session:HEAT MAP')
     ];
+
+    var sectionInfo;
+    if (currentSection != 3){
+        sectionInfo = <PlayersStats
+                        stats={statsBySection[currentSection]}
+                        session={session}
+                      />;
+    } else {
+      sectionInfo = <HeatMap
+                      stats={statsBySection[currentSection]}
+                      session={session}
+                    />;
+    }
     return (
 
       <Main title={t('session:title', { session })} width={containerWidth}>
@@ -55,10 +70,7 @@ class Session extends Page {
           sections={sections}
           onSectionChange={index => this.setState({ currentSection: index })}
         />
-        <PlayersStats
-          stats={statsBySection[currentSection]}
-          session={session}
-        />
+        {sectionInfo}
       </Main>
     );
   }
@@ -66,5 +78,5 @@ class Session extends Page {
 
 export default hoc(
   'session',
-  { endpoint: query => `/tennis/sessions/${query.id}?include=videos,current_stats,players` },
+  { endpoint: query => `/tennis/sessions/${query.id}?include=videos,current_stats,players,exchanges,exchanges.hits` },
 )(Session);

@@ -109,3 +109,8 @@ export const SessionTitleContainer = styled(Flex)`
 export const SectionsContainer = styled(FlexColumn)`
   width: 100%;
 `;
+
+export const HeatMapContainer = styled(FlexCenter)`
+  width: 970px;
+  background-color: var(--dark-blue-grey);
+`;
