@@ -26,7 +26,7 @@ class Session extends Page {
   }
 
   render() {
-    const { session, t, user } = this.props;
+    const { session, t } = this.props;
     const { currentSection } = this.state;
     const sections = [
       t('session:KEY NUMBERS'),
@@ -34,7 +34,6 @@ class Session extends Page {
       t('session:PERFORMANCES'),
       t('session:HEAT MAP')
     ];
-
 
     var sectionInfo;
     if (currentSection != 3){
@@ -54,9 +53,9 @@ class Session extends Page {
         <SessionTitle session={session} />
         <HorizontalSeparation />
         <UserScores>
-          <Normal> {session.players[0]['name']} </Normal>
+          <Normal> {session.players[0].name} </Normal>
           <Score score={score} />
-          <Normal> {session.players[1]['name']} </Normal>
+          <Normal> {session.players[1].name} </Normal>
         </UserScores>
         <WatchVideo session={session} />
         <HorizontalSeparation />

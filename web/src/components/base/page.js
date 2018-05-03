@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { defaultPropTypes, defaultProps } from '~/components';
+import { defaultPropTypes, defaultProps } from '../prop-types';
 
 class Page extends React.PureComponent {
   getChildContext() {
