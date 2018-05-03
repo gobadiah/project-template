@@ -150,6 +150,21 @@ def session_exchanges(self):
 
 Session.exchanges = session_exchanges
 
+@property
+def type_of_tennis_session(self):
+    """Extra property for easily accessing the type of a session
+    match or training or specific training (service, volley ...)
+    @michael : agree with you might not be usefull, we will decide
+    this next week
+    """
+    if 'type_of_session' in self.data:
+        return self.data['type_of_session']
+    else:
+        # in case type is not specified set as mix session
+        return 'mix'
+
+
+Session.type_of_tennis_session = type_of_tennis_session
 
 class SessionSerializer(BaseSessionSerializer):
     """Tennis session serializer."""
