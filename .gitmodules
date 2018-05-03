@@ -2,5 +2,5 @@
 	path = devops/toolbox
 	url = https://github.com/gobadiah/devops-toolbox
 [submodule "devops/vault"]
-	path = devops/vault
+	path = devops/vault/bootstrap
 	url = git@github.com:gobadiah/vault-k8s-cluster.git

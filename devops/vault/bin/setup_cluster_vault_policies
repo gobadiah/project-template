@@ -1,0 +1,16 @@
+#!/bin/zsh
+
+SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
+
+source $SCRIPTPATH/lib/config
+
+### Cluster specific policies
+# These must be created each time a cluster is created.
+
+## Circleci
+# Ability to create a circleci on any k8s cluster
+vault write sys/policy/$CIRCLECI_POLICY \
+  policy="$(cat policies/circleci.hcl | sed "s/CLUSTER_NAME/$CLUSTER_NAME/")"
+
+vault write auth/token/roles/$CIRCLECI_ROLE \
+  allowed_policies="$circleci_policy"

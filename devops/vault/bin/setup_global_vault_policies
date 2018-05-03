@@ -1,0 +1,16 @@
+#!/bin/zsh
+
+SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
+
+source $SCRIPTPATH/lib/config
+
+### Global policies
+# These should change rarely.
+
+## Circleci
+# circleci global policy, allowing circleci to create cluster specific tokens
+vault write sys/policy/circleci-global-policy policy=@policies/circleci-global-policy.hcl
+
+# Circleci vault token
+vault write auth/token/roles/circleci \
+  allowed_policies="circleci-global-policy"

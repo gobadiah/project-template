@@ -4,9 +4,12 @@ defaults: &defaults
 jobs:
   build:
     docker:
-      - image: docker:17.05.0-ce-git
+      - image: gobadiah/docker-vault:0.1
     steps:
       - checkout
+      - run:
+          command: |
+            circleci
   test:
     docker:
       - image: docker:17.05.0-ce-git

@@ -1,0 +1,10 @@
+#!/bin/zsh
+
+SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
+
+source $SCRIPTPATH/lib/config
+
+### Global policies
+## Circleci
+vault delete auth/token/roles/circleci
+vault delete sys/policy/circleci-global-policy
