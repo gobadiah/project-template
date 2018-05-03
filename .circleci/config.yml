@@ -4,7 +4,7 @@ defaults: &defaults
 jobs:
   build:
     docker:
-      - image: gobadiah/docker-vault:0.1
+      - image: gobadiah/docker-vault:0.3
     steps:
       - checkout
       - run:
