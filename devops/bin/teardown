@@ -9,7 +9,7 @@ color=blue
 # called from.
 SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
 
-source $SCRIPTPATH/lib/config
+source $SCRIPTPATH/../config
 
 print -nP "%F{$color}"
 
@@ -54,4 +54,8 @@ print -P "%F{green}done.%F{$color}"
 
 print -nP "Delete the cluster k8s secret entry in vault at %F{yellow}$VAULT_K8S_PATH%F{$color}... "
 silent vault secrets disable $VAULT_K8S_PATH
+print -P "%F{green}done.%F{$color}"
+
+print -nP "Removing vault policies... "
+silent teardown_cluster_vault_policies
 print -P "%F{green}done.%F{$color}"

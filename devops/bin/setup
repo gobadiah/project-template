@@ -9,13 +9,13 @@ color=blue
 # called from.
 SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
 
-source $SCRIPTPATH/lib/config
+source $SCRIPTPATH/../config
 
 print -nP "%F{$color}"
 print -nP "Create a k8s cluster, this can take up to a few minutes... "
-if [[ "$(kubectl config current-context)" == "$CLUSTER_NAME" ]]; then
+if [[ "$(kubectl config current-context 2>/dev/null)" == "$CLUSTER_NAME" ]]; then
   print -nP "%F{cyan}Cluster is already current context%F{$color} "
-elif kubectl config get-contexts 2>/dev/null | grep -q " $CLUSTER_NAME "; then
+elif kubectl config get-contexts -o name 2>/dev/null | grep -q "^$CLUSTER_NAME$"; then
   print -nP "%F{cyan}Cluster is already created, setting current context to it %F{$color}"
   silent kubectl config use-context $CLUSTER_NAME
 else
@@ -69,15 +69,19 @@ if [[ "$VAULT_VPC" != "" && "$VPC" != "" ]]; then
       xargs -I {} aws ec2 create-route \
         --destination-cidr-block $vpc_cidr \
         --vpc-peering-connection-id $peering_connection_id \
-        --route-table-id {}
+        --route-table-id {} >/dev/null
     aws ec2 describe-route-tables |
       jq -r ".RouteTables[] | select(.VpcId==\"$VPC\") | .RouteTableId" |
       xargs -I {} aws ec2 create-route \
         --destination-cidr-block $vault_cidr \
         --vpc-peering-connection-id $peering_connection_id \
-        --route-table-id {}
+        --route-table-id {} >/dev/null
   fi
 fi
 print -P "%F{green}done.%F{$color}"
 
 setup_aws_postgres --db-name main
+
+print -nP "Installing vault policies... "
+silent setup_cluster_vault_policies
+print -P "%F{green}done.%F{$color}"
