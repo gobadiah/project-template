@@ -8,9 +8,11 @@ jobs:
       - image: gobadiah/docker-vault:0.3
     steps:
       - checkout
+      - setup_remote_docker
       - run:
           command: |
             direnv allow .
+            which circleci
             circleci build
   test:
     <<: *defaults
