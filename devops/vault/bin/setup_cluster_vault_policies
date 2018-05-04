@@ -2,7 +2,11 @@
 
 SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
 
+source $SCRIPTPATH/../../bin/lib/config
+
 source $SCRIPTPATH/lib/config
+
+pushd $SCRIPTPATH/..
 
 ### Cluster specific policies
 # These must be created each time a cluster is created.
@@ -12,5 +16,11 @@ source $SCRIPTPATH/lib/config
 vault write sys/policy/$CIRCLECI_POLICY \
   policy="$(cat policies/circleci.hcl | sed "s/CLUSTER_NAME/$CLUSTER_NAME/")"
 
+# Cluster specific circleci role
 vault write auth/token/roles/$CIRCLECI_ROLE \
-  allowed_policies="$circleci_policy"
+  allowed_policies="$CIRCLECI_POLICY"
+
+# Cluster specific kubernetes role
+vault write $VAULT_K8S_PATH/roles/circleci allowed_domains=circleci allow_bare_domains=true ttl=1h
+
+popd

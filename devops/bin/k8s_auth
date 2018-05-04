@@ -1,0 +1,40 @@
+#!/bin/zsh
+
+set -e
+
+SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
+
+pushd $SCRIPTPATH/../k8s
+
+source $SCRIPTPATH/../config
+
+user="$1"
+cluster="$CLUSTER_NAME"
+full_user="$CLUSTER_NAME-$user"
+context="$full_user"
+
+mkdir -p ~/.kube/ca
+
+openssl genrsa -out ~/.kube/ca/$full_user.key 2048
+
+openssl req -new -key ~/.kube/ca/$full_user.key -out $full_user.csr -subj "/CN=$user"
+
+data=$(vault write -format=json $VAULT_K8S_PATH/sign/$user csr=@$full_user.csr common_name=$user)
+
+rm $full_user.csr
+
+# unfortunately vault doesn't return valid json because of newlines in certificate,
+# hence the awk tweaking.
+echo $data | awk 'BEGIN { nl=false } /(BEGIN CERTIFICATE|BEGIN RSA PRIVATE KEY)/ { nl=!nl } /(END CERTIFICATE|END RSA PRIVATE KEY)/ { nl=!nl } { if (nl) { printf "%s\\n", $0 } else { print $0 } }' | jq -r '.data.certificate' > ~/.kube/ca/$full_user.crt
+echo $data | awk 'BEGIN { nl=false } /(BEGIN CERTIFICATE|BEGIN RSA PRIVATE KEY)/ { nl=!nl } /(END CERTIFICATE|END RSA PRIVATE KEY)/ { nl=!nl } { if (nl) { printf "%s\\n", $0 } else { print $0 } }' | jq -r '.data.issuing_ca' > ~/.kube/ca/$CLUSTER_NAME.crt
+
+kubectl config set-credentials $full_user --client-certificate ~/.kube/ca/$full_user.crt --client-key ~/.kube/ca/$full_user.key
+
+host=$(vault read -field=host $VAULT_CLUSTER_PATH/api)
+
+kubectl config set-cluster $cluster --server=$host --certificate-authority ~/.kube/ca/$CLUSTER_NAME.crt
+kubectl config set-context $context --cluster $cluster --user $full_user
+
+kubectl config use-context $context
+
+popd

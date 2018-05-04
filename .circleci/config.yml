@@ -9,7 +9,7 @@ jobs:
       - checkout
       - run:
           command: |
-            circleci
+            circleci build
   test:
     docker:
       - image: docker:17.05.0-ce-git
@@ -17,9 +17,12 @@ jobs:
       - checkout
   deploy:
     docker:
-      - image: docker:17.05.0-ce-git
+      - image: gobadiah/docker-vault:0.3
     steps:
       - checkout
+      - run:
+          command: |
+            circleci deploy
 workflows:
   version: 2
   core:

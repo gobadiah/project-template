@@ -1,3 +1,3 @@
-path "CLUSTER_NAME/k8s/issue/circleci" {
+path "CLUSTER_NAME/k8s/sign/circleci" {
   capabilities = ["create", "update"]
 }

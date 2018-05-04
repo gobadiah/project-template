@@ -4,6 +4,8 @@ SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
 
 source $SCRIPTPATH/lib/config
 
+pushd $SCRIPTPATH/..
+
 ### Global policies
 # These should change rarely.
 
@@ -14,3 +16,5 @@ vault write sys/policy/circleci-global-policy policy=@policies/circleci-global-p
 # Circleci vault token
 vault write auth/token/roles/circleci \
   allowed_policies="circleci-global-policy"
+
+popd
