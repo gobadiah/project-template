@@ -13,6 +13,7 @@ jobs:
           command: |
             direnv allow .
             which circleci
+            pwd
             circleci build
   test:
     <<: *defaults
