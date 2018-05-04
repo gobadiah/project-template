@@ -3,19 +3,23 @@ defaults: &defaults
   working_directory: ~/project
 jobs:
   build:
+    <<: *defaults
     docker:
       - image: gobadiah/docker-vault:0.3
     steps:
       - checkout
       - run:
           command: |
+            direnv allow .
             circleci build
   test:
+    <<: *defaults
     docker:
       - image: docker:17.05.0-ce-git
     steps:
       - checkout
   deploy:
+    <<: *defaults
     docker:
       - image: gobadiah/docker-vault:0.3
     steps:

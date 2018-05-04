@@ -4,11 +4,7 @@ SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
 
 pushd $SCRIPTPATH/../..
 
-source $SCRIPTPATH/lib/config
-
-source $SCRIPTPATH/../vault/bin/lib/config
-
-direnv allow .
+source $SCRIPTPATH/../config
 
 eval "$(direnv export bash)"
 
