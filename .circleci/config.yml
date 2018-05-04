@@ -11,10 +11,7 @@ jobs:
       - setup_remote_docker
       - run:
           command: |
-            direnv allow .
-            which circleci
-            pwd
-            circleci build
+            ./devops/bin/circleci build
   test:
     <<: *defaults
     docker:
@@ -29,7 +26,7 @@ jobs:
       - checkout
       - run:
           command: |
-            circleci deploy
+            ./devops/bin/circleci deploy
 workflows:
   version: 2
   core:

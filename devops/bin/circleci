@@ -6,6 +6,8 @@ pushd $SCRIPTPATH/../..
 
 source $SCRIPTPATH/../config
 
+direnv allow .
+
 eval "$(direnv export bash)"
 
 # VAULT_TOKEN has the value of a generic token (circleci-global-policy) stored
