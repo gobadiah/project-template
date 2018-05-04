@@ -2,99 +2,6 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: filebeat-config
-  namespace: kube-system
-  labels:
-    k8s-app: filebeat
-    task: logging
-data:
-  filebeat.yml: |
-    filebeat.prospectors:
-    - input_type: log
-      paths:
-      - "/var/log/containers/*.log"
-      - "/var/log/startupscript.log"
-      - "/var/log/kubelet.log"
-      - "/var/log/kube-proxy.log"
-      - "/var/log/kube-apiserver.log"
-      - "/var/log/kube-controller-manager.log"
-      - "/var/log/kube-scheduler.log"
-      - "/var/log/rescheduler.log"
-      - "/var/log/glbc.log"
-      - "/var/log/cluster-autoscaler.log"
-      symlinks: true
-      json.message_key: log
-      json.keys_under_root: true
-      json.add_error_key: true
-      multiline.pattern: '^\s'
-      multiline.match: after
-      document_type: kube-logs
-    output.logstash:
-      hosts: ["logstash.kube-system:5044"]
-    logging:
-      to_stderr: true
-      to_syslog: false
-      to_files: false
----
-apiVersion: extensions/v1beta1
-kind: DaemonSet
-metadata:
-  name: filebeat
-  namespace: kube-system
-  labels:
-    k8s-app: filebeat
-    task: logging
-spec:
-  template:
-    metadata:
-      labels:
-        k8s-app: filebeat
-        task: logging
-      name: filebeat
-    spec:
-      containers:
-      - name: filebeat
-        image: docker.elastic.co/beats/filebeat:6.2.4
-        imagePullPolicy: Always
-        resources:
-          limits:
-            cpu: 50m
-            memory: 50Mi
-          requests:
-            cpu: 50m
-            memory: 50Mi
-        env:
-        - name: FILEBEAT_HOST
-          valueFrom:
-            fieldRef:
-              fieldPath: spec.nodeName
-        volumeMounts:
-        - name: varlog
-          mountPath: /var/log/containers
-        - name: varlogpods
-          mountPath: /var/log/pods
-          readOnly: true
-        - name: varlibdockercontainers
-          mountPath: /var/lib/docker/containers
-          readOnly: true
-      terminationGracePeriodSeconds: 30
-      tolerations:
-      - key: node-role.kubernetes.io/master
-        effect: NoSchedule
-      volumes:
-      - name: varlog
-        hostPath:
-          path: /var/log/containers
-      - name: varlogpods
-        hostPath:
-          path: /var/log/pods
-      - name: varlibdockercontainers
-        hostPath:
-          path: /var/lib/docker/containers
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
   name: logstash-config
   namespace: kube-system
   labels:
@@ -103,7 +10,8 @@ metadata:
 data:
   logstash.yml: |
     http.host: "0.0.0.0"
-    path.config: /usr/share/logstash/pipeline
+    path.config: /config/pipeline.conf
+    xpack.monitoring.enabled: false
   pipeline.conf: "
     input {
       beats {
@@ -112,12 +20,12 @@ data:
         ssl => false
       }
     }
-    output {\n
-      amazon_es {\n
-        hosts => \"search-default-7a4pigdo4f5l6esdtgsxxjcjrq.eu-west-1.es.amazonaws.com\"\n
-        region => \"eu-west-1\"\n
-      }\n
-    }\n"
+    output {
+      amazon_es {
+        hosts => \"search-default-7a4pigdo4f5l6esdtgsxxjcjrq.eu-west-1.es.amazonaws.com\"
+        region => \"eu-west-1\"
+      }
+    }"
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
@@ -134,10 +42,17 @@ spec:
     spec:
       containers:
       - name: logstash
-        image: docker.elastic.co/logstash/logstash:6.2.4
+        image: gobadiah/logstash-es
+        args: ["--path.settings", "/config"]
         volumeMounts:
+        - name: config
+          mountPath: /config
       securityContext:
         fsGroup: 101
+      volumes:
+      - name: config
+        configMap:
+          name: logstash-config
 ---
 apiVersion: v1
 kind: Service
