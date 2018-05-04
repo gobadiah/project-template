@@ -1,0 +1,66 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SignIn should match snapshot 1`] = `
+.emotion-0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+<div>
+  <form
+    onSubmit={[Function]}
+  >
+    <div
+      className="emotion-0 emotion-1"
+    >
+      <label
+        htmlFor="email"
+      >
+        Email
+      </label>
+      <input
+        autoComplete="email"
+        className={undefined}
+        name="email"
+        onBlur={[Function]}
+        onChange={[Function]}
+        onDragStart={[Function]}
+        onDrop={[Function]}
+        onFocus={[Function]}
+        placeholder={undefined}
+        type="email"
+        value=""
+      />
+    </div>
+    <div
+      className="emotion-0 emotion-1"
+    >
+      <label
+        htmlFor="password"
+      >
+        Password
+      </label>
+      <input
+        autoComplete="current-password"
+        className={undefined}
+        name="password"
+        onBlur={[Function]}
+        onChange={[Function]}
+        onDragStart={[Function]}
+        onDrop={[Function]}
+        onFocus={[Function]}
+        placeholder={undefined}
+        type="password"
+        value=""
+      />
+    </div>
+    <input
+      type="submit"
+      value="Sign in"
+    />
+  </form>
+  <div />
+</div>
+`;

@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Next config should disable fs and add a rules for images 1`] = `
+Object {
+  "module": Object {
+    "rules": Array [
+      Object {
+        "test": /\\\\\\.\\(png\\|jpg\\|gif\\)\\$/,
+        "use": Array [
+          Object {
+            "loader": "file-loader",
+            "options": Object {
+              "emitFile": false,
+              "outputPath": "../static/build",
+              "publicPath": "/static/build/",
+            },
+          },
+        ],
+      },
+      Object {
+        "loader": "ignore-loader",
+        "test": /__tests__/,
+      },
+    ],
+  },
+  "node": Object {
+    "fs": "empty",
+  },
+}
+`;

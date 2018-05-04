@@ -1,0 +1,159 @@
+version: 2
+defaults: &defaults
+  working_directory: ~/project
+jobs:
+  build:
+    <<: *defaults
+    docker:
+        - image: circleci/ruby:2.4.2-jessie-node-browsers
+    steps:
+      - run:
+          name: Download cc-test-reporter
+          command: |
+            mkdir -p tmp/
+            curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./tmp/cc-test-reporter
+            chmod +x ./tmp/cc-test-reporter
+      - persist_to_workspace:
+          root: tmp
+          paths:
+            - cc-test-reporter
+  build-web:
+    docker:
+      - image: docker:17.05.0-ce-git
+    steps:
+      - checkout
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - run:
+          name: Build web Docker image
+          command: |
+            ./web/docker/build --cache-from=web
+  test-web:
+    <<: *defaults
+    docker:
+      - image: circleci/node:9-stretch
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/project/tmp
+      - restore_cache:
+          keys:
+            - v1-web-node_modules-{{ checksum "web/package.json" }}-{{ checksum "web/yarn.lock" }}
+            - v1-web-node_modules-{{ checksum "web/package.json" }}-
+            - v1-web-node-modules-
+      - run:
+          name: Yarn
+          command: |
+            cd web
+            yarn install
+      - save_cache:
+          key: v1-web-node_modules-{{ checksum "web/package.json" }}-{{ checksum "web/yarn.lock" }}
+          paths:
+            - web/node_modules
+      - run:
+          name: Run tests
+          command: |
+            cd web
+            npm run test:ci
+            cd ..
+          environment:
+            JEST_JUNIT_OUTPUT: "reports/junit/web-tests-results.xml"
+      - run:
+          name: Store Code Climate report
+          command: |
+            ./tmp/cc-test-reporter format-coverage -t lcov -o tmp/codeclimate.web.json web/reports/coverage/lcov.info
+      - persist_to_workspace:
+          root: tmp
+          paths: 
+            - codeclimate.web.json
+      - store_test_results:
+          path: web/reports/junit
+      - store_artifacts:
+          path: web/reports
+  build-api:
+    docker:
+      - image: docker:17.05.0-ce-git
+    steps:
+      - checkout
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - run:
+          name: Build api Docker image
+          command: |
+            ./api/docker/build --cache-from=api
+  test-api:
+    <<: *defaults
+    docker:
+      - image: circleci/python:3.6.4-stretch-node-browsers
+      - image: circleci/postgres:10.3-alpine-ram
+        environment:
+        - POSTGRES_USER=ubuntu
+        - POSTGRES_DB=test_db
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/project/tmp
+      - restore_cache:
+          keys:
+            - v1-api-deps-{{ .Branch }}-{{ checksum "api/requirements.txt" }}
+            - v1-api-deps-{{ .Branch }}
+            - v1-api-deps-
+      - run:
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            pip install -r api/requirements.txt
+      - save_cache:
+          key: v1-api-deps-{{ .Branch }}-{{ checksum "api/requirements.txt" }}
+          paths:
+            - venv
+      - run:
+          name: Run tests
+          command: |
+            . venv/bin/activate
+            cd api
+            invoke test
+          environment:
+            DATABASE_URL: postgres://ubuntu@localhost:5432/test_db
+      - run:
+          name: Store Code Climate report
+          command: |
+            cd api
+            ../tmp/cc-test-reporter format-coverage -o ../tmp/codeclimate.api.json -t coverage.py --add-prefix api reports/coverage/coverage.xml
+      - persist_to_workspace:
+          root: tmp
+          paths:
+            - codeclimate.api.json
+      - store_test_results:
+          path: api/reports/junit
+      - store_artifacts:
+          path: api/reports
+  upload-coverage:
+    <<: *defaults
+    docker:
+        - image: circleci/ruby:2.4.2-jessie-node-browsers
+    steps:
+      - attach_workspace:
+          at: ~/project/tmp
+      - run:
+          name: Upload coverage results to Code Climate
+          command: |
+            ./tmp/cc-test-reporter sum-coverage tmp/codeclimate.*.json -p 2 -o tmp/codeclimate.total.json
+            ./tmp/cc-test-reporter upload-coverage -i tmp/codeclimate.total.json
+workflows:
+  version: 2
+  build-and-test-web:
+    jobs:
+      - build
+      - build-web
+      - build-api
+      - test-web:
+          requires:
+            - build
+      - test-api:
+          requires:
+            - build
+      - upload-coverage:
+          requires:
+            - test-web
+            - test-api

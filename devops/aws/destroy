@@ -1,0 +1,17 @@
+#!/usr/local/bin/zsh
+
+SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
+
+source $SCRIPTPATH/../config
+
+source $SCRIPTPATH/lib
+
+detach_user_policy
+
+clear_access_keys
+
+delete_user
+
+delete_policy
+
+delete_bucket

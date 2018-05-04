@@ -1,0 +1,5 @@
+#!/usr/local/bin/zsh
+
+./aws/destroy
+
+./heroku/destroy

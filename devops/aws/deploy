@@ -1,0 +1,8 @@
+#!/usr/local/bin/zsh
+
+SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
+TMP="$SCRIPTPATH/tmp"
+
+source $SCRIPTPATH/../config
+
+source $SCRIPTPATH/lib

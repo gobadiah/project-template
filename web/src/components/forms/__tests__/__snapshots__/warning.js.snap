@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Warning should match snapshot when mounting 1`] = `
+<Warning
+  warning={
+    Array [
+      "One warning",
+      "Two warning",
+    ]
+  }
+>
+  <div
+    key="0"
+  >
+    One warning
+  </div>
+  <div
+    key="1"
+  >
+    Two warning
+  </div>
+</Warning>
+`;

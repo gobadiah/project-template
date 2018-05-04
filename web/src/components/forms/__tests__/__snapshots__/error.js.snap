@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Error should match snapshot when mounting 1`] = `
+<Error
+  error={
+    Array [
+      "One error",
+      "Two error",
+    ]
+  }
+>
+  <div
+    key="0"
+  >
+    One error
+  </div>
+  <div
+    key="1"
+  >
+    Two error
+  </div>
+</Error>
+`;

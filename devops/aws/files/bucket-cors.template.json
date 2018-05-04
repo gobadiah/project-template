@@ -1,0 +1,19 @@
+{
+    "CORSRules": [
+        {
+            "AllowedHeaders": [
+                "Authorization",
+                "content-type",
+                "x-amz-acl"
+            ],
+            "AllowedMethods": [
+                "GET",
+                "PUT"
+            ],
+            "AllowedOrigins": [
+                "__WEB_URL__"
+            ],
+            "MaxAgeSeconds": 3000
+        }
+    ]
+}

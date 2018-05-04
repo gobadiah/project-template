@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Form should match snapshot when mounting 1`] = `
+<Form
+  error="One error"
+  handleSubmit={[Function]}
+  pristine={false}
+  reset={[Function]}
+  submitting={false}
+  warning="One warning"
+>
+  <form
+    onSubmit={[Function]}
+  >
+    <div />
+    <input
+      disabled={false}
+      type="submit"
+      value="Send"
+    />
+    <input
+      disabled={false}
+      onClick={[Function]}
+      type="button"
+      value="Reset"
+    />
+    <Warning
+      warning="One warning"
+    >
+      <div>
+        One warning
+      </div>
+    </Warning>
+    <Error
+      error="One error"
+    >
+      <div>
+        One error
+      </div>
+    </Error>
+  </form>
+</Form>
+`;

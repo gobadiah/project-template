@@ -1,0 +1,50 @@
+{
+  "env": {
+    "test": {
+      "plugins": [
+        [
+          "file-loader",
+          {
+            "publicPath": "/static/build",
+            "outputPath": "/dist/static/build"
+          }
+        ],
+      ]
+    },
+    "production": {
+      "plugins": [
+        ["transform-inline-env-vars", {
+          "include": [
+            "NODE_ENV",
+            "SENTRY_PUBLIC_DSN",
+          ]
+        }]
+      ]
+    },
+    "development": {
+      "plugins": [
+        ["transform-inline-env-vars", {
+          "include": [
+            "NODE_ENV",
+            "SENTRY_PUBLIC_DSN",
+          ]
+        }]
+      ]
+    }
+  },
+  "presets": ["next/babel", "env"],
+  "plugins": [
+    ["babel-plugin-root-import", {
+      "rootPathSuffix": "src"
+    }],
+    "emotion",
+    "transform-class-properties",
+    [
+      "inline-import",
+      {
+        "extensions": [".css"]
+      }
+    ]
+  ],
+  "ignore": []
+}
