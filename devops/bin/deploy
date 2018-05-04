@@ -8,6 +8,6 @@ pushd $SCRIPTPATH/../k8s
 
 source $SCRIPTPATH/../config
 
-kubectl apply -R -f .
+kubectl apply -R -f deploy
 
 popd
