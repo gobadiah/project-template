@@ -15,7 +15,22 @@ can be found [here](https://circleci.com/docs/2.0/).
 
 The following environment variables need to be set in circleci:
 
-* `PROJECT`: `project-template`
+* `VAULT_TOKEN`: gives circleci access to the vault.
+
+Here is how to generate a token for circleci :
+
+```
+vault write auth/token/create/circleci \
+  policies=circleci-global-policy \
+  ttl=72h \
+  renewable=true \
+  periodic=true
+```
+
+This will create a periodic token, meaning it can lasts for ever, as long as it is renewed periodically
+faster than the ttl. The token is renewed automatically in circleci script, which is run for each build.
+This does mean that if no build is run for a duration equal to the ttl, the token will expire, and
+subsequent builds will fail. At that time a new token will have to be generated using the command above.
 
 ### Config file explained
 

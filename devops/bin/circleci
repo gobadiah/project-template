@@ -18,7 +18,9 @@ vault token renew
 # VAULT_TOKEN has the value of a generic token (circleci-global-policy) stored
 # in circleci project settings. We use it to get a more specific token, used
 # for this environment.
-export VAULT_TOKEN=$(vault write -format=json auth/token/create/$CIRCLECI_ROLE policies=$CIRCLECI_POLICY ttl=1h |
+export VAULT_TOKEN=$(vault write -format=json auth/token/create/$CIRCLECI_ROLE \
+  policies="$CIRCLECI_POLICY,$VAULT_READ_API_POLICY" \
+  ttl=1h |
   jq -r '.auth.client_token')
 
 if [[ "$1" == "deploy" ]]; then
