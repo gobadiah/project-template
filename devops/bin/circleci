@@ -17,7 +17,7 @@ export VAULT_TOKEN=$(vault write -format=json auth/token/create/$CIRCLECI_ROLE p
   jq -r '.auth.client_token')
 
 if [[ "$1" == "deploy" ]]; then
-  k8s_login circleci
+  k8s_auth circleci
   deploy
 fi
 
