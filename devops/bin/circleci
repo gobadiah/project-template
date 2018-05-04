@@ -12,6 +12,9 @@ direnv allow .
 
 eval "$(direnv export bash)"
 
+# Let's renew our token
+vault token renew
+
 # VAULT_TOKEN has the value of a generic token (circleci-global-policy) stored
 # in circleci project settings. We use it to get a more specific token, used
 # for this environment.
