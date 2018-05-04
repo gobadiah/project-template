@@ -9,6 +9,11 @@ pushd $SCRIPTPATH/..
 ### Cluster specific policies
 # These must be created each time a cluster is created.
 
+## General
+# read the api host
+vault write sys/policy/$VAULT_READ_API_POLICY \
+  policy="$(cat policies/read_api.hcl | sed "s#PATH#$VAULT_CLUSTER_PATH#")"
+
 ## Circleci
 # Ability to create a circleci on any k8s cluster
 vault write sys/policy/$CIRCLECI_POLICY \
@@ -16,7 +21,7 @@ vault write sys/policy/$CIRCLECI_POLICY \
 
 # Cluster specific circleci role
 vault write auth/token/roles/$CIRCLECI_ROLE \
-  allowed_policies="$CIRCLECI_POLICY"
+  allowed_policies="$CIRCLECI_POLICY,$VAULT_READ_API_POLICY"
 
 # Cluster specific kubernetes role
 vault write $VAULT_K8S_PATH/roles/circleci allowed_domains=circleci allow_bare_domains=true ttl=1h
