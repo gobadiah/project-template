@@ -1,12 +1,1 @@
 #!/bin/zsh
-
-if [[ "$ENV" == "production" ]]; then
-  prefix="production"
-elif [[ "$ENV" == "staging" ]]; then
-  prefix="staging"
-else
-  prefix="env"
-fi
-
-CIRCLECI_POLICY="$prefix-$CLUSTER_NAME-k8s-circleci-user"
-CIRCLECI_ROLE="circleci-$prefix-$CLUSTER_NAME"

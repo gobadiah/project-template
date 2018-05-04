@@ -2,9 +2,7 @@
 
 SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
 
-source $SCRIPTPATH/../../bin/lib/config
-
-source $SCRIPTPATH/lib/config
+source $SCRIPTPATH/../../config
 
 pushd $SCRIPTPATH/..
 

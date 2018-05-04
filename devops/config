@@ -54,3 +54,16 @@ export CLUSTER_NAME="$ENV.k8s.local"
 export VAULT_CLUSTER_PATH="secret/$CLUSTER_NAME"
 export VAULT_AWS_PATH=$CLUSTER_NAME/aws
 export VAULT_K8S_PATH=$CLUSTER_NAME/k8s
+
+# CIRCLECI
+
+if [[ "$ENV" == "production" ]]; then
+  prefix="production"
+elif [[ "$ENV" == "staging" ]]; then
+  prefix="staging"
+else
+  prefix="env"
+fi
+
+CIRCLECI_POLICY="$prefix-$CLUSTER_NAME-k8s-circleci-user"
+CIRCLECI_ROLE="circleci-$prefix-$CLUSTER_NAME"
