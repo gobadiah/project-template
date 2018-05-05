@@ -27,6 +27,7 @@ jobs:
       - run:
           name: Build web Docker image
           command: |
+            source .envrc
             ./web/docker/build --cache-from=web
   test-web:
     <<: *defaults
@@ -53,6 +54,7 @@ jobs:
       - run:
           name: Run tests
           command: |
+            source .envrc
             cd web
             npm run test:ci
             cd ..
@@ -80,6 +82,7 @@ jobs:
       - run:
           name: Build api Docker image
           command: |
+            source .envrc
             ./api/docker/build --cache-from=api
   test-api:
     <<: *defaults
@@ -111,6 +114,7 @@ jobs:
           name: Run tests
           command: |
             . venv/bin/activate
+            source .envrc
             cd api
             invoke test
           environment:
