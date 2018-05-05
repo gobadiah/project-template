@@ -13,7 +13,6 @@ direnv allow .
 eval "$(direnv export zsh)"
 
 if [[ "$1" == "deploy" ]]; then
-  k8s_auth circleci
   deploy
 elif [[ "$1" == "build" ]]; then
   if [[ "$2" == "web" ]]; then

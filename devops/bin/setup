@@ -1,13 +1,9 @@
-#!/usr/local/bin/zsh
+#!/bin/zsh
 
 SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
 
-source $SCRIPTPATH/config
+echo $SCRIPTPATH
 
-source $SCRIPTPATH/lib
+source $SCRIPTPATH/../config
 
-$SCRIPTPATH/aws/setup
-
-$SCRIPTPATH/heroku/setup
-
-rm $AWS_OUTPUT_CONFIG
+$SCRIPTPATH/../heroku/setup

@@ -143,6 +143,17 @@ jobs:
           command: |
             ./tmp/cc-test-reporter sum-coverage tmp/codeclimate.*.json -p 2 -o tmp/codeclimate.total.json
             ./tmp/cc-test-reporter upload-coverage -i tmp/codeclimate.total.json
+  deploy:
+    <<: *defaults
+    docker:
+      - image: gobadiah/docker:18.04.0-ce-git
+    steps:
+      - checkout
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - run:
+          name: Deploy
+          command: ./devops/bin/circleci deploy
 workflows:
   version: 2
   build-and-test-web:
@@ -157,6 +168,10 @@ workflows:
           requires:
             - build
       - upload-coverage:
+          requires:
+            - test-web
+            - test-api
+      - deploy:
           requires:
             - test-web
             - test-api

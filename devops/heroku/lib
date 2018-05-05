@@ -62,7 +62,7 @@ function configure_api_app() {
 function deploy_web_app() {
   pushd "$SCRIPTPATH/../../web"
 
-  WEB_URL=$WEB_URL TAG=$ENV ./build_docker
+  WEB_URL=$WEB_URL TAG=$ENV ./docker/build
 
   docker tag $PROJECT/web:$ENV registry.heroku.com/$web/web
   docker push registry.heroku.com/$web/web
