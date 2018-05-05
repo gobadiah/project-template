@@ -19,7 +19,7 @@ jobs:
             - cc-test-reporter
   build-web:
     docker:
-      - image: docker:17.05.0-ce-git
+      - image: gobadiah/docker:18.04.0-ce-git
     steps:
       - checkout
       - setup_remote_docker:
@@ -75,7 +75,7 @@ jobs:
           path: web/reports
   build-api:
     docker:
-      - image: docker:17.05.0-ce-git
+      - image: gobadiah/docker:18.04.0-ce-git
     steps:
       - checkout
       - setup_remote_docker:
