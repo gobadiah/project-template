@@ -25,9 +25,13 @@ jobs:
       - setup_remote_docker:
           docker_layer_caching: true
       - run:
+          name: Bash env
+          command: cat .envrc | grep -Ev "(dotenv|PATH_add)" >> "$BASH_ENV"
+      - run:
           name: Build web Docker image
           command: |
-            cat .envrc | grep -Ev "(dotenv|PATH_add)" | source /dev/stdin
+            pwd
+            echo $PROJECT
             ./web/docker/build --cache-from=web
   test-web:
     <<: *defaults
@@ -51,6 +55,9 @@ jobs:
           key: v1-web-node_modules-{{ checksum "web/package.json" }}-{{ checksum "web/yarn.lock" }}
           paths:
             - web/node_modules
+      - run:
+          name: Bash env
+          command: cat .envrc | grep -Ev "(dotenv|PATH_add)" >> "$BASH_ENV"
       - run:
           name: Run tests
           command: |
