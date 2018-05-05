@@ -24,13 +24,9 @@ jobs:
       - checkout
       - setup_remote_docker:
           docker_layer_caching: true
-      - run: cat .envrc | grep -Ev "(dotenv|PATH_add)" >> $BASH_ENV
       - run:
           name: Build web Docker image
-          command: |
-            cat $BASH_ENV
-            echo $PROJECT
-            ./web/docker/build --cache-from=web
+          command: ./devops/bin/circleci build web
   test-web:
     <<: *defaults
     docker:
@@ -84,12 +80,9 @@ jobs:
       - checkout
       - setup_remote_docker:
           docker_layer_caching: true
-      - run: cat .envrc | grep -Ev "(dotenv|PATH_add)" >> $BASH_ENV
       - run:
           name: Build api Docker image
-          command: |
-            cat .envrc | grep -Ev "(dotenv|PATH_add)" | source /dev/stdin
-            ./api/docker/build --cache-from=api
+          command: ./devops/bin/circleci build api
   test-api:
     <<: *defaults
     docker:
