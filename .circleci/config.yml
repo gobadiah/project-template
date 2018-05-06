@@ -50,9 +50,6 @@ jobs:
           paths:
             - web/node_modules
       - run:
-          name: Bash env
-          command: cat .envrc | grep -Ev "(dotenv|PATH_add)" >> "$BASH_ENV"
-      - run:
           name: Run tests
           command: |
             cat .envrc | grep -Ev "(dotenv|PATH_add)" | source /dev/stdin
