@@ -73,7 +73,10 @@ function deploy_web_app() {
 function deploy_api_app() {
   pushd "$SCRIPTPATH/../../api"
 
-  heroku container:push -a $api web
+  TAG=$ENV ./docker/build
+
+  docker tag $PROJECT/api:$ENV registry.heroku.com/$api/web
+  docker push registry.heroku.com/$api/web
   heroku run -a $api "python manage.py migrate" --type=worker
 
   popd
