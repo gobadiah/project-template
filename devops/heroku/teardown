@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/usr/local/bin/zsh
 
 SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
 TMP="$SCRIPTPATH/tmp"
@@ -7,16 +7,6 @@ source $SCRIPTPATH/../config
 
 source $SCRIPTPATH/lib
 
-create_web_app
+destroy_api_app
 
-configure_web_app
-
-create_api_app
-
-configure_api_app
-
-heroku_login
-
-deploy_web_app
-
-deploy_api_app
+destroy_web_app
