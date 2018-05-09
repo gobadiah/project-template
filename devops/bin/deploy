@@ -2,10 +2,8 @@
 
 SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
 
-source $SCRIPTPATH/config
+source $SCRIPTPATH/../config
 
-source $SCRIPTPATH/lib
+$SCRIPTPATH/../aws/deploy
 
-$SCRIPTPATH/aws/deploy
-
-$SCRIPTPATH/heroku/deploy
+$SCRIPTPATH/../heroku/deploy
