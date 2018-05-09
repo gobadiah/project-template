@@ -19,15 +19,14 @@ jobs:
             - cc-test-reporter
   build-web:
     docker:
-      - image: docker:17.05.0-ce-git
+      - image: gobadiah/docker:18.04.0-ce-git
     steps:
       - checkout
       - setup_remote_docker:
           docker_layer_caching: true
       - run:
           name: Build web Docker image
-          command: |
-            ./web/docker/build --cache-from=web
+          command: ./devops/bin/circleci build web
   test-web:
     <<: *defaults
     docker:
@@ -53,6 +52,7 @@ jobs:
       - run:
           name: Run tests
           command: |
+            cat .envrc | grep -Ev "(dotenv|PATH_add)" | source /dev/stdin
             cd web
             npm run test:ci
             cd ..
@@ -72,15 +72,14 @@ jobs:
           path: web/reports
   build-api:
     docker:
-      - image: docker:17.05.0-ce-git
+      - image: gobadiah/docker:18.04.0-ce-git
     steps:
       - checkout
       - setup_remote_docker:
           docker_layer_caching: true
       - run:
           name: Build api Docker image
-          command: |
-            ./api/docker/build --cache-from=api
+          command: ./devops/bin/circleci build api
   test-api:
     <<: *defaults
     docker:
@@ -111,6 +110,7 @@ jobs:
           name: Run tests
           command: |
             . venv/bin/activate
+            cat .envrc | grep -Ev "(dotenv|PATH_add)" | source /dev/stdin
             cd api
             invoke test
           environment:
@@ -140,6 +140,17 @@ jobs:
           command: |
             ./tmp/cc-test-reporter sum-coverage tmp/codeclimate.*.json -p 2 -o tmp/codeclimate.total.json
             ./tmp/cc-test-reporter upload-coverage -i tmp/codeclimate.total.json
+  deploy:
+    <<: *defaults
+    docker:
+      - image: gobadiah/docker:18.04.0-ce-git
+    steps:
+      - checkout
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - run:
+          name: Deploy
+          command: ./devops/bin/circleci deploy
 workflows:
   version: 2
   build-and-test-web:
@@ -154,6 +165,10 @@ workflows:
           requires:
             - build
       - upload-coverage:
+          requires:
+            - test-web
+            - test-api
+      - deploy:
           requires:
             - test-web
             - test-api
