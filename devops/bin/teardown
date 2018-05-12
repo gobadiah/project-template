@@ -6,6 +6,6 @@ SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
 
 source $SCRIPTPATH/../config
 
-$SCRIPTPATH/../aws/destroy
+$SCRIPTPATH/../aws/teardown
 
-$SCRIPTPATH/../heroku/destroy
+$SCRIPTPATH/../heroku/teardown
