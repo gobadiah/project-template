@@ -15,7 +15,7 @@ function create_web_app() {
 }
 
 function teardown_web_app() {
-  heroku apps:list -t $PROJECT | grep -q $web ||
+  heroku apps:list -t $PROJECT | grep -q $web &&
     heroku apps:destroy -c $web -a $web
 }
 
@@ -44,11 +44,8 @@ function create_api_app() {
 }
 
 function teardown_api_app() {
-  heroku apps:list -t $PROJECT | grep -q $api
-  if [ $? -eq 0 ]
-  then
+  heroku apps:list -t $PROJECT | grep -q $api &&
     heroku apps:destroy -c $api -a $api
-  fi
 }
 
 function configure_api_app() {
