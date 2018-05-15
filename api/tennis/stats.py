@@ -141,19 +141,48 @@ def stats_win_exchanges(session):
     # calculate the distance per players for each exchanges
     # data contains for each player the list of distance travelled on
     # all exchanges
-    data = {player.data['player_id']: 0 for player in players}
+    data = {key: {player.data['player_id']: 0 for player in players}
+            for key in ['score',
+                        'winningforehand',
+                        'winningbackhand',
+                        'ace']}
     for exchange in session.exchanges:
         winner = exchange.data['winner']
-        if winner in data:
-            data[winner] += 1
+        list_of_hits = Hit.objects.filter(exchange=exchange)
+        # total number of win
+        if winner in data['score']:
+            data['score'][winner] += 1
+
+        # winning shots
+        # > check if last hitter is the winner
+        last_hit_id = exchange.data['hit_ids'][-1]
+        last_hit = None
+        for hit in list_of_hits:
+            if hit.data['hit_id'] == last_hit_id:
+                last_hit = hit
+        # check hit was found
+        if last_hit is not None:
+            # check if last hit is a winning shot
+            if last_hit.data['is_winning']:
+                # classify type of winning hit
+                if last_hit.data['type_of_hit'] == 'service':
+                    if winner in data['ace']:
+                        data['ace'][winner] += 1
+                elif last_hit.data['type_of_hit'] == 'backhand':
+                    if winner in data['winningbackhand']:
+                        data['winningbackhand'][winner] += 1
+                elif last_hit.data['type_of_hit'] == 'forehand':
+                    if winner in data['winningforehand']:
+                        data['winningforehand'][winner] += 1
 
     # expose this function outside register
     # @michael : idem remark stats_distance_exchanges
     def add_pct_value(stat_dict):
         """Add normalized parameter to stat dict value / max_value."""
         for this_stat in stat_dict:
-            total_value = sum([stat_dict[this_stat][player_id]['value'] for
-                               player_id in stat_dict[this_stat]])
+            # total_value cannot be null
+            total_value = max(sum([stat_dict[this_stat][player_id]['value'] for
+                                   player_id in stat_dict[this_stat]]), 1)
             for player_id in stat_dict[this_stat]:
                 stat_dict[this_stat][player_id]['normalized'] = \
                         stat_dict[this_stat][player_id]['value'] / total_value
@@ -163,10 +192,40 @@ def stats_win_exchanges(session):
         'winpercentage': dict(map(
             lambda player: (player.id, {
                 'value':
-                data[player.data['player_id']],
+                data['score'][player.data['player_id']],
                 'display': '%d points won' %
-                (data[player.data['player_id']]),
+                (data['score'][player.data['player_id']]),
                 'label': 'Win percentage',
+            }),
+            session.players.all(),
+        )),
+        'winonbackhand': dict(map(
+            lambda player: (player.id, {
+                'value':
+                data['winningbackhand'][player.data['player_id']],
+                'display': '%d points won' %
+                (data['winningbackhand'][player.data['player_id']]),
+                'label': 'Wins on backhand',
+            }),
+            session.players.all(),
+        )),
+        'winonforehand': dict(map(
+            lambda player: (player.id, {
+                'value':
+                data['winningforehand'][player.data['player_id']],
+                'display': '%d points won' %
+                (data['winningforehand'][player.data['player_id']]),
+                'label': 'Wins on forehand',
+            }),
+            session.players.all(),
+        )),
+        'ace': dict(map(
+            lambda player: (player.id, {
+                'value':
+                data['ace'][player.data['player_id']],
+                'display': '%d points won' %
+                (data['ace'][player.data['player_id']]),
+                'label': 'Aces',
             }),
             session.players.all(),
         ))}
