@@ -147,7 +147,10 @@ def stats_win_exchanges(session):
                         'winonreturn',
                         'winningforehand',
                         'winningbackhand',
-                        'ace']}
+                        'ace',
+                        'faultserv',
+                        'faultbackhand',
+                        'faultforehand']}
     for exchange in session.exchanges:
         winner = exchange.data['winner']
         list_of_hits = Hit.objects.filter(exchange=exchange)
@@ -170,7 +173,7 @@ def stats_win_exchanges(session):
 
         # winning exchanges on service_session
         if first_hit is not None:
-            if hit.hitter.data['player_id'] == winner:
+            if first_hit.hitter.data['player_id'] == winner:
                 if winner in data['winonserv']:
                     # Winning exchanges on service
                     data['winonserv'][winner] += 1
@@ -193,6 +196,19 @@ def stats_win_exchanges(session):
                 elif last_hit.data['type_of_hit'] == 'forehand':
                     if winner in data['winningforehand']:
                         data['winningforehand'][winner] += 1
+            # check if last hit is a fault
+            else:
+                # find hitter
+                hitter = last_hit.hitter.data['player_id']
+                if last_hit.data['type_of_hit'] == 'service':
+                    if hitter in data['faultserv']:
+                        data['faultserv'][hitter] += 1
+                elif last_hit.data['type_of_hit'] == 'backhand':
+                    if hitter in data['faultbackhand']:
+                        data['faultbackhand'][hitter] += 1
+                elif last_hit.data['type_of_hit'] == 'forehand':
+                    if hitter in data['faultforehand']:
+                        data['faultforehand'][hitter] += 1
 
     # expose this function outside register
     # @michael : idem remark stats_distance_exchanges
@@ -265,6 +281,36 @@ def stats_win_exchanges(session):
                 'display': '%d points won' %
                 (data['ace'][player.data['player_id']]),
                 'label': 'Aces',
+            }),
+            session.players.all(),
+        )),
+        'lostonbackhand': dict(map(
+            lambda player: (player.id, {
+                'value':
+                data['faultbackhand'][player.data['player_id']],
+                'display': '%d points lost' %
+                (data['faultbackhand'][player.data['player_id']]),
+                'label': 'Fault on backhand',
+            }),
+            session.players.all(),
+        )),
+        'lostonforehand': dict(map(
+            lambda player: (player.id, {
+                'value':
+                data['faultforehand'][player.data['player_id']],
+                'display': '%d points lost' %
+                (data['faultforehand'][player.data['player_id']]),
+                'label': 'Fault on forehand',
+            }),
+            session.players.all(),
+        )),
+        'lostonserv': dict(map(
+            lambda player: (player.id, {
+                'value':
+                data['faultserv'][player.data['player_id']],
+                'display': '%d points lost' %
+                (data['faultserv'][player.data['player_id']]),
+                'label': 'Faults on service',
             }),
             session.players.all(),
         ))}
