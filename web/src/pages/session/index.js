@@ -10,7 +10,8 @@ import { PlayersStats, Sections, SessionStats, SessionTitle, HeatMap } from './c
 import { UserScores, WatchVideo, containerWidth, userScoreHeight } from './styles';
 
 const statsBySection = {
-  0: ['maxservicespeed', 'meanservicespeed', 'maxforehandspeed', 'maxbackhandspeed'],
+  0: ['maxservicespeed', 'meanservicespeed', 'maxforehandspeed', 'maxbackhandspeed',
+    'distanceplayer'],
   1: ['meanhitspeed', 'meanservicespeed', 'maxservicespeed'],
   2: [],
   3: [],
@@ -32,7 +33,7 @@ class Session extends Page {
       t('session:KEY NUMBERS'),
       t('session:STATISTICS'),
       t('session:PERFORMANCES'),
-      t('session:HEAT MAP')
+      t('session:HEAT MAP'),
     ];
 
     let sectionInfo;

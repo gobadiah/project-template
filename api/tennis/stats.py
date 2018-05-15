@@ -133,6 +133,48 @@ def service_session(session):
 
 
 @register_session
+def distance_session(session):
+    """Compute the distance per player."""
+    # get all the players in the current sessions
+    players = session.players.all()
+
+    # calculate the distance per players for each exchanges
+    # data contains for each player the list of distance travelled on
+    # all exchanges
+    data = {player.data['player_id']: [] for player in players}
+    for exchange in session.exchanges:
+        exchange_distance = exchange.data['travelled_distance']
+        for player_id in exchange_distance:
+            data[player_id].append(exchange_distance[player_id])
+
+    # expose this function outside register
+    # @michael : where to put this kind of usefull function ?
+    def add_normalized_value(stat_dict):
+        """Add normalized parameter to stat dict value / max_value."""
+        for this_stat in stat_dict:
+            max_value = max([stat_dict[this_stat][player_id]['value'] for
+                             player_id in stat_dict[this_stat]])
+            for player_id in stat_dict[this_stat]:
+                stat_dict[this_stat][player_id]['normalized'] = \
+                        stat_dict[this_stat][player_id]['value'] / max_value
+        return stat_dict
+
+    result = {
+        'distanceplayer': dict(map(
+            lambda player: (player.id, {
+                'value':
+                sum(data[player.data['player_id']]),
+                'display': '%0.1f m' %
+                (sum(data[player.data['player_id']])),
+                'label': 'Travelled distance',
+            }),
+            session.players.all(),
+        ))}
+    add_normalized_value(result)
+    return result
+
+
+@register_session
 def mean_speed_of_hits(session):
     """Calculate stat on hits for session per player.
 
