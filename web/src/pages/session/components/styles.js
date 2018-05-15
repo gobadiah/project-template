@@ -110,7 +110,11 @@ export const SectionsContainer = styled(FlexColumn)`
   width: 100%;
 `;
 
-export const HeatMapContainer = styled(FlexCenter)`
+export const HeatMapContainer = styled('div')`
   width: 970px;
   background-color: var(--dark-blue-grey);
+`;
+
+export const HeatMapOptionContainer = styled(Flex)`
+  background-color: var(--apple-green);
 `;
