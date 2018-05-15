@@ -10,7 +10,7 @@ import { PlayersStats, Sections, SessionStats, SessionTitle, HeatMap } from './c
 import { UserScores, WatchVideo, containerWidth, userScoreHeight } from './styles';
 
 const statsBySection = {
-  0: ['service', 'service'],
+  0: ['maxservicespeed', 'meanservicespeed', 'maxforehandspeed', 'maxbackhandspeed'],
   1: ['meanhitspeed', 'meanservicespeed', 'maxservicespeed'],
   2: [],
   3: [],
@@ -35,17 +35,17 @@ class Session extends Page {
       t('session:HEAT MAP')
     ];
 
-    var sectionInfo;
-    if (currentSection != 3){
-        sectionInfo = <PlayersStats
-                        stats={statsBySection[currentSection]}
-                        session={session}
-                      />;
+    let sectionInfo;
+    if (currentSection !== 3) {
+      sectionInfo = (<PlayersStats
+        stats={statsBySection[currentSection]}
+        session={session}
+      />);
     } else {
-      sectionInfo = <HeatMap
-                      stats={statsBySection[currentSection]}
-                      session={session}
-                    />;
+      sectionInfo = (<HeatMap
+        stats={statsBySection[currentSection]}
+        session={session}
+      />);
     }
     return (
 
