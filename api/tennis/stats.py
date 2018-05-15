@@ -143,6 +143,8 @@ def stats_win_exchanges(session):
     # all exchanges
     data = {key: {player.data['player_id']: 0 for player in players}
             for key in ['score',
+                        'winonserv',
+                        'winonreturn',
                         'winningforehand',
                         'winningbackhand',
                         'ace']}
@@ -155,11 +157,28 @@ def stats_win_exchanges(session):
 
         # winning shots
         # > check if last hitter is the winner
+        # > identify first hitter (service)
         last_hit_id = exchange.data['hit_ids'][-1]
+        first_hit_id = exchange.data['hit_ids'][0]
         last_hit = None
+        first_hit = None
         for hit in list_of_hits:
             if hit.data['hit_id'] == last_hit_id:
                 last_hit = hit
+            if hit.data['hit_id'] == first_hit_id:
+                first_hit = hit
+
+        # winning exchanges on service_session
+        if first_hit is not None:
+            if hit.hitter.data['player_id'] == winner:
+                if winner in data['winonserv']:
+                    # Winning exchanges on service
+                    data['winonserv'][winner] += 1
+            else:
+                if winner in data['winonreturn']:
+                    # Winning exchanges on return
+                    data['winonreturn'][winner] += 1
+
         # check hit was found
         if last_hit is not None:
             # check if last hit is a winning shot
@@ -196,6 +215,26 @@ def stats_win_exchanges(session):
                 'display': '%d points won' %
                 (data['score'][player.data['player_id']]),
                 'label': 'Win percentage',
+            }),
+            session.players.all(),
+        )),
+        'winningonserv': dict(map(
+            lambda player: (player.id, {
+                'value':
+                data['winonserv'][player.data['player_id']],
+                'display': '%d points won' %
+                (data['winonserv'][player.data['player_id']]),
+                'label': 'Win on service',
+            }),
+            session.players.all(),
+        )),
+        'winningonreturn': dict(map(
+            lambda player: (player.id, {
+                'value':
+                data['winonreturn'][player.data['player_id']],
+                'display': '%d points won' %
+                (data['winonreturn'][player.data['player_id']]),
+                'label': 'Win on return',
             }),
             session.players.all(),
         )),

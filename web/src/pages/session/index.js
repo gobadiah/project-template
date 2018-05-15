@@ -12,7 +12,7 @@ import { UserScores, WatchVideo, containerWidth, userScoreHeight } from './style
 const statsBySection = {
   0: ['maxservicespeed', 'meanservicespeed', 'maxforehandspeed', 'maxbackhandspeed',
     'distanceplayer', 'winpercentage'],
-  1: ['winonbackhand', 'winonforehand', 'ace'],
+  1: ['winpercentage', 'winningonserv', 'winningonreturn', 'winonbackhand', 'winonforehand', 'ace'],
   2: [],
   3: [],
 };
