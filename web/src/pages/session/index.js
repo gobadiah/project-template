@@ -11,7 +11,7 @@ import { UserScores, WatchVideo, containerWidth, userScoreHeight } from './style
 
 const statsBySection = {
   0: ['maxservicespeed', 'meanservicespeed', 'maxforehandspeed', 'maxbackhandspeed',
-    'distanceplayer'],
+    'distanceplayer', 'winpercentage'],
   1: ['meanhitspeed', 'meanservicespeed', 'maxservicespeed'],
   2: [],
   3: [],
