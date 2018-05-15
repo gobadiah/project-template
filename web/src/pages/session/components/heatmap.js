@@ -55,7 +55,8 @@ class HeatMap extends PureComponent {
 
   renderCourt(ThisType) {
     /* TODO : Explain metrics */
-    const dimensions = [[[0, 0], [2377, 0]],
+    const dimensions = [
+      [[0, 0], [2377, 0]],
       [[0, 1097], [2377, 1097]],
       [[0, 0], [0, 1097]],
       [[2377, 0], [2377, 1097]],
