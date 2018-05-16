@@ -139,7 +139,7 @@ def mean_speed_of_hits(session):
             - the mean speed of hits per player in a session
             - the mean service speed per player in a session
             - the max service speed per player in a session
-            
+
         TODO : distinguish between in match and in training in session
 
     """
@@ -235,3 +235,53 @@ def duration_session(session):
             'display': str(session.duration),
         },
     }
+
+
+
+@register_session
+def heat_map_info(session):
+    """Compute the heat map data for a session."""
+    # get all the players in the current sessions
+    players = session.players.all()
+
+    # get all hit data for this exchange
+    list_of_hits = Hit.objects.filter(exchange__in=session.exchanges)
+
+    # normalise data as if player was always on the left
+    def normalise(pt, side):
+        if side == 'left':
+            return pt
+        else:
+            # symetry on y axis on net
+            x, y = pt
+            return [23.77 - x, y]
+
+    # calculate hit info per type of hit per players
+    data = {key: {player.data['player_id']: [] for player in players}
+            for key in ['hitterposition',
+                        'reboundposition']}
+
+    for hit in list_of_hits:
+        # hitter id
+        this_hitter = hit.hitter.data['player_id']
+        # hitter side // rebound side
+        side = hit.data['hitter_side']
+        # always a hitter position
+        hitter_position = hit.data['hitter_position']
+        # check if hitter is one of the 2 players
+        if this_hitter in data['hitterposition']:
+            # add stat to data
+            data['hitterposition'][this_hitter].append(
+                normalise(hitter_position,
+                          side))
+        # test if there is a rebound position
+        this_rebound = hit.data['rebound_position']
+        if this_rebound is not None:
+            # check if hitter is one of the 2 players
+            if this_hitter in data['reboundposition']:
+                # add stat to data
+                data['reboundposition'][this_hitter].append(
+                    normalise(this_rebound,
+                              side))
+
+    return data

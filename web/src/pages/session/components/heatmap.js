@@ -1,4 +1,5 @@
 import { defaultPropTypes, RoundButton } from '~/components';
+import { arrayOf, shape, string } from 'prop-types';
 import { css } from 'react-emotion';
 import React from 'react';
 import { PureComponent } from '~/components/base';
@@ -14,7 +15,8 @@ class HeatMap extends PureComponent {
     super(props);
     this.state = {
       right_player: true,
-      type_of_hit: [],
+      type_of_hit: ['service', 'forehand', 'backhand',
+        'volley', 'overhead'],
       color: 'rgb(0, 102, 255)',
     };
   }
@@ -52,6 +54,94 @@ class HeatMap extends PureComponent {
 
     );
   }
+
+
+  renderBalls() {
+    const { session } = this.props;
+    const originX = 200;
+    const originY = 200;
+
+    let player = 'WALID01';
+    if (this.state.right_player) {
+      player = 'WALID01';
+    } else {
+      player = 'GOLIATH01';
+    }
+    /* console.log(player);
+    console.log(this.state.type_of_hit); */
+    const ListOfBalls = session.current_stats.data['reboundposition']['goliath01'];
+
+    /* selection per type of hit
+    const arrayLength = this.state.type_of_hit.length;
+    for (let i = 0; i < arrayLength; i += 1) {
+      ListOfBalls = ListOfBalls.concat(myData[player][this.state.type_of_hit[i]]);
+      console.log(myData[player][this.state.type_of_hit[i]]);
+    } */
+
+    console.log(ListOfBalls);
+    const res = [ListOfBalls.map(el => React.createElement(
+      'circle',
+      {
+        cx: (el[0] * 100) + originX,
+        cy: (el[1] * 100) + originY,
+        fill: 'black',
+        fillOpacity: 1,
+        r: 5,
+      },
+    )),
+    ListOfBalls.map(el => React.createElement(
+      'circle',
+      {
+        cx: (el[0] * 100) + originX,
+        cy: (el[1] * 100) + originY,
+        fill: 'white',
+        fillOpacity: 0.4,
+        r: 20,
+      },
+    ))];
+    return res;
+  }
+
+
+  renderPlayers() {
+    const { session } = this.props;
+    const originX = 200;
+    const originY = 200;
+
+    let player = 'WALID01';
+    if (this.state.right_player) {
+      player = 'WALID01';
+    } else {
+      player = 'GOLIATH01';
+    }
+    /* console.log(player);
+    console.log(this.state.type_of_hit); */
+    const ListOfPlayers = session.current_stats.data['hitterposition']['goliath01'];
+
+    /* selection per type of hit
+    const arrayLength = this.state.type_of_hit.length;
+    for (let i = 0; i < arrayLength; i += 1) {
+      ListOfBalls = ListOfBalls.concat(myData[player][this.state.type_of_hit[i]]);
+      console.log(myData[player][this.state.type_of_hit[i]]);
+    } */
+
+    console.log(ListOfPlayers);
+    const res = [ListOfPlayers.map(el => React.createElement(
+      'rect',
+      {
+        x: (el[0] * 100) + originX - 20,
+        y: (el[1] * 100) + originY - 20,
+        width: 40,
+        height: 40,
+        fill: 'var(--apple-green)',
+        fillOpacity: 0.6,
+        stroke: 'green',
+        strokeWidth: 4,
+      },
+    ))];
+    return res;
+  }
+
 
   renderCourt(ThisType) {
     /* TODO : Explain metrics */
@@ -121,6 +211,8 @@ class HeatMap extends PureComponent {
           <svg viewBox={viewBox} >
             {this.renderCourt('back')}
             {this.renderCourt('lines')}
+            {this.renderBalls()}
+            {this.renderPlayers()}
           </svg>
         </Container>
         <ButtonContainer>
@@ -138,8 +230,8 @@ class HeatMap extends PureComponent {
 
 
 HeatMap.propTypes = {
-  /* session: shape().isRequired,
-  stats: arrayOf(string).isRequired, */
+  session: shape().isRequired,
+  stats: arrayOf(string).isRequired,
 };
 
 HeatMap.defaultProps = {
