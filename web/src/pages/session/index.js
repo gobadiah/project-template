@@ -36,16 +36,16 @@ class Session extends Page {
     ];
 
     var sectionInfo;
-    if (currentSection != 3){
-        sectionInfo = <PlayersStats
+    if (currentSection != 3) {
+        sectionInfo = (<PlayersStats
                         stats={statsBySection[currentSection]}
                         session={session}
-                      />;
+                      />);
     } else {
-      sectionInfo = <HeatMap
+      sectionInfo = (<HeatMap
                       stats={statsBySection[currentSection]}
                       session={session}
-                    />;
+                    />);
     }
     return (
 
