@@ -7,6 +7,6 @@ source $SCRIPTPATH/../config
 
 source $SCRIPTPATH/lib
 
-destroy_api_app
+teardown_api_app
 
-destroy_web_app
+teardown_web_app
