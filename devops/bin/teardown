@@ -1,5 +1,9 @@
 #!/usr/local/bin/zsh
 
-./aws/destroy
+set +e
 
-./heroku/destroy
+SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
+
+source $SCRIPTPATH/../config
+
+$SCRIPTPATH/../heroku/teardown
