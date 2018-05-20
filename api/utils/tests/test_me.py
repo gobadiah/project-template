@@ -25,4 +25,3 @@ def test_get_user_with_me():
     request = MagicMock()
     request.user = user
     assert get_user(request, kwargs) == user
-
