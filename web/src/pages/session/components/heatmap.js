@@ -1,8 +1,16 @@
-import { defaultPropTypes, RoundButton } from '~/components';
+import { defaultPropTypes, RoundButton, OptionButton } from '~/components';
 import { arrayOf, shape, string } from 'prop-types';
 import { css } from 'react-emotion';
 import React from 'react';
 import { PureComponent } from '~/components/base';
+import _ from 'lodash';
+
+/* import SwitchButton from 'react-switch-button';
+// Be sure to include styles at some point, probably during your bootstrapping
+import 'react-switch-button/dist/react-switch-button.css'; */
+
+// import Switch from 'react-toggle-switch'
+
 
 // @ michael how to isntall switch button ?
 import {
@@ -14,39 +22,63 @@ class HeatMap extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
+      // be more explicit on variable name
       right_player: true,
+      update: true,
       type_of_hit: ['service', 'forehand', 'backhand',
         'volley', 'overhead'],
       color: 'rgb(0, 102, 255)',
     };
+    // This binding is necessary to make `this` work in the callback
+    // this.handleClick = this.handleClick.bind(this);
   }
 
-  handleClick(type) {
-    const typeOfHits = ['service', 'forehand', 'backhand',
-      'volley', 'overhead'];
+  handleClick = (type) => {
+    /* const typeOfHits = ['service', 'forehand', 'backhand',
+      'volley', 'overhead']; */
     if (type === 'player') {
+      console.log('click', type);
       this.setState({ right_player: !this.state.right_player });
-    }
-    if (typeOfHits.indexOf(type) >= 0) {
-      const thisTypeOfHits = this.state.type_of_hit;
-      const index = thisTypeOfHits.indexOf(type);
+      console.log(this.state);
+    } else {
+      const typeOfHits = _.clone(this.state.type_of_hit);
+      const index = typeOfHits.indexOf(type);
       if (index > -1) {
-        thisTypeOfHits.splice(index, 1);
+        typeOfHits.splice(index, 1);
       } else {
-        thisTypeOfHits.push(type);
+        typeOfHits.push(type);
       }
 
-      // console.log(this_type_of_hits);
-      this.setState({ type_of_hit: thisTypeOfHits });
+      console.log('click', type);
+      this.setState({ type_of_hit: typeOfHits });
+      // this.setState({ update: !this.state.update });
+      console.log(this.state);
+
     }
+
   }
 
   renderOptions(type) {
     /* TODO : should take t as argument for translation */
     const { t } = this.context;
+    console.log('render', type);
+    if (type === 'player') {
+      return (
+        <OptionButton
+          text={t((this.state.right_player ? 'Right' : 'Left'))}
+          className={css`width: 100%`}
+          value={type}
+          onClick={() => this.handleClick(type)}
+        />
+
+      );
+    }
+    const index = this.state.type_of_hit.indexOf(type);
+    console.log('render', type, index);
     return (
-      <RoundButton
-        text={t(type)}
+      <OptionButton
+        fill={index > -1 ? 'green' : 'gray'}
+        text={t((index > -1 ? type : 'OFF'))}
         className={css`width: 100%`}
         value={type}
         onClick={() => this.handleClick(type)}
@@ -107,7 +139,7 @@ class HeatMap extends PureComponent {
     const { session } = this.props;
     const originX = 200;
     const originY = 200;
-
+    const RectSize = 30
     let player = 'WALID01';
     if (this.state.right_player) {
       player = 'WALID01';
@@ -129,12 +161,12 @@ class HeatMap extends PureComponent {
     const res = [ListOfPlayers.map(el => React.createElement(
       'rect',
       {
-        x: (el[0] * 100) + originX - 20,
-        y: (el[1] * 100) + originY - 20,
-        width: 40,
-        height: 40,
+        x: ((el[0] * 100) + originX) - (RectSize / 2),
+        y: ((el[1] * 100) + originY) - (RectSize / 2),
+        width: RectSize,
+        height: RectSize,
         fill: 'var(--apple-green)',
-        fillOpacity: 0.6,
+        fillOpacity: 0.4,
         stroke: 'green',
         strokeWidth: 4,
       },
