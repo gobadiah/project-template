@@ -63,6 +63,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'core',
     'assets',
+    'drf_yasg',
 ]
 
 if not DEBUG and 'SENTRY_DSN' in os.environ:
