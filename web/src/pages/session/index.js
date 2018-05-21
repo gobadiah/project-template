@@ -7,7 +7,7 @@ import { score } from '~/tennis/fixtures';
 import hoc from '~/hoc';
 
 import { PlayersStats, Sections, SessionStats, SessionTitle, HeatMap } from './components';
-import { UserScores, WatchVideo, containerWidth, userScoreHeight } from './styles';
+import { UserScores, WatchVideo, containerWidth } from './styles';
 
 const statsBySection = {
   0: ['maxservicespeed', 'meanservicespeed', 'maxforehandspeed', 'maxbackhandspeed',
@@ -85,5 +85,8 @@ class Session extends Page {
 
 export default hoc(
   'session',
-  { endpoint: query => `/tennis/sessions/${query.id}?include=videos,current_stats,players,exchanges,exchanges.hits` },
+  {
+    endpoint: query => `/tennis/sessions/${query.id}?include=videos,
+  current_stats,players,exchanges,exchanges.hits`,
+  },
 )(Session);
