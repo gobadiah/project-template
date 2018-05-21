@@ -50,9 +50,9 @@ class Session extends Page {
       />);
     }
 
-    const Player1Name = `${session.players[0].data['first-name']}
+    const player1Name = `${session.players[0].data['first-name']}
     ${session.players[0].data['last-name']}`;
-    const Player2Name = `${session.players[1].data['first-name']}
+    const player2Name = `${session.players[1].data['first-name']}
     ${session.players[1].data['last-name']}`;
     return (
 
@@ -60,9 +60,9 @@ class Session extends Page {
         <SessionTitle session={session} />
         <HorizontalSeparation />
         <UserScores>
-          <Normal> {Player1Name} </Normal>
+          <Normal> {player1Name} </Normal>
           <Score score={score} />
-          <Normal> {Player2Name} </Normal>
+          <Normal> {player2Name} </Normal>
         </UserScores>
         <WatchVideo session={session} />
         <HorizontalSeparation />
