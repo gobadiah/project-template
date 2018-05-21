@@ -2,7 +2,7 @@ export * from './prop-types';
 
 export { default as Main } from './main';
 export { default as RoundButton } from './buttons/round';
-export { default as OptionButton } from './buttons/round';
+export { default as OptionButton } from './buttons/options';
 export { default as GoogleButton } from './buttons/google';
 export { default as FacebookButton } from './buttons/facebook';
 export { default as StatBar } from './stat-bar';
