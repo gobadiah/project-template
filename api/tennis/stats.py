@@ -230,7 +230,7 @@ def stats_win_exchanges(session):
                 data['score'][player.data['player_id']],
                 'display': '%d points won' %
                 (data['score'][player.data['player_id']]),
-                'label': 'Win percentage',
+                'label': 'Won points',
             }),
             session.players.all(),
         )),
@@ -379,7 +379,8 @@ def stats_speed_hits(session):
                              'backhand': [],
                              'overhead': [],
                              'volley': [],
-                             'service': []}
+                             'service': [],
+                             'undef': []}
 
     # @michael : do you have doc on the syntax : exchange__in ?
     list_of_hits = Hit.objects.filter(exchange__in=session.exchanges)
@@ -389,6 +390,8 @@ def stats_speed_hits(session):
         hitter = hit.hitter.id
         mean_speed = hit.data['mean_speed']
         type_of_hit = hit.data['type_of_hit']
+        if type_of_hit is None:
+            type_of_hit = 'undef'
         data[hitter]['all'].append(mean_speed)
         data[hitter][type_of_hit].append(mean_speed)
 

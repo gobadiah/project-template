@@ -49,15 +49,20 @@ class Session extends Page {
         session={session}
       />);
     }
+
+    const Player1Name = `${session.players[0].data['first-name']}
+    ${session.players[0].data['last-name']}`;
+    const Player2Name = `${session.players[1].data['first-name']}
+    ${session.players[1].data['last-name']}`;
     return (
 
       <Main title={t('session:title', { session })} width={containerWidth}>
         <SessionTitle session={session} />
         <HorizontalSeparation />
         <UserScores>
-          <Normal> {session.players[0].name} </Normal>
+          <Normal> {Player1Name} </Normal>
           <Score score={score} />
-          <Normal> {session.players[1].name} </Normal>
+          <Normal> {Player2Name} </Normal>
         </UserScores>
         <WatchVideo session={session} />
         <HorizontalSeparation />
