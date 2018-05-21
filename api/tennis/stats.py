@@ -133,14 +133,6 @@ def service_session(session):
 
 
 @register_session
-<<<<<<< HEAD
-def mean_speed_of_hits(session):
-    """
-        calculate stat on hits for session per player
-            - the mean speed of hits per player in a session
-            - the mean service speed per player in a session
-            - the max service speed per player in a session
-=======
 def stats_win_exchanges(session):
     """Compute the number of win exchanges per player."""
     # get all the players in the current sessions
@@ -371,7 +363,6 @@ def stats_distance_exchanges(session):
 @register_session
 def stats_speed_hits(session):
     """Calculate stat on hits for session per player.
->>>>>>> 0f26d15... web : correct bug on players-stats.js to select correct player
 
         TODO : distinguish between in match and in training in session
 
@@ -382,20 +373,12 @@ def stats_speed_hits(session):
     data = {}
     for player_i in players:
         data[player_i.id] = {'all': [],
-<<<<<<< HEAD
-                                'forehand': [],
-                                'backhand': [],
-                                'overhead':[],
-                                'volley': [],
-                                'service': []}
-=======
                              'forehand': [],
                              'backhand': [],
                              'overhead': [],
                              'volley': [],
                              'service': [],
                              'undef': []}
->>>>>>> 0f26d15... web : correct bug on players-stats.js to select correct player
 
     #@michael : do you have doc on the syntax : exchange__in ?
     list_of_hits = Hit.objects.filter(exchange__in=session.exchanges)
@@ -403,17 +386,11 @@ def stats_speed_hits(session):
     # Get all info in data to calculate mean speed per type of hits
     for hit in list_of_hits:
         hitter = hit.hitter.id
-<<<<<<< HEAD
-        mean_speed = hit.data["mean_speed"]
-        type_of_hit = hit.data["type_of_hit"]
-        data[hitter]["all"].append(mean_speed)
-=======
         mean_speed = hit.data['mean_speed']
         type_of_hit = hit.data['type_of_hit']
         if type_of_hit is None:
             type_of_hit = 'undef'
         data[hitter]['all'].append(mean_speed)
->>>>>>> 0f26d15... web : correct bug on players-stats.js to select correct player
         data[hitter][type_of_hit].append(mean_speed)
 
 
