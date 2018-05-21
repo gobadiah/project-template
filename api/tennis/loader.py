@@ -130,6 +130,8 @@ def loader(
         hit.hitter = hitter
         hit.data = h
         hit.save()
+
+    """
     for game_id, game in games.items():
         video_points = VideoPoint.objects.filter(
             start_point_for_exchanges__game=game,
@@ -165,6 +167,7 @@ def loader(
                 games_won=games_won if d['winner'] != player_id else
                 games_won + 1,
             )
+    """
     if match:
         video_points = VideoPoint.objects.filter(
             start_point_for_exchanges__game__set__match=match,
@@ -286,7 +289,7 @@ def format_timedelta(td):
     return '{}:{}:{}'.format(hours, m, s)
 
 
-def get_duration(text, default='06:00:00'):
+def get_duration(text, default='01:00:00'):
     """Get a duration from the user."""
     default_duration_str = default
     duration_str = input(text + ' (format hh:mm:ss) [{}]: '.format(  # Noqa B322
@@ -325,7 +328,7 @@ def create_session(user, data):
     session.place = input(  # Noqa B322
         'Session\'s place [{}]: '.format(default_place),
     ) or default_place
-    session.duration = get_duration('Session\'s duration', default='06:00:00')
+    session.duration = get_duration('Session\'s duration', default='01:00:00')
     surface = None
 
     def get(surface):
