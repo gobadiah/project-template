@@ -132,6 +132,8 @@ def service_session(session):
     }
 
 # TODO : split function with sub functions
+
+
 @register_session
 def stats_win_exchanges(session):
     """Compute the number of win exchanges per player."""
