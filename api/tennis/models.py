@@ -7,6 +7,8 @@ from django.utils.translation import ugettext_lazy as _
 
 User = get_user_model()
 
+# @Michael : Exchange should be associated with hits
+
 
 class Exchange(models.Model):
     """A Tennis exchange."""
