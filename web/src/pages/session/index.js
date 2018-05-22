@@ -10,10 +10,21 @@ import { PlayersStats, Sections, SessionStats, SessionTitle, HeatMap } from './c
 import { UserScores, WatchVideo, containerWidth } from './styles';
 
 const statsBySection = {
-  0: ['maxservicespeed', 'meanservicespeed', 'maxforehandspeed', 'maxbackhandspeed',
-    'distanceplayer', 'winpercentage'],
-  1: ['winpercentage', 'winningonserv', 'winningonreturn', 'winonbackhand', 'winonforehand', 'ace',
-    'lostonbackhand', 'lostonforehand', 'lostonserv'],
+  0: ['maxservicespeed',
+    'meanservicespeed',
+    'maxforehandspeed',
+    'maxbackhandspeed',
+    'distanceplayer',
+    'winpercentage'],
+  1: ['winpercentage',
+    'winningonserv',
+    'winningonreturn',
+    'winonbackhand',
+    'winonforehand',
+    'ace',
+    'lostonbackhand',
+    'lostonforehand',
+    'lostonserv'],
   2: [],
   3: [],
 };
@@ -39,15 +50,19 @@ class Session extends Page {
 
     let sectionInfo;
     if (currentSection !== 3) {
-      sectionInfo = (<PlayersStats
-        stats={statsBySection[currentSection]}
-        session={session}
-      />);
+      sectionInfo = (
+        <PlayersStats
+          stats={statsBySection[currentSection]}
+          session={session}
+        />
+      );
     } else {
-      sectionInfo = (<HeatMap
-        stats={statsBySection[currentSection]}
-        session={session}
-      />);
+      sectionInfo = (
+        <HeatMap
+          stats={statsBySection[currentSection]}
+          session={session}
+        />
+      );
     }
 
     const player1Name = `${session.players[0].data['first-name']}

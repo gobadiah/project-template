@@ -131,7 +131,7 @@ def service_session(session):
         )),
     }
 
-
+# TODO : split function with sub functions
 @register_session
 def stats_win_exchanges(session):
     """Compute the number of win exchanges per player."""
@@ -373,8 +373,8 @@ def stats_speed_hits(session):
     players = session.players.all()
 
     data = {}
-    for player_i in players:
-        data[player_i.id] = {'all': [],
+    for player in players:
+        data[player.id] = {'all': [],
                              'forehand': [],
                              'backhand': [],
                              'overhead': [],
