@@ -36,11 +36,11 @@ const PlayersStats = ({ session, stats }, { t }) => (
   <Container>
     { stats.map(stat => (
       <StatColumn key={stat}>
-        <Label>{t(session.current_stats.data[stat]['1'].label)}</Label>
+        <Label>{t(session.current_stats.data[stat][session.players[0].id].label)}</Label>
         <Values>
-          <Stat stat={session.current_stats.data[stat]['1']} />
+          <Stat stat={session.current_stats.data[stat][session.players[0].id]} />
           <VerticalSeparation />
-          <Stat stat={session.current_stats.data[stat]['2']} right />
+          <Stat stat={session.current_stats.data[stat][session.players[1].id]} right />
         </Values>
       </StatColumn>
     )) }

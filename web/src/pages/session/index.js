@@ -7,11 +7,24 @@ import { score } from '~/tennis/fixtures';
 import hoc from '~/hoc';
 
 import { PlayersStats, Sections, SessionStats, SessionTitle, HeatMap } from './components';
-import { UserScores, WatchVideo, containerWidth, userScoreHeight } from './styles';
+import { UserScores, WatchVideo, containerWidth } from './styles';
 
 const statsBySection = {
-  0: ['service', 'service'],
-  1: ['meanhitspeed', 'meanservicespeed', 'maxservicespeed'],
+  0: ['maxservicespeed',
+    'meanservicespeed',
+    'maxforehandspeed',
+    'maxbackhandspeed',
+    'distanceplayer',
+    'winpercentage'],
+  1: ['winpercentage',
+    'winningonserv',
+    'winningonreturn',
+    'winonbackhand',
+    'winonforehand',
+    'ace',
+    'lostonbackhand',
+    'lostonforehand',
+    'lostonserv'],
   2: [],
   3: [],
 };
@@ -32,30 +45,39 @@ class Session extends Page {
       t('session:KEY NUMBERS'),
       t('session:STATISTICS'),
       t('session:PERFORMANCES'),
-      t('session:HEAT MAP')
+      t('session:HEAT MAP'),
     ];
 
-    var sectionInfo;
-    if (currentSection != 3){
-        sectionInfo = <PlayersStats
-                        stats={statsBySection[currentSection]}
-                        session={session}
-                      />;
+    let sectionInfo;
+    if (currentSection !== 3) {
+      sectionInfo = (
+        <PlayersStats
+          stats={statsBySection[currentSection]}
+          session={session}
+        />
+      );
     } else {
-      sectionInfo = <HeatMap
-                      stats={statsBySection[currentSection]}
-                      session={session}
-                    />;
+      sectionInfo = (
+        <HeatMap
+          stats={statsBySection[currentSection]}
+          session={session}
+        />
+      );
     }
+
+    const player1Name = `${session.players[0].data['first-name']}
+    ${session.players[0].data['last-name']}`;
+    const player2Name = `${session.players[1].data['first-name']}
+    ${session.players[1].data['last-name']}`;
     return (
 
       <Main title={t('session:title', { session })} width={containerWidth}>
         <SessionTitle session={session} />
         <HorizontalSeparation />
         <UserScores>
-          <Normal> {session.players[0].name} </Normal>
+          <Normal> {player1Name} </Normal>
           <Score score={score} />
-          <Normal> {session.players[1].name} </Normal>
+          <Normal> {player2Name} </Normal>
         </UserScores>
         <WatchVideo session={session} />
         <HorizontalSeparation />
@@ -78,5 +100,8 @@ class Session extends Page {
 
 export default hoc(
   'session',
-  { endpoint: query => `/tennis/sessions/${query.id}?include=videos,current_stats,players,exchanges,exchanges.hits` },
+  {
+    endpoint: query => `/tennis/sessions/${query.id}?include=videos,
+  current_stats,players,exchanges,exchanges.hits`,
+  },
 )(Session);
