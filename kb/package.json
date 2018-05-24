@@ -6,6 +6,6 @@
   "author": "Michaël Journo",
   "license": "MIT",
   "dependencies": {
-    "raneto": "^0.14.0"
+    "raneto": "^0.15.0"
   }
 }

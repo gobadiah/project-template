@@ -1,12 +1,11 @@
 #!/usr/local/bin/zsh
 
+set +e
+
 SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
-TMP="$SCRIPTPATH/tmp"
 
 source $SCRIPTPATH/../config
 
-source $SCRIPTPATH/lib
+$SCRIPTPATH/../aws/teardown
 
-destroy_api_app
-
-destroy_web_app
+$SCRIPTPATH/../heroku/teardown

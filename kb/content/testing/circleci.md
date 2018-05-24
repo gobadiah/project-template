@@ -13,5 +13,4 @@ CircleCI configuration file resides at `.circleci/config.yml`, and documentation
 In order to function properly, you need to set the following environment variables : 
 
 * `PROJECT`: project name
-
 * `CC_TEST_REPORTER_ID`: [Code Climate](https://codeclimate.com) test reporter id, found in test coverage section

@@ -1,13 +1,12 @@
 #!/usr/local/bin/zsh
 
 SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
+TMP="$SCRIPTPATH/tmp"
 
-source $SCRIPTPATH/config
+source $SCRIPTPATH/../config
 
 source $SCRIPTPATH/lib
 
-$SCRIPTPATH/aws/setup
+teardown_api_app
 
-$SCRIPTPATH/heroku/setup
-
-rm $AWS_OUTPUT_CONFIG
+teardown_web_app
