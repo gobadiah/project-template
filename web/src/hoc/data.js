@@ -17,13 +17,13 @@ export default ({
   let props;
   let key;
   if (singular) {
-    key = _.singularize(type);
+    key = _.camelCase(_.singularize(type));
     props = {
       [key]: state[type][result.body.data.id],
     };
     props[key].toJSON = () => removeCircularReferences(props[key]);
   } else {
-    key = type;
+    key = _.camelCase(type);
     const ids = result.body.data.map(o => o.id);
     props = {
       [key]: ids.map(id => state[type][id]),
