@@ -5,4 +5,4 @@ from ..urls import urlpatterns
 
 def test_users_urlpatterns():
     """Test users urlpatterns."""
-    assert len(urlpatterns) == 3
+    assert len(urlpatterns) == 5
