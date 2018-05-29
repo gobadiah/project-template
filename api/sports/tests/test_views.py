@@ -108,11 +108,11 @@ def test_videoviewset_handle_request(rf):
     assert data == {
         'asset': OrderedDict([
             ('type', 'assets'),
-            ('id', '8'),
+            ('id', str(video.asset_id)),
         ]),
         'session': OrderedDict([
             ('type', 'sessions'),
-            ('id', '12'),
+            ('id', str(video.session_id)),
         ]),
     }
 

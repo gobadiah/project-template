@@ -124,6 +124,9 @@ def test_user_registration_successful(client):
             'data': {
                 'type': 'users',
                 'attributes': {
+                    'first_name': 'Nicolas',
+                    'last_name': 'Smith',
+                    'birthday': '1970-01-01',
                     'email': email,
                     'password': password,
                 },
@@ -131,6 +134,7 @@ def test_user_registration_successful(client):
         }),
         content_type='application/vnd.api+json',
     )
+    print(response.json())
     assert response.status_code == 201  # Created
     assert User.objects.filter(email=email).count() == 1
     user = User.objects.get(email=email)

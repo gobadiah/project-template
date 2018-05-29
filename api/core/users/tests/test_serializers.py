@@ -11,6 +11,7 @@ def test_user_serializer_fields():
     assert 'providers' in UserSerializer.Meta.fields
 
 
+@pytest.mark.django_db
 def test_user_serializer_can_serialize(rf):
     """Test UserSerializer can serialize a simple User object."""
     request = rf.get('/')
@@ -21,6 +22,16 @@ def test_user_serializer_can_serialize(rf):
         'url': None,
         'email': '',
         'providers': [],
+        'birthday': None,
+        'club': None,
+        'current_stats': None,
+        'dominant_hand': 'right_handed',
+        'first_name': '',
+        'gender': None,
+        'last_name': '',
+        'picture': None,
+        'ranking': None,
+        'sessions': [],
     }
 
 

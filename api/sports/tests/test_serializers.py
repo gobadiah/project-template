@@ -63,11 +63,11 @@ def test_video_serializer_can_serialize(rf):
     assert serializer.data == {
         'asset': OrderedDict([
             ('type', 'assets'),
-            ('id', '6'),
+            ('id', str(obj.asset_id)),
         ]),
         'session': OrderedDict([
             ('type', 'sessions'),
-            ('id', '8'),
+            ('id', str(obj.session_id)),
         ]),
     }
 
