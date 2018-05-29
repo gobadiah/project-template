@@ -91,6 +91,10 @@ exports[`Document should match snapshot 1`] = `
         }
       }
     />
+    <link
+      href="https://fonts.googleapis.com/css?family=Titillium+Web:400,700"
+      rel="stylesheet"
+    />
     <style
       dangerouslySetInnerHTML={
         Object {
