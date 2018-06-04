@@ -1,4 +1,4 @@
-import { defaultPropTypes, RoundButton, OptionButton } from '~/components';
+import { defaultPropTypes, OptionButton } from '~/components';
 import { arrayOf, shape, string } from 'prop-types';
 import { css } from 'react-emotion';
 import React from 'react';
@@ -24,7 +24,7 @@ class HeatMap extends PureComponent {
     this.state = {
       // be more explicit on variable name
       right_player: true,
-      update: true,
+      // Note : list must be coherent with the one used in python
       type_of_hit: ['service', 'forehand', 'backhand',
         'volley', 'overhead'],
       color: 'rgb(0, 102, 255)',
@@ -37,9 +37,7 @@ class HeatMap extends PureComponent {
     /* const typeOfHits = ['service', 'forehand', 'backhand',
       'volley', 'overhead']; */
     if (type === 'player') {
-      console.log('click', type);
       this.setState({ right_player: !this.state.right_player });
-      console.log(this.state);
     } else {
       const typeOfHits = _.clone(this.state.type_of_hit);
       const index = typeOfHits.indexOf(type);
@@ -49,10 +47,8 @@ class HeatMap extends PureComponent {
         typeOfHits.push(type);
       }
 
-      console.log('click', type);
+
       this.setState({ type_of_hit: typeOfHits });
-      // this.setState({ update: !this.state.update });
-      console.log(this.state);
 
     }
 
@@ -61,7 +57,6 @@ class HeatMap extends PureComponent {
   renderOptions(type) {
     /* TODO : should take t as argument for translation */
     const { t } = this.context;
-    console.log('render', type);
     if (type === 'player') {
       return (
         <OptionButton
@@ -74,7 +69,6 @@ class HeatMap extends PureComponent {
       );
     }
     const index = this.state.type_of_hit.indexOf(type);
-    console.log('render', type, index);
     return (
       <OptionButton
         fill={index > -1 ? 'green' : 'gray'}
@@ -93,24 +87,27 @@ class HeatMap extends PureComponent {
     const originX = 200;
     const originY = 200;
 
-    let player = 'WALID01';
+    let player = '';
     if (this.state.right_player) {
-      player = 'WALID01';
+      // If right player select player[1] to be coherent width
+      // player order on the screen
+      // @michael : player id is in lower case when I create the stat in python
+      // but doesn't exist in lower case ... bizarre bizarre
+      player = session.players[1].data['player-id'].toLowerCase();
     } else {
-      player = 'GOLIATH01';
+      player = session.players[0].data['player-id'].toLowerCase();
     }
-    /* console.log(player);
-    console.log(this.state.type_of_hit); */
-    const ListOfBalls = session.current_stats.data['reboundposition']['goliath01'];
+    console.log('PLAYER', player);
+    console.log(session.current_stats.data['reboundposition']);
+    let ListOfBalls = [];
 
-    /* selection per type of hit
+    /* selection per type of hit */
     const arrayLength = this.state.type_of_hit.length;
     for (let i = 0; i < arrayLength; i += 1) {
-      ListOfBalls = ListOfBalls.concat(myData[player][this.state.type_of_hit[i]]);
-      console.log(myData[player][this.state.type_of_hit[i]]);
-    } */
+      ListOfBalls = ListOfBalls.concat(session.current_stats
+        .data.reboundposition[player][this.state.type_of_hit[i]]);
+    }
 
-    console.log(ListOfBalls);
     const res = [ListOfBalls.map(el => React.createElement(
       'circle',
       {
@@ -139,23 +136,23 @@ class HeatMap extends PureComponent {
     const { session } = this.props;
     const originX = 200;
     const originY = 200;
-    const RectSize = 30
-    let player = 'WALID01';
+    const RectSize = 30;
+    let player = '';
     if (this.state.right_player) {
-      player = 'WALID01';
+      player = session.players[1].data['player-id'].toLowerCase();
     } else {
-      player = 'GOLIATH01';
+      player = session.players[0].data['player-id'].toLowerCase();
     }
     /* console.log(player);
     console.log(this.state.type_of_hit); */
-    const ListOfPlayers = session.current_stats.data['hitterposition']['goliath01'];
+    let ListOfPlayers = [];
 
-    /* selection per type of hit
+    /* selection per type of hit */
     const arrayLength = this.state.type_of_hit.length;
     for (let i = 0; i < arrayLength; i += 1) {
-      ListOfBalls = ListOfBalls.concat(myData[player][this.state.type_of_hit[i]]);
-      console.log(myData[player][this.state.type_of_hit[i]]);
-    } */
+      ListOfPlayers = ListOfPlayers.concat(session.current_stats
+        .data.hitterposition[player][this.state.type_of_hit[i]]);
+    }
 
     console.log(ListOfPlayers);
     const res = [ListOfPlayers.map(el => React.createElement(

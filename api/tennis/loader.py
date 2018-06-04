@@ -130,8 +130,10 @@ def loader(
         hit.hitter = hitter
         hit.data = h
         hit.save()
-
-    """
+    # Games.items is null when not in match
+    # Session type = match ==> ok
+    # session type = training ==> empty
+    # session type = mix ==> check for each each
     for game_id, game in games.items():
         video_points = VideoPoint.objects.filter(
             start_point_for_exchanges__game=game,
@@ -141,18 +143,20 @@ def loader(
         game.save()
         d = data['list_of_games'][game_id]
         for side, player_id in d['player_sides'].items():
-            exchanges_won = d['score']['points'][player_id]
+            exchanges_won = None
+            if 'points' in d['score']:
+                exchanges_won = d['score']['points'][player_id]
             GamePlayer.objects.create(
                 game=game,
                 player=players[player_id],
                 is_winner=player_id == d['winner'],
                 side=side,
-                exchanges_won=exchanges_won if d['winner'] != player_id
+                exchanges_won=exchanges_won,
                 else exchanges_won + 1,
             )
     for set_id, set in sets.items():
         video_points = VideoPoint.objects.filter(
-            start_point_for_exchanges__game__set=set,
+            start_point_for_exchanges__game__set=set,video_points
         )
         set.start_at = min(video_points)
         set.end_at = max(video_points)
@@ -167,7 +171,6 @@ def loader(
                 games_won=games_won if d['winner'] != player_id else
                 games_won + 1,
             )
-    """
     if match:
         video_points = VideoPoint.objects.filter(
             start_point_for_exchanges__game__set__match=match,
@@ -289,7 +292,7 @@ def format_timedelta(td):
     return '{}:{}:{}'.format(hours, m, s)
 
 
-def get_duration(text, default='01:00:00'):
+def get_duration(text, default='06:00:00'):
     """Get a duration from the user."""
     default_duration_str = default
     duration_str = input(text + ' (format hh:mm:ss) [{}]: '.format(  # Noqa B322
@@ -328,7 +331,7 @@ def create_session(user, data):
     session.place = input(  # Noqa B322
         'Session\'s place [{}]: '.format(default_place),
     ) or default_place
-    session.duration = get_duration('Session\'s duration', default='01:00:00')
+    session.duration = get_duration('Session\'s duration', default='06:00:00')
     surface = None
 
     def get(surface):

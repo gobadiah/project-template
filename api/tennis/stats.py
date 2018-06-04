@@ -380,12 +380,12 @@ def stats_speed_hits(session):
 
     for player in players:
         data[player.id] = {'all': [],
-                             'forehand': [],
-                             'backhand': [],
-                             'overhead': [],
-                             'volley': [],
-                             'service': [],
-                             'undef': []}
+                           'forehand': [],
+                           'backhand': [],
+                           'overhead': [],
+                           'volley': [],
+                           'service': [],
+                           'undef': []}
 
     # @michael : do you have doc on the syntax : exchange__in ?
 
@@ -507,22 +507,37 @@ def heat_map_info(session):
             x, y = pt
             return [23.77 - x, y]
 
+    # list all type of hits
+    # @michael : the list should never change ... but if one day it changes we
+    # will need to update it everywhere
+    all_type_of_hits = ['forehand',
+                        'backhand',
+                        'overhead',
+                        'volley',
+                        'service',
+                        'undef']
     # calculate hit info per type of hit per players
-    data = {key: {player.data['player_id']: [] for player in players}
-            for key in ['hitterposition',
-                        'reboundposition']}
+    data = {key:
+            {player.data['player_id']:
+             {type_of_hit: [] for type_of_hit in all_type_of_hits}
+             for player in players}
+            for key in ['hitterposition', 'reboundposition']}
 
     for hit in list_of_hits:
         # hitter id
         this_hitter = hit.hitter.data['player_id']
         # hitter side // rebound side
         side = hit.data['hitter_side']
+        # type of hits
+        type_of_hit = hit.data['type_of_hit']
+        if type_of_hit is None:
+            type_of_hit = 'undef'
         # always a hitter position
         hitter_position = hit.data['hitter_position']
         # check if hitter is one of the 2 players
         if this_hitter in data['hitterposition']:
             # add stat to data
-            data['hitterposition'][this_hitter].append(
+            data['hitterposition'][this_hitter][type_of_hit].append(
                 normalise(hitter_position,
                           side))
         # test if there is a rebound position
@@ -531,7 +546,7 @@ def heat_map_info(session):
             # check if hitter is one of the 2 players
             if this_hitter in data['reboundposition']:
                 # add stat to data
-                data['reboundposition'][this_hitter].append(
+                data['reboundposition'][this_hitter][type_of_hit].append(
                     normalise(this_rebound,
                               side))
 
