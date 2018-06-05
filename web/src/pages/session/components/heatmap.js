@@ -1,5 +1,5 @@
 import { defaultPropTypes, OptionButton } from '~/components';
-import { arrayOf, shape, string } from 'prop-types';
+import { shape } from 'prop-types';
 import { css } from 'react-emotion';
 import React from 'react';
 import { PureComponent } from '~/components/base';
@@ -50,7 +50,7 @@ class HeatMap extends PureComponent {
 
       this.setState({ type_of_hit: typeOfHits });
     }
-  }
+  };
 
   renderOptions(type) {
     /* TODO : should take t as argument for translation */
@@ -106,8 +106,6 @@ class HeatMap extends PureComponent {
     } else {
       player = session.players[0].data['player-id'].toLowerCase();
     }
-    console.log('PLAYER', player);
-    console.log(session.current_stats.data['reboundposition']);
     let ListOfBalls = [];
 
     /* selection per type of hit */
@@ -163,7 +161,6 @@ class HeatMap extends PureComponent {
         .data.hitterposition[player][this.state.type_of_hit[i]]);
     }
 
-    console.log(ListOfPlayers);
     const res = [ListOfPlayers.map(el => React.createElement(
       'rect',
       {
@@ -241,7 +238,8 @@ class HeatMap extends PureComponent {
     const viewBoxHeight = 1500; // Because that's my preferred number
     const viewBoxTop = 0;
     const viewBoxLeft = 0;
-    const viewBox = `${viewBoxTop} ${viewBoxLeft} ${viewBoxWidth} ${viewBoxHeight}`;
+    const viewBox = `${viewBoxTop}
+    ${viewBoxLeft} ${viewBoxWidth} ${viewBoxHeight}`;
 
     return (
       <Container>
@@ -270,7 +268,6 @@ class HeatMap extends PureComponent {
 
 HeatMap.propTypes = {
   session: shape().isRequired,
-  stats: arrayOf(string).isRequired,
 };
 
 HeatMap.defaultProps = {
