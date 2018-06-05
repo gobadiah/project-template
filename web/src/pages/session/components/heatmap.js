@@ -49,18 +49,27 @@ class HeatMap extends PureComponent {
 
 
       this.setState({ type_of_hit: typeOfHits });
-
     }
-
   }
 
   renderOptions(type) {
     /* TODO : should take t as argument for translation */
     const { t } = this.context;
+    const { session } = this.props;
+    let player = '';
+    if (this.state.right_player) {
+      // If right player select player[1] to be coherent width
+      // player order on the screen
+      // @michael : player id is in lower case when I create the stat in python
+      // but doesn't exist in lower case ... bizarre bizarre
+      player = session.players[1].data['player-id'].toLowerCase();
+    } else {
+      player = session.players[0].data['player-id'].toLowerCase();
+    }
     if (type === 'player') {
       return (
         <OptionButton
-          text={t((this.state.right_player ? 'Right' : 'Left'))}
+          text={player}
           className={css`width: 100%`}
           value={type}
           onClick={() => this.handleClick(type)}
@@ -71,8 +80,8 @@ class HeatMap extends PureComponent {
     const index = this.state.type_of_hit.indexOf(type);
     return (
       <OptionButton
-        fill={index > -1 ? 'green' : 'gray'}
-        text={t((index > -1 ? type : 'OFF'))}
+        isClicked={index > -1}
+        text={t(type)}
         className={css`width: 100%`}
         value={type}
         onClick={() => this.handleClick(type)}
@@ -250,6 +259,7 @@ class HeatMap extends PureComponent {
           {this.renderOptions('forehand') }
           {this.renderOptions('backhand') }
           {this.renderOptions('volley') }
+          {this.renderOptions('overhead') }
         </ButtonContainer>
       </Container>
 
