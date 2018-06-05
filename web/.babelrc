@@ -32,7 +32,7 @@
       ]
     }
   },
-  "presets": ["next/babel", "env"],
+  "presets": ["next/babel", "@babel/preset-env"],
   "plugins": [
     ["babel-plugin-root-import", {
       "rootPathSuffix": "src"
