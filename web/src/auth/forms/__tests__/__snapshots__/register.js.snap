@@ -8,6 +8,10 @@ exports[`PlainRegisterForm should match snapshot 1`] = `
   justify-content: space-between;
 }
 
+.emotion-2 {
+  width: 100%;
+}
+
 <Form
   className=""
   error={Array []}
@@ -57,5 +61,9 @@ exports[`PlainRegisterForm should match snapshot 1`] = `
       inputClassName="css-1nvc6v8"
     />
   </Styled(div)>
+  <RoundButton
+    className="emotion-2"
+    text=""
+  />
 </Form>
 `;

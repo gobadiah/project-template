@@ -16,11 +16,4 @@ describe('Index', () => {
     const wrapper = mount(<Index {...pageProps} />);
     expect(wrapper).toMatchSnapshot();
   });
-
-  it('shallow render should contain Hello world', () => {
-    const user = {};
-    const wrapper = mount(<Index {...pageProps} user={user} />);
-
-    expect(wrapper.containsMatchingElement(<div>Hello</div>)).toBeTruthy();
-  });
 });

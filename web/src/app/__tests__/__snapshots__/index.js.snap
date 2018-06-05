@@ -8,6 +8,11 @@ Object {
   "ns": Array [
     "common",
     "index",
+    "home",
+    "account",
+    "sign-in",
+    "session",
+    "video",
   ],
   "preload": Array [
     "fr",

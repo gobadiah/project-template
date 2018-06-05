@@ -2,6 +2,7 @@
 
 exports[`Form should match snapshot when mounting 1`] = `
 <Form
+  className=""
   error="One error"
   handleSubmit={[Function]}
   pristine={false}
@@ -10,20 +11,10 @@ exports[`Form should match snapshot when mounting 1`] = `
   warning="One warning"
 >
   <form
+    className=""
     onSubmit={[Function]}
   >
     <div />
-    <input
-      disabled={false}
-      type="submit"
-      value="Send"
-    />
-    <input
-      disabled={false}
-      onClick={[Function]}
-      type="button"
-      value="Reset"
-    />
     <Warning
       warning="One warning"
     >

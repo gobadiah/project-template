@@ -1,6 +1,7 @@
 """Tests for sports.views."""
 
 import json
+from collections import OrderedDict
 
 from core.users.tests.factories import UserFactory
 
@@ -32,7 +33,13 @@ def test_sessionviewset_handle_request(rf):
     view = SessionViewSet.as_view({'get': 'retrieve'})
     response = view(request, pk=session.id)
     data = response.data
-    assert data == {'videos': []}
+    assert data == {
+        'current_stats': None,
+        'data': {
+            'surface': 'clay',
+        },
+        'videos': [],
+    }
 
 
 @pytest.mark.django_db
@@ -51,8 +58,18 @@ def test_get_list_sessionviewset(client):
     assert result['data'] == [
         {
             'attributes': {
+                'data': {
+                    'surface': 'clay',
+                },
             },
             'relationships': {
+                'current-stats': {
+                    'data': None,
+                    'links': {
+                        'related': 'http://testserver/sessions' +
+                        '/%d/current_stats' % session.id,
+                    },
+                },
                 'videos': {
                     'data': [],
                     'links': {
@@ -88,7 +105,16 @@ def test_videoviewset_handle_request(rf):
     view = VideoViewSet.as_view({'get': 'retrieve'})
     response = view(request, pk=video.id)
     data = response.data
-    assert data == {}
+    assert data == {
+        'asset': OrderedDict([
+            ('type', 'assets'),
+            ('id', str(video.asset_id)),
+        ]),
+        'session': OrderedDict([
+            ('type', 'sessions'),
+            ('id', str(video.session_id)),
+        ]),
+    }
 
 
 @pytest.mark.django_db
@@ -109,6 +135,28 @@ def test_get_list_videoviewset(client):
             },
             'type': 'videos',
             'id': str(video.id),
+            'relationships': {
+                'asset': {
+                    'data': {
+                        'id': str(video.asset_id),
+                        'type': 'assets',
+                    },
+                    'links': {
+                        'related': 'http://testserver/videos/%d/asset' %
+                        video.id,
+                    },
+                },
+                'session': {
+                    'data': {
+                        'id': str(video.session_id),
+                        'type': 'sessions',
+                    },
+                    'links': {
+                        'related': 'http://testserver/videos/%d/session' %
+                        video.id,
+                    },
+                },
+            },
         },
     ]
     assert result['meta'] == {
@@ -130,7 +178,10 @@ def test_videopointviewset_handle_request(rf):
     view = VideoPointViewSet.as_view({'get': 'retrieve'})
     response = view(request, pk=videopoint.id)
     data = response.data
-    assert data == {}
+    assert data == {
+        'frame': videopoint.frame,
+        'time': '0' + str(videopoint.time),
+    }
 
 
 @pytest.mark.django_db
@@ -148,6 +199,8 @@ def test_get_list_videopointviewset(client):
     assert result['data'] == [
         {
             'attributes': {
+                'frame': videopoint.frame,
+                'time': '0' + str(videopoint.time),
             },
             'type': 'video-points',
             'id': str(videopoint.id),
