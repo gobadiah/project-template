@@ -4,70 +4,62 @@ import { css } from 'react-emotion';
 import React from 'react';
 import { PureComponent } from '~/components/base';
 import _ from 'lodash';
-
-/* import SwitchButton from 'react-switch-button';
-// Be sure to include styles at some point, probably during your bootstrapping
-import 'react-switch-button/dist/react-switch-button.css'; */
-
-// import Switch from 'react-toggle-switch'
-
-
-// @ michael how to isntall switch button ?
 import {
   HeatMapContainer as Container,
   HeatMapOptionContainer as ButtonContainer,
 } from './styles';
+
 
 class HeatMap extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
       // be more explicit on variable name
-      right_player: true,
+      firstPlayerSelected: true,
+      typeOfHit: ['service', 'forehand', 'backhand',
       // Note : list must be coherent with the one used in python
-      type_of_hit: ['service', 'forehand', 'backhand',
         'volley', 'overhead'],
+      // TODO : change color based on surface
       color: 'rgb(0, 102, 255)',
     };
-    // This binding is necessary to make `this` work in the callback
-    // this.handleClick = this.handleClick.bind(this);
   }
 
   handleClick = (type) => {
-    /* const typeOfHits = ['service', 'forehand', 'backhand',
-      'volley', 'overhead']; */
     if (type === 'player') {
-      this.setState({ right_player: !this.state.right_player });
+      // if click on player change player selected
+      this.setState({ firstPlayerSelected: !this.state.firstPlayerSelected });
     } else {
-      const typeOfHits = _.clone(this.state.type_of_hit);
+      // if click on option: update list of hit to display
+      const typeOfHits = _.clone(this.state.typeOfHit);
       const index = typeOfHits.indexOf(type);
       if (index > -1) {
         typeOfHits.splice(index, 1);
       } else {
         typeOfHits.push(type);
       }
-
-
-      this.setState({ type_of_hit: typeOfHits });
+      this.setState({ typeOfHit: typeOfHits });
     }
   };
 
   renderOptions(type) {
+    /* render ooption button : switch button to select type of hit to display
+    and wich player to display */
     /* TODO : should take t as argument for translation */
     const { t } = this.context;
     const { session } = this.props;
     let player = '';
-    if (this.state.right_player) {
-      // If right player select player[1] to be coherent width
+    if (this.state.firstPlayerSelected) {
+      // If right player select player[0] to be coherent width
       // player order on the screen
       // @michael : player id is in lower case when I create the stat in python
       // but doesn't exist in lower case ... bizarre bizarre
-      player = session.players[1].data['player-id'].toLowerCase();
-    } else {
       player = session.players[0].data['player-id'].toLowerCase();
+    } else {
+      player = session.players[1].data['player-id'].toLowerCase();
     }
     if (type === 'player') {
       return (
+        // render player button option
         <OptionButton
           text={player}
           className={css`width: 100%`}
@@ -77,7 +69,8 @@ class HeatMap extends PureComponent {
 
       );
     }
-    const index = this.state.type_of_hit.indexOf(type);
+    // render option for selected type of hits
+    const index = this.state.typeOfHit.indexOf(type);
     return (
       <OptionButton
         isClicked={index > -1}
@@ -97,24 +90,22 @@ class HeatMap extends PureComponent {
     const originY = 200;
 
     let player = '';
-    if (this.state.right_player) {
-      // If right player select player[1] to be coherent width
-      // player order on the screen
-      // @michael : player id is in lower case when I create the stat in python
-      // but doesn't exist in lower case ... bizarre bizarre
-      player = session.players[1].data['player-id'].toLowerCase();
-    } else {
+    if (this.state.firstPlayerSelected) {
+      // select player for which to render balls
       player = session.players[0].data['player-id'].toLowerCase();
+    } else {
+      player = session.players[1].data['player-id'].toLowerCase();
     }
     let ListOfBalls = [];
 
-    /* selection per type of hit */
-    const arrayLength = this.state.type_of_hit.length;
+    // update list of ball for each selected type of hits
+    const arrayLength = this.state.typeOfHit.length;
     for (let i = 0; i < arrayLength; i += 1) {
       ListOfBalls = ListOfBalls.concat(session.current_stats
-        .data.reboundposition[player][this.state.type_of_hit[i]]);
+        .data.reboundposition[player][this.state.typeOfHit[i]]);
     }
 
+    // display balls (white circle / black center)
     const res = [ListOfBalls.map(el => React.createElement(
       'circle',
       {
@@ -145,22 +136,23 @@ class HeatMap extends PureComponent {
     const originY = 200;
     const RectSize = 30;
     let player = '';
-    if (this.state.right_player) {
-      player = session.players[1].data['player-id'].toLowerCase();
-    } else {
+    if (this.state.firstPlayerSelected) {
+      // select which player to render positions
       player = session.players[0].data['player-id'].toLowerCase();
+    } else {
+      player = session.players[1].data['player-id'].toLowerCase();
     }
-    /* console.log(player);
-    console.log(this.state.type_of_hit); */
+
     let ListOfPlayers = [];
 
-    /* selection per type of hit */
-    const arrayLength = this.state.type_of_hit.length;
+    // update list of player position per type of hits
+    const arrayLength = this.state.typeOfHit.length;
     for (let i = 0; i < arrayLength; i += 1) {
       ListOfPlayers = ListOfPlayers.concat(session.current_stats
-        .data.hitterposition[player][this.state.type_of_hit[i]]);
+        .data.hitterposition[player][this.state.typeOfHit[i]]);
     }
 
+    // display player position as rectangle
     const res = [ListOfPlayers.map(el => React.createElement(
       'rect',
       {
@@ -180,6 +172,7 @@ class HeatMap extends PureComponent {
 
   renderCourt(ThisType) {
     /* TODO : Explain metrics */
+    // render court
     const dimensions = [
       [[0, 0], [2377, 0]],
       [[0, 1097], [2377, 1097]],
@@ -200,6 +193,7 @@ class HeatMap extends PureComponent {
 
     const rect = [[0, 0], [2377, 1097]];
 
+    // TODO : update color based on surface  type
     const thisColor = this.state.color;
     // console.log(hits.data);
     if (ThisType === 'lines') {
