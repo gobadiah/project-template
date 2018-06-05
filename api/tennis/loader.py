@@ -152,11 +152,10 @@ def loader(
                 is_winner=player_id == d['winner'],
                 side=side,
                 exchanges_won=exchanges_won,
-                else exchanges_won + 1,
             )
     for set_id, set in sets.items():
         video_points = VideoPoint.objects.filter(
-            start_point_for_exchanges__game__set=set,video_points
+            start_point_for_exchanges__game__set=set,
         )
         set.start_at = min(video_points)
         set.end_at = max(video_points)
