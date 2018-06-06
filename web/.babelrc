@@ -17,6 +17,7 @@
           "include": [
             "NODE_ENV",
             "SENTRY_PUBLIC_DSN",
+            "WEB_URL"
           ]
         }]
       ]
@@ -27,6 +28,7 @@
           "include": [
             "NODE_ENV",
             "SENTRY_PUBLIC_DSN",
+            "WEB_URL"
           ]
         }]
       ]
