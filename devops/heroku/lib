@@ -63,6 +63,7 @@ function deploy_web_app() {
 
   docker tag $PROJECT/web:$ENV registry.heroku.com/$web/web
   docker push registry.heroku.com/$web/web
+  heroku container:release -a $web web
 
   popd
 }
@@ -74,6 +75,7 @@ function deploy_api_app() {
 
   docker tag $PROJECT/api:$ENV registry.heroku.com/$api/web
   docker push registry.heroku.com/$api/web
+  heroku container:release -a $api web
   heroku run -a $api "python manage.py migrate" --type=worker
 
   popd
