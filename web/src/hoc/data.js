@@ -5,7 +5,7 @@ import { read } from '~/utils';
 
 _.mixin(require('lodash-inflection'));
 
-export default ({
+const handleEndpoint = ({
   endpoint,
   store,
   query,
@@ -35,3 +35,7 @@ export default ({
   }
   return props;
 }))(typeof endpoint === 'string' ? endpoint : endpoint(query));
+
+export default ({ endpoint, ...args }) => (endpoint && Array.isArray(endpoint) ?
+  Promise.all(endpoint.map(ep => handleEndpoint({ ep, ...args }))) :
+  handleEndpoint({ endpoint, ...args }));
