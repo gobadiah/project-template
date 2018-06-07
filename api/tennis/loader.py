@@ -63,6 +63,7 @@ def loader(
     exchanges = {}
     for player in players.values():
         player.save()
+        # Link between players and sessions
         SessionPlayer.objects.get_or_create(
             session=session,
             player=player,
@@ -117,6 +118,7 @@ def loader(
             )
     for h in data['list_of_hits']:
         if h['exchange_id'] not in exchanges:
+            logger.info('WARNING! no exchange ddata for hit :', h)
             continue
         hit = Hit(exchange=exchanges[h['exchange_id']])
         hit.video_point, _ = VideoPoint.objects.get_or_create(
@@ -143,9 +145,7 @@ def loader(
         game.save()
         d = data['list_of_games'][game_id]
         for side, player_id in d['player_sides'].items():
-            exchanges_won = None
-            if 'points' in d['score']:
-                exchanges_won = d['score']['points'][player_id]
+            exchanges_won = d['score'][player_id]
             GamePlayer.objects.create(
                 game=game,
                 player=players[player_id],
@@ -161,14 +161,13 @@ def loader(
         set.end_at = max(video_points)
         set.save()
         d = data['list_of_sets'][set_id]
-        for player_id, games_won in d['score']['games'].items():
+        for player_id, games_won in d['score'].items():
             logger.info(player_id, games_won)
             SetPlayer.objects.create(
                 set=set,
                 player=players[player_id],
                 is_winner=player_id == d['winner'],
-                games_won=games_won if d['winner'] != player_id else
-                games_won + 1,
+                games_won=games_won,
             )
     if match:
         video_points = VideoPoint.objects.filter(
