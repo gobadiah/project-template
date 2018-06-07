@@ -1,67 +1,49 @@
 import React from 'react';
 import { func, string, bool } from 'prop-types';
-
 import { defaultPropTypes } from '~/components';
 
 
-import { Button } from './styles';
-
-/* const OptionButton = ({
-  className,
+const OptionButton = ({
+  selected,
   text,
-  isClicked,
   onClick,
+  className,
 }) => (
-  if isClicked {
-    return
-    <Button className={className} onClick={onClick}>
-      <span>{text}</span>
-    </Button>
-  } else {
-    return
-    <Button className={className} onClick={onClick}>
-      <span>{text}</span>
-    </Button>
-  }
 
-); */
-
-
-function OptionButton(props) {
-  if (props.isClicked) {
-    return (
-      <Button className={props.className} onClick={props.onClick}>
-        <span>{props.text}</span>
-      </Button>);
-  }
-
-  return (
-    <Button
-      style={
-        {
-          color: 'gray',
-          backgroundColor: 'lightgray',
-        }}
-      className={props.className}
-      onClick={props.onClick}
+  <div>
+    <button
+      css='
+        background-color: clear;
+        border: 0;
+      '
+      className={className}
+      onClick={onClick}
     >
-      <span>{props.text}</span>
-    </Button>
-  );
-}
+      <span>{text}</span>
+    </button>
+    <div
+      css={`
+        background-color: ${selected ? 'var(--apple-green)' : 'grey'};
+        width:120px;
+        height:5px;
+      `}
+    />
+  </div>
+);
+
 
 OptionButton.propTypes = {
   className: string,
   text: string,
   onClick: func,
-  isClicked: bool,
+  selected: bool,
 };
 
 OptionButton.defaultProps = {
   className: '',
   text: '',
   onClick: undefined,
-  isClicked: true,
+  selected: true,
 };
 
 OptionButton.contextTypes = defaultPropTypes;

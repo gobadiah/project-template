@@ -153,7 +153,9 @@ def stats_win_exchanges(session):
                         'faultserv',
                         'faultbackhand',
                         'faultforehand']}
+
     for exchange in session.exchanges:
+        # TODO : check if exchange as winner as attribute
         winner = exchange.data['winner']
         list_of_hits = Hit.objects.filter(exchange=exchange)
         # total number of win
@@ -189,6 +191,7 @@ def stats_win_exchanges(session):
             # check if last hit is a winning shot
             if last_hit.data['is_winning']:
                 # classify type of winning hit
+                # TODO : simple loop
                 if last_hit.data['type_of_hit'] == 'service':
                     if winner in data['ace']:
                         data['ace'][winner] += 1

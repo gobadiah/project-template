@@ -116,5 +116,6 @@ export const HeatMapContainer = styled('div')`
 `;
 
 export const HeatMapOptionContainer = styled(Flex)`
-  background-color: var(--apple-green);
+  justify-content: space-around;
+  //background-color: var(--apple-green);
 `;
