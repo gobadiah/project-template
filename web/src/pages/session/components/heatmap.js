@@ -71,7 +71,6 @@ class HeatMap extends PureComponent {
           value={type}
           onClick={() => this.handleClick(type)}
         />
-
       );
     }
     // render option for selected type of hits
