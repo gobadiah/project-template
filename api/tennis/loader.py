@@ -203,7 +203,7 @@ def load_json(json_filename='database_match.json'):
     if json_filename is None:
         json_filename = input(  # Noqa B322
             _('Please enter the filename for the json database: '))
-    return json.load(open(json_filename))
+    return json.load(open(json_filename.replace(' ', '').strip("'")))
 
 
 def choose_user(default_email='gobadiah@gmail'):
@@ -376,7 +376,7 @@ def create_video(user, session, region='eu-west-3'):
     asset.info['s3']['key'] = \
         input('Video\'s key in Amazon S3 [{}]: '.format(  # Noqa B322
         default_key,
-    )) or default_key
+    )).replace(' ', '').strip("'") or default_key
     #  asset.url = 'http://{}.s3-aws-{}.amazonaws.com/{}'.format(
     #      asset.info['s3']['bucket'],
     #      region,
