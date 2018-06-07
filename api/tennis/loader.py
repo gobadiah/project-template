@@ -133,8 +133,8 @@ def loader(
         hit.data = h
         hit.save()
     # Games.items is null when not in match
-    # Session type = match ==> ok
-    # session type = training ==> empty
+    # Session type = match ==> ok
+    # Session type = training ==> empty
     # session type = mix ==> check for each each
     for game_id, game in games.items():
         video_points = VideoPoint.objects.filter(
