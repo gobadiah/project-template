@@ -56,7 +56,11 @@ class HeatMap extends PureComponent {
       player = session.players[0].data['player-id'].toLowerCase();
     } else {
       player = session.players[1].data['player-id'].toLowerCase();
-      // const player = session.players[this.state.indexOfPlayerSelected]['player-id'].toLowerCase();
+      /*
+      const player = session.
+      players[this.state.
+      indexOfPlayerSelected]['player-id'].toLowerCase();
+      */
     }
     if (type === 'player') {
       return (
