@@ -1,0 +1,9 @@
+#!/bin/zsh
+
+SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
+
+source $SCRIPTPATH/../config
+
+$SCRIPTPATH/../aws/deploy
+
+$SCRIPTPATH/../heroku/deploy

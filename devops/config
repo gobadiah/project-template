@@ -1,13 +1,28 @@
 #!/usr/local/bin/zsh
 
-web="kincube-web-$ENV"
-api="kincube-api-$ENV"
+function get_default_env() {
+  branch=$(git rev-parse --abbrev-ref HEAD)
+  if [[ $branch == "master" ]]; then
+    DEFAULT_ENV="production"
+  elif [[ $branch == "develop" ]]; then
+    DEFAULT_ENV="staging"
+  else
+    DEFAULT_ENV=$(echo "$branch" | sed -E 's/^(feature\/|hotfix\/|release\/|support\/)?(.*)/\2/' | sed 's#/#-#g') 
+  fi
+}
+
+get_default_env
+
+ENV=${ENV:=$DEFAULT_ENV}
+
+# Heroku limits app name to 30 characters
+web="${PROJECT_SHORTHAND:=$PROJECT}-web-$ENV"
+api="${PROJECT_SHORTHAND:=$PROJECT}-api-$ENV"
 
 API_URL="https://$api.herokuapp.com"
 WEB_URL="https://$web.herokuapp.com"
 
-REGION="eu-west-1"
-BUCKET="kincube-$ENV"
+BUCKET="$PROJECT-$ENV"
 POLICY_BASE="s3-limited-access"
 POLICY="$POLICY_BASE-$ENV"
 ROLE="api-role-$ENV"

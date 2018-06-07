@@ -1,0 +1,11 @@
+{
+  "name": "kb-template",
+  "version": "1.0.0",
+  "description": "Knowledge Base template powered by Raneto",
+  "main": "index.js",
+  "author": "Michaël Journo",
+  "license": "MIT",
+  "dependencies": {
+    "raneto": "^0.15.0"
+  }
+}

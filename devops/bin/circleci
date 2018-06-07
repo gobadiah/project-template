@@ -1,0 +1,25 @@
+#!/bin/zsh
+
+set -e
+
+SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
+
+pushd $SCRIPTPATH/../..
+
+source $SCRIPTPATH/../config
+
+direnv allow .
+
+eval "$(direnv export zsh)"
+
+if [[ "$1" == "deploy" ]]; then
+  deploy
+elif [[ "$1" == "build" ]]; then
+  if [[ "$2" == "web" ]]; then
+    ./web/docker/build --cache-from=web
+  elif [[ "$2" == "api" ]]; then
+    ./api/docker/build --cache-from=api
+  fi
+fi
+
+popd
