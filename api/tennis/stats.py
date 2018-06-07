@@ -9,9 +9,9 @@ from django.utils import timezone
 
 from sports.models import Session
 
-from .models import Hit
-
 from stats.models import Stats
+
+from .models import Hit
 
 user_generators = {}
 session_generators = {}
@@ -131,7 +131,7 @@ def service_session(session):
         )),
     }
 
-# TODO : split function with sub functions
+# TODO(Nicolas) : split function with sub functions
 
 
 @register_session
@@ -155,7 +155,7 @@ def stats_win_exchanges(session):
                         'faultforehand']}
 
     for exchange in session.exchanges:
-        # TODO : check if exchange as winner as attribute
+        # TODO(Nicolas) : check if exchange as winner as attribute
         winner = exchange.data['winner']
         list_of_hits = Hit.objects.filter(exchange=exchange)
         # total number of win
@@ -191,7 +191,7 @@ def stats_win_exchanges(session):
             # check if last hit is a winning shot
             if last_hit.data['is_winning']:
                 # classify type of winning hit
-                # TODO : simple loop
+                # TODO(Nicolas) : simple loop
                 if last_hit.data['type_of_hit'] == 'service':
                     if winner in data['ace']:
                         data['ace'][winner] += 1
@@ -225,7 +225,7 @@ def stats_win_exchanges(session):
                                    player_id in stat_dict[this_stat]]), 1)
             for player_id in stat_dict[this_stat]:
                 stat_dict[this_stat][player_id]['normalized'] = \
-                        stat_dict[this_stat][player_id]['value'] / total_value
+                    stat_dict[this_stat][player_id]['value'] / total_value
         return stat_dict
 
     result = {
@@ -347,7 +347,7 @@ def stats_distance_exchanges(session):
                              player_id in stat_dict[this_stat]])
             for player_id in stat_dict[this_stat]:
                 stat_dict[this_stat][player_id]['normalized'] = \
-                        stat_dict[this_stat][player_id]['value'] / max_value
+                    stat_dict[this_stat][player_id]['value'] / max_value
         return stat_dict
 
     result = {
@@ -368,13 +368,10 @@ def stats_distance_exchanges(session):
 @register_session
 def stats_speed_hits(session):
     """Calculate stat on hits for session per player.
+
     - the max speed forehand per player in a session
     - the max speed backhand per player in a session
     - the max service speed per player in a session
-
-
-
-
     """
     # get all the players in the session
     players = session.players.all()
@@ -420,62 +417,79 @@ def stats_speed_hits(session):
                              player_id in stat_dict[this_stat]])
             for player_id in stat_dict[this_stat]:
                 stat_dict[this_stat][player_id]['normalized'] = \
-                        stat_dict[this_stat][player_id]['value'] / max_value
+                    stat_dict[this_stat][player_id]['value'] / max_value
         return stat_dict
 
-    result = {'meanhitspeed':
-              dict(map(
-                    lambda player: (player.id, {
-                        'value': calculate_mean(data[player.id]['all']),
-                        'display': '%0.1fkmh' %
-                        (calculate_mean(data[player.id]['all'])),
-                        'label': 'Mean hit speed',
-                    }),
-                    players,
-                )),
-              'maxbackhandspeed':
-              dict(map(
-                          lambda player: (player.id, {
-                              'value':
-                              max(data[player.id]['backhand']),
-                              'display': '%0.1fkm/h' %
-                              (max(data[player.id]['backhand'])),
-                              'label': 'Max backhand speed',
-                          }),
-                          session.players.all(),
-                      )),
-              'maxforehandspeed':
-              dict(map(
-                          lambda player: (player.id, {
-                              'value':
-                              max(data[player.id]['forehand']),
-                              'display': '%0.1fkm/h' %
-                              (max(data[player.id]['forehand'])),
-                              'label': 'Max forehand speed',
-                          }),
-                          session.players.all(),
-                      )),
-              'meanservicespeed':
-              dict(map(
-                        lambda player: (player.id, {
-                            'value':
-                            calculate_mean(data[player.id]['service']),
-                            'display': '%0.1fkm/h' %
-                            (calculate_mean(data[player.id]['service'])),
-                            'label': 'Mean service speed',
-                        }),
-                        session.players.all(),
-                    )),
-              'maxservicespeed':
-              dict(map(
-                        lambda player: (player.id, {
-                            'value': max(data[player.id]['service']),
-                            'display': '%0.1fkm/h' %
-                            (max(data[player.id]['service'])),
-                            'label': 'Mean service speed',
-                        }),
-                        session.players.all(),
-                    ))}
+    result = {
+        'meanhitspeed':
+        dict(map(
+            lambda player: (
+                player.id,
+                {
+                    'value': calculate_mean(data[player.id]['all']),
+                    'display': '%0.1fkmh' %
+                    calculate_mean(data[player.id]['all']),
+                    'label': 'Mean hit speed',
+                },
+            ),
+            players,
+        )),
+        'maxbackhandspeed':
+        dict(map(
+            lambda player: (
+                player.id,
+                {
+                    'value':
+                    max(data[player.id]['backhand']),
+                    'display': '%0.1fkm/h' %
+                    (max(data[player.id]['backhand'])),
+                    'label': 'Max backhand speed',
+                },
+            ),
+            session.players.all(),
+        )),
+        'maxforehandspeed':
+        dict(map(
+            lambda player: (
+                player.id,
+                {
+                    'value':
+                    max(data[player.id]['forehand']),
+                    'display': '%0.1fkm/h' %
+                    (max(data[player.id]['forehand'])),
+                    'label': 'Max forehand speed',
+                },
+            ),
+            session.players.all(),
+        )),
+        'meanservicespeed':
+        dict(map(
+            lambda player: (
+                player.id,
+                {
+                    'value':
+                    calculate_mean(data[player.id]['service']),
+                    'display': '%0.1fkm/h' %
+                    (calculate_mean(data[player.id]['service'])),
+                    'label': 'Mean service speed',
+                },
+            ),
+            session.players.all(),
+        )),
+        'maxservicespeed':
+        dict(map(
+            lambda player: (
+                player.id,
+                {
+                    'value': max(data[player.id]['service']),
+                    'display': '%0.1fkm/h' %
+                    (max(data[player.id]['service'])),
+                    'label': 'Mean service speed',
+                },
+            ),
+            session.players.all(),
+        )),
+    }
 
     add_normalized_value(result)
     return result
