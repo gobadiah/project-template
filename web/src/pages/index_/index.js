@@ -1,31 +1,25 @@
 import React from 'react';
 
-import { Link } from '~/routes';
+import { Main } from '~/components';
 import { Page } from '~/components/base';
 import hoc from '~/hoc';
-
-import Language from '~/components/languages';
-import SomePureComponent from '~/components/some-pure-component';
-
-import { helloWorld } from './styles';
+import redirect from '~/utils/redirect';
 
 class Index extends Page {
   render() {
-    const { t, user } = this.props;
+    const { t } = this.props;
     return (
-      <div css='background-color: hotpink;'>
-        <div className={helloWorld}>
-          { user ? t('index:Hello', { user }) : t('index:Hello world') }
-        </div>
-        <Language />
-        <SomePureComponent />
-        <Link route='some-page'><a>Some page</a></Link>
-        <Link route='generate-error'><a>Generate error</a></Link>
-        <Link route='signin'><a>Signin</a></Link>
-        <Link route='register'><a>Register</a></Link>
-      </div>
+      <Main title={t('index:title')} />
     );
   }
 }
 
-export default hoc('index')(Index);
+const initialDispatch = ({ store, res }) => {
+  if (store.getState().auth.get('userId')) {
+    redirect(res, 'home');
+  } else {
+    redirect(res, 'signin');
+  }
+};
+
+export default hoc('index', { initialDispatch })(Index);

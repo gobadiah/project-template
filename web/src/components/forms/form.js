@@ -1,4 +1,4 @@
-import { node, oneOfType, arrayOf, bool, func, string } from 'prop-types';
+import { node, oneOfType, arrayOf, func, string } from 'prop-types';
 import React from 'react';
 
 import { PureComponent } from '~/components/base';
@@ -10,19 +10,14 @@ class Form extends PureComponent {
   render() {
     const {
       children,
+      className,
       error,
       handleSubmit,
-      pristine,
-      reset,
-      submitting,
       warning,
     } = this.props;
-    const { t } = this.context;
     return (
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className={className}>
         {children}
-        <input type='submit' value={t('Send')} disabled={submitting} />
-        <input type='button' value={t('Reset')} disabled={pristine || submitting} onClick={reset} />
         <Warning warning={warning} />
         <Error error={error} />
       </form>
@@ -31,6 +26,7 @@ class Form extends PureComponent {
 }
 
 Form.propTypes = {
+  className: string,
   children: oneOfType([
     node,
     arrayOf(node),
@@ -40,9 +36,6 @@ Form.propTypes = {
     arrayOf(string),
   ]),
   handleSubmit: func.isRequired,
-  pristine: bool.isRequired,
-  submitting: bool.isRequired,
-  reset: func.isRequired,
   warning: oneOfType([
     string,
     arrayOf(string),
@@ -50,6 +43,7 @@ Form.propTypes = {
 };
 
 Form.defaultProps = {
+  className: '',
   error: [],
   warning: [],
 };

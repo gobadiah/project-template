@@ -14,10 +14,14 @@ describe('Routes', () => {
 
     require('~/routes');
 
-    expect(mockRoutesAdd).toHaveBeenCalledTimes(5);
+    expect(mockRoutesAdd).toHaveBeenCalledTimes(9);
     expect(mockRoutesAdd).toBeCalledWith('index', '/', 'index_');
     expect(mockRoutesAdd).toBeCalledWith('some-page');
     expect(mockRoutesAdd).toBeCalledWith('generate-error');
+    expect(mockRoutesAdd).toBeCalledWith('account');
+    expect(mockRoutesAdd).toBeCalledWith('home');
+    expect(mockRoutesAdd).toBeCalledWith('video', '/videos/:id');
+    expect(mockRoutesAdd).toBeCalledWith('session', '/sessions/:id');
     expect(mockRoutesAdd).toBeCalledWith('signin');
     expect(mockRoutesAdd).toBeCalledWith('register');
 

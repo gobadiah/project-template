@@ -103,6 +103,11 @@ exports[`SomePage should match snapshot 1`] = `
                   "ns": Array [
                     "common",
                     "index",
+                    "home",
+                    "account",
+                    "sign-in",
+                    "session",
+                    "video",
                   ],
                   "nsSeparator": ":",
                   "overloadTranslationOptionHandler": [Function],
@@ -176,6 +181,11 @@ exports[`SomePage should match snapshot 1`] = `
                 "ns": Array [
                   "common",
                   "index",
+                  "home",
+                  "account",
+                  "sign-in",
+                  "session",
+                  "video",
                 ],
                 "nsSeparator": ":",
                 "overloadTranslationOptionHandler": [Function],
@@ -246,6 +256,11 @@ exports[`SomePage should match snapshot 1`] = `
                         "ns": Array [
                           "common",
                           "index",
+                          "home",
+                          "account",
+                          "sign-in",
+                          "session",
+                          "video",
                         ],
                         "nsSeparator": ":",
                         "overloadTranslationOptionHandler": [Function],
@@ -305,6 +320,11 @@ exports[`SomePage should match snapshot 1`] = `
                       "ns": Array [
                         "common",
                         "index",
+                        "home",
+                        "account",
+                        "sign-in",
+                        "session",
+                        "video",
                       ],
                       "nsSeparator": ":",
                       "overloadTranslationOptionHandler": [Function],
@@ -372,6 +392,11 @@ exports[`SomePage should match snapshot 1`] = `
                       "ns": Array [
                         "common",
                         "index",
+                        "home",
+                        "account",
+                        "sign-in",
+                        "session",
+                        "video",
                       ],
                       "nsSeparator": ":",
                       "overloadTranslationOptionHandler": [Function],
@@ -439,6 +464,11 @@ exports[`SomePage should match snapshot 1`] = `
                     "ns": Array [
                       "common",
                       "index",
+                      "home",
+                      "account",
+                      "sign-in",
+                      "session",
+                      "video",
                     ],
                     "nsSeparator": ":",
                     "overloadTranslationOptionHandler": [Function],
@@ -464,7 +494,7 @@ exports[`SomePage should match snapshot 1`] = `
                   "state": Object {},
                   "store": Object {
                     "fr": Object {
-                      "index": Object {
+                      "common": Object {
                         "Hello world": "Hello world",
                       },
                     },
@@ -516,6 +546,11 @@ exports[`SomePage should match snapshot 1`] = `
                       "ns": Array [
                         "common",
                         "index",
+                        "home",
+                        "account",
+                        "sign-in",
+                        "session",
+                        "video",
                       ],
                       "nsSeparator": ":",
                       "overloadTranslationOptionHandler": [Function],
@@ -580,6 +615,11 @@ exports[`SomePage should match snapshot 1`] = `
                     "ns": Array [
                       "common",
                       "index",
+                      "home",
+                      "account",
+                      "sign-in",
+                      "session",
+                      "video",
                     ],
                     "nsSeparator": ":",
                     "overloadTranslationOptionHandler": [Function],
@@ -604,7 +644,7 @@ exports[`SomePage should match snapshot 1`] = `
                   "services": [Circular],
                   "store": Object {
                     "fr": Object {
-                      "index": Object {
+                      "common": Object {
                         "Hello world": "Hello world",
                       },
                     },
@@ -659,6 +699,11 @@ exports[`SomePage should match snapshot 1`] = `
                       "ns": Array [
                         "common",
                         "index",
+                        "home",
+                        "account",
+                        "sign-in",
+                        "session",
+                        "video",
                       ],
                       "nsSeparator": ":",
                       "overloadTranslationOptionHandler": [Function],
@@ -722,6 +767,11 @@ exports[`SomePage should match snapshot 1`] = `
                     "ns": Array [
                       "common",
                       "index",
+                      "home",
+                      "account",
+                      "sign-in",
+                      "session",
+                      "video",
                     ],
                     "nsSeparator": ":",
                     "overloadTranslationOptionHandler": [Function],
@@ -795,6 +845,11 @@ exports[`SomePage should match snapshot 1`] = `
                       "ns": Array [
                         "common",
                         "index",
+                        "home",
+                        "account",
+                        "sign-in",
+                        "session",
+                        "video",
                       ],
                       "nsSeparator": ":",
                       "overloadTranslationOptionHandler": [Function],
@@ -854,6 +909,11 @@ exports[`SomePage should match snapshot 1`] = `
                     "ns": Array [
                       "common",
                       "index",
+                      "home",
+                      "account",
+                      "sign-in",
+                      "session",
+                      "video",
                     ],
                     "nsSeparator": ":",
                     "overloadTranslationOptionHandler": [Function],
@@ -921,6 +981,11 @@ exports[`SomePage should match snapshot 1`] = `
                     "ns": Array [
                       "common",
                       "index",
+                      "home",
+                      "account",
+                      "sign-in",
+                      "session",
+                      "video",
                     ],
                     "nsSeparator": ":",
                     "overloadTranslationOptionHandler": [Function],
@@ -990,6 +1055,11 @@ exports[`SomePage should match snapshot 1`] = `
                         "ns": Array [
                           "common",
                           "index",
+                          "home",
+                          "account",
+                          "sign-in",
+                          "session",
+                          "video",
                         ],
                         "nsSeparator": ":",
                         "overloadTranslationOptionHandler": [Function],
@@ -1049,6 +1119,11 @@ exports[`SomePage should match snapshot 1`] = `
                       "ns": Array [
                         "common",
                         "index",
+                        "home",
+                        "account",
+                        "sign-in",
+                        "session",
+                        "video",
                       ],
                       "nsSeparator": ":",
                       "overloadTranslationOptionHandler": [Function],
@@ -1116,6 +1191,11 @@ exports[`SomePage should match snapshot 1`] = `
                       "ns": Array [
                         "common",
                         "index",
+                        "home",
+                        "account",
+                        "sign-in",
+                        "session",
+                        "video",
                       ],
                       "nsSeparator": ":",
                       "overloadTranslationOptionHandler": [Function],
@@ -2077,7 +2157,7 @@ exports[`SomePage should match snapshot 1`] = `
                 },
                 "resourceStore": Object {
                   "fr": Object {
-                    "index": Object {
+                    "common": Object {
                       "Hello world": "Hello world",
                     },
                   },
@@ -2085,7 +2165,7 @@ exports[`SomePage should match snapshot 1`] = `
               },
               "store": Object {
                 "fr": Object {
-                  "index": Object {
+                  "common": Object {
                     "Hello world": "Hello world",
                   },
                 },
@@ -2138,6 +2218,11 @@ exports[`SomePage should match snapshot 1`] = `
                         "ns": Array [
                           "common",
                           "index",
+                          "home",
+                          "account",
+                          "sign-in",
+                          "session",
+                          "video",
                         ],
                         "nsSeparator": ":",
                         "overloadTranslationOptionHandler": [Function],
@@ -2197,6 +2282,11 @@ exports[`SomePage should match snapshot 1`] = `
                       "ns": Array [
                         "common",
                         "index",
+                        "home",
+                        "account",
+                        "sign-in",
+                        "session",
+                        "video",
                       ],
                       "nsSeparator": ":",
                       "overloadTranslationOptionHandler": [Function],
@@ -2264,6 +2354,11 @@ exports[`SomePage should match snapshot 1`] = `
                       "ns": Array [
                         "common",
                         "index",
+                        "home",
+                        "account",
+                        "sign-in",
+                        "session",
+                        "video",
                       ],
                       "nsSeparator": ":",
                       "overloadTranslationOptionHandler": [Function],
@@ -2331,6 +2426,11 @@ exports[`SomePage should match snapshot 1`] = `
                     "ns": Array [
                       "common",
                       "index",
+                      "home",
+                      "account",
+                      "sign-in",
+                      "session",
+                      "video",
                     ],
                     "nsSeparator": ":",
                     "overloadTranslationOptionHandler": [Function],
@@ -2356,7 +2456,7 @@ exports[`SomePage should match snapshot 1`] = `
                   "state": Object {},
                   "store": Object {
                     "fr": Object {
-                      "index": Object {
+                      "common": Object {
                         "Hello world": "Hello world",
                       },
                     },
@@ -2411,6 +2511,11 @@ exports[`SomePage should match snapshot 1`] = `
                       "ns": Array [
                         "common",
                         "index",
+                        "home",
+                        "account",
+                        "sign-in",
+                        "session",
+                        "video",
                       ],
                       "nsSeparator": ":",
                       "overloadTranslationOptionHandler": [Function],
@@ -2474,6 +2579,11 @@ exports[`SomePage should match snapshot 1`] = `
                     "ns": Array [
                       "common",
                       "index",
+                      "home",
+                      "account",
+                      "sign-in",
+                      "session",
+                      "video",
                     ],
                     "nsSeparator": ":",
                     "overloadTranslationOptionHandler": [Function],
@@ -2547,6 +2657,11 @@ exports[`SomePage should match snapshot 1`] = `
                       "ns": Array [
                         "common",
                         "index",
+                        "home",
+                        "account",
+                        "sign-in",
+                        "session",
+                        "video",
                       ],
                       "nsSeparator": ":",
                       "overloadTranslationOptionHandler": [Function],
@@ -2606,6 +2721,11 @@ exports[`SomePage should match snapshot 1`] = `
                     "ns": Array [
                       "common",
                       "index",
+                      "home",
+                      "account",
+                      "sign-in",
+                      "session",
+                      "video",
                     ],
                     "nsSeparator": ":",
                     "overloadTranslationOptionHandler": [Function],
@@ -2673,6 +2793,11 @@ exports[`SomePage should match snapshot 1`] = `
                     "ns": Array [
                       "common",
                       "index",
+                      "home",
+                      "account",
+                      "sign-in",
+                      "session",
+                      "video",
                     ],
                     "nsSeparator": ":",
                     "overloadTranslationOptionHandler": [Function],
@@ -2737,6 +2862,11 @@ exports[`SomePage should match snapshot 1`] = `
                   "ns": Array [
                     "common",
                     "index",
+                    "home",
+                    "account",
+                    "sign-in",
+                    "session",
+                    "video",
                   ],
                   "nsSeparator": ":",
                   "overloadTranslationOptionHandler": [Function],
@@ -2804,6 +2934,11 @@ exports[`SomePage should match snapshot 1`] = `
                         "ns": Array [
                           "common",
                           "index",
+                          "home",
+                          "account",
+                          "sign-in",
+                          "session",
+                          "video",
                         ],
                         "nsSeparator": ":",
                         "overloadTranslationOptionHandler": [Function],
@@ -2863,6 +2998,11 @@ exports[`SomePage should match snapshot 1`] = `
                       "ns": Array [
                         "common",
                         "index",
+                        "home",
+                        "account",
+                        "sign-in",
+                        "session",
+                        "video",
                       ],
                       "nsSeparator": ":",
                       "overloadTranslationOptionHandler": [Function],
@@ -2930,6 +3070,11 @@ exports[`SomePage should match snapshot 1`] = `
                       "ns": Array [
                         "common",
                         "index",
+                        "home",
+                        "account",
+                        "sign-in",
+                        "session",
+                        "video",
                       ],
                       "nsSeparator": ":",
                       "overloadTranslationOptionHandler": [Function],
@@ -3891,7 +4036,7 @@ exports[`SomePage should match snapshot 1`] = `
                 },
                 "resourceStore": Object {
                   "fr": Object {
-                    "index": Object {
+                    "common": Object {
                       "Hello world": "Hello world",
                     },
                   },
@@ -3977,6 +4122,11 @@ exports[`SomePage should match snapshot 1`] = `
                     "ns": Array [
                       "common",
                       "index",
+                      "home",
+                      "account",
+                      "sign-in",
+                      "session",
+                      "video",
                     ],
                     "nsSeparator": ":",
                     "overloadTranslationOptionHandler": [Function],
@@ -4050,6 +4200,11 @@ exports[`SomePage should match snapshot 1`] = `
                   "ns": Array [
                     "common",
                     "index",
+                    "home",
+                    "account",
+                    "sign-in",
+                    "session",
+                    "video",
                   ],
                   "nsSeparator": ":",
                   "overloadTranslationOptionHandler": [Function],
@@ -4120,6 +4275,11 @@ exports[`SomePage should match snapshot 1`] = `
                           "ns": Array [
                             "common",
                             "index",
+                            "home",
+                            "account",
+                            "sign-in",
+                            "session",
+                            "video",
                           ],
                           "nsSeparator": ":",
                           "overloadTranslationOptionHandler": [Function],
@@ -4179,6 +4339,11 @@ exports[`SomePage should match snapshot 1`] = `
                         "ns": Array [
                           "common",
                           "index",
+                          "home",
+                          "account",
+                          "sign-in",
+                          "session",
+                          "video",
                         ],
                         "nsSeparator": ":",
                         "overloadTranslationOptionHandler": [Function],
@@ -4246,6 +4411,11 @@ exports[`SomePage should match snapshot 1`] = `
                         "ns": Array [
                           "common",
                           "index",
+                          "home",
+                          "account",
+                          "sign-in",
+                          "session",
+                          "video",
                         ],
                         "nsSeparator": ":",
                         "overloadTranslationOptionHandler": [Function],
@@ -4313,6 +4483,11 @@ exports[`SomePage should match snapshot 1`] = `
                       "ns": Array [
                         "common",
                         "index",
+                        "home",
+                        "account",
+                        "sign-in",
+                        "session",
+                        "video",
                       ],
                       "nsSeparator": ":",
                       "overloadTranslationOptionHandler": [Function],
@@ -4338,7 +4513,7 @@ exports[`SomePage should match snapshot 1`] = `
                     "state": Object {},
                     "store": Object {
                       "fr": Object {
-                        "index": Object {
+                        "common": Object {
                           "Hello world": "Hello world",
                         },
                       },
@@ -4390,6 +4565,11 @@ exports[`SomePage should match snapshot 1`] = `
                         "ns": Array [
                           "common",
                           "index",
+                          "home",
+                          "account",
+                          "sign-in",
+                          "session",
+                          "video",
                         ],
                         "nsSeparator": ":",
                         "overloadTranslationOptionHandler": [Function],
@@ -4454,6 +4634,11 @@ exports[`SomePage should match snapshot 1`] = `
                       "ns": Array [
                         "common",
                         "index",
+                        "home",
+                        "account",
+                        "sign-in",
+                        "session",
+                        "video",
                       ],
                       "nsSeparator": ":",
                       "overloadTranslationOptionHandler": [Function],
@@ -4478,7 +4663,7 @@ exports[`SomePage should match snapshot 1`] = `
                     "services": [Circular],
                     "store": Object {
                       "fr": Object {
-                        "index": Object {
+                        "common": Object {
                           "Hello world": "Hello world",
                         },
                       },
@@ -4533,6 +4718,11 @@ exports[`SomePage should match snapshot 1`] = `
                         "ns": Array [
                           "common",
                           "index",
+                          "home",
+                          "account",
+                          "sign-in",
+                          "session",
+                          "video",
                         ],
                         "nsSeparator": ":",
                         "overloadTranslationOptionHandler": [Function],
@@ -4596,6 +4786,11 @@ exports[`SomePage should match snapshot 1`] = `
                       "ns": Array [
                         "common",
                         "index",
+                        "home",
+                        "account",
+                        "sign-in",
+                        "session",
+                        "video",
                       ],
                       "nsSeparator": ":",
                       "overloadTranslationOptionHandler": [Function],
@@ -4669,6 +4864,11 @@ exports[`SomePage should match snapshot 1`] = `
                         "ns": Array [
                           "common",
                           "index",
+                          "home",
+                          "account",
+                          "sign-in",
+                          "session",
+                          "video",
                         ],
                         "nsSeparator": ":",
                         "overloadTranslationOptionHandler": [Function],
@@ -4728,6 +4928,11 @@ exports[`SomePage should match snapshot 1`] = `
                       "ns": Array [
                         "common",
                         "index",
+                        "home",
+                        "account",
+                        "sign-in",
+                        "session",
+                        "video",
                       ],
                       "nsSeparator": ":",
                       "overloadTranslationOptionHandler": [Function],
@@ -4795,6 +5000,11 @@ exports[`SomePage should match snapshot 1`] = `
                       "ns": Array [
                         "common",
                         "index",
+                        "home",
+                        "account",
+                        "sign-in",
+                        "session",
+                        "video",
                       ],
                       "nsSeparator": ":",
                       "overloadTranslationOptionHandler": [Function],
@@ -4864,6 +5074,11 @@ exports[`SomePage should match snapshot 1`] = `
                           "ns": Array [
                             "common",
                             "index",
+                            "home",
+                            "account",
+                            "sign-in",
+                            "session",
+                            "video",
                           ],
                           "nsSeparator": ":",
                           "overloadTranslationOptionHandler": [Function],
@@ -4923,6 +5138,11 @@ exports[`SomePage should match snapshot 1`] = `
                         "ns": Array [
                           "common",
                           "index",
+                          "home",
+                          "account",
+                          "sign-in",
+                          "session",
+                          "video",
                         ],
                         "nsSeparator": ":",
                         "overloadTranslationOptionHandler": [Function],
@@ -4990,6 +5210,11 @@ exports[`SomePage should match snapshot 1`] = `
                         "ns": Array [
                           "common",
                           "index",
+                          "home",
+                          "account",
+                          "sign-in",
+                          "session",
+                          "video",
                         ],
                         "nsSeparator": ":",
                         "overloadTranslationOptionHandler": [Function],
@@ -5951,7 +6176,7 @@ exports[`SomePage should match snapshot 1`] = `
                   },
                   "resourceStore": Object {
                     "fr": Object {
-                      "index": Object {
+                      "common": Object {
                         "Hello world": "Hello world",
                       },
                     },
@@ -5959,7 +6184,7 @@ exports[`SomePage should match snapshot 1`] = `
                 },
                 "store": Object {
                   "fr": Object {
-                    "index": Object {
+                    "common": Object {
                       "Hello world": "Hello world",
                     },
                   },
@@ -6012,6 +6237,11 @@ exports[`SomePage should match snapshot 1`] = `
                           "ns": Array [
                             "common",
                             "index",
+                            "home",
+                            "account",
+                            "sign-in",
+                            "session",
+                            "video",
                           ],
                           "nsSeparator": ":",
                           "overloadTranslationOptionHandler": [Function],
@@ -6071,6 +6301,11 @@ exports[`SomePage should match snapshot 1`] = `
                         "ns": Array [
                           "common",
                           "index",
+                          "home",
+                          "account",
+                          "sign-in",
+                          "session",
+                          "video",
                         ],
                         "nsSeparator": ":",
                         "overloadTranslationOptionHandler": [Function],
@@ -6138,6 +6373,11 @@ exports[`SomePage should match snapshot 1`] = `
                         "ns": Array [
                           "common",
                           "index",
+                          "home",
+                          "account",
+                          "sign-in",
+                          "session",
+                          "video",
                         ],
                         "nsSeparator": ":",
                         "overloadTranslationOptionHandler": [Function],
@@ -6205,6 +6445,11 @@ exports[`SomePage should match snapshot 1`] = `
                       "ns": Array [
                         "common",
                         "index",
+                        "home",
+                        "account",
+                        "sign-in",
+                        "session",
+                        "video",
                       ],
                       "nsSeparator": ":",
                       "overloadTranslationOptionHandler": [Function],
@@ -6230,7 +6475,7 @@ exports[`SomePage should match snapshot 1`] = `
                     "state": Object {},
                     "store": Object {
                       "fr": Object {
-                        "index": Object {
+                        "common": Object {
                           "Hello world": "Hello world",
                         },
                       },
@@ -6285,6 +6530,11 @@ exports[`SomePage should match snapshot 1`] = `
                         "ns": Array [
                           "common",
                           "index",
+                          "home",
+                          "account",
+                          "sign-in",
+                          "session",
+                          "video",
                         ],
                         "nsSeparator": ":",
                         "overloadTranslationOptionHandler": [Function],
@@ -6348,6 +6598,11 @@ exports[`SomePage should match snapshot 1`] = `
                       "ns": Array [
                         "common",
                         "index",
+                        "home",
+                        "account",
+                        "sign-in",
+                        "session",
+                        "video",
                       ],
                       "nsSeparator": ":",
                       "overloadTranslationOptionHandler": [Function],
@@ -6421,6 +6676,11 @@ exports[`SomePage should match snapshot 1`] = `
                         "ns": Array [
                           "common",
                           "index",
+                          "home",
+                          "account",
+                          "sign-in",
+                          "session",
+                          "video",
                         ],
                         "nsSeparator": ":",
                         "overloadTranslationOptionHandler": [Function],
@@ -6480,6 +6740,11 @@ exports[`SomePage should match snapshot 1`] = `
                       "ns": Array [
                         "common",
                         "index",
+                        "home",
+                        "account",
+                        "sign-in",
+                        "session",
+                        "video",
                       ],
                       "nsSeparator": ":",
                       "overloadTranslationOptionHandler": [Function],
@@ -6547,6 +6812,11 @@ exports[`SomePage should match snapshot 1`] = `
                       "ns": Array [
                         "common",
                         "index",
+                        "home",
+                        "account",
+                        "sign-in",
+                        "session",
+                        "video",
                       ],
                       "nsSeparator": ":",
                       "overloadTranslationOptionHandler": [Function],
@@ -6611,6 +6881,11 @@ exports[`SomePage should match snapshot 1`] = `
                     "ns": Array [
                       "common",
                       "index",
+                      "home",
+                      "account",
+                      "sign-in",
+                      "session",
+                      "video",
                     ],
                     "nsSeparator": ":",
                     "overloadTranslationOptionHandler": [Function],
@@ -6678,6 +6953,11 @@ exports[`SomePage should match snapshot 1`] = `
                           "ns": Array [
                             "common",
                             "index",
+                            "home",
+                            "account",
+                            "sign-in",
+                            "session",
+                            "video",
                           ],
                           "nsSeparator": ":",
                           "overloadTranslationOptionHandler": [Function],
@@ -6737,6 +7017,11 @@ exports[`SomePage should match snapshot 1`] = `
                         "ns": Array [
                           "common",
                           "index",
+                          "home",
+                          "account",
+                          "sign-in",
+                          "session",
+                          "video",
                         ],
                         "nsSeparator": ":",
                         "overloadTranslationOptionHandler": [Function],
@@ -6804,6 +7089,11 @@ exports[`SomePage should match snapshot 1`] = `
                         "ns": Array [
                           "common",
                           "index",
+                          "home",
+                          "account",
+                          "sign-in",
+                          "session",
+                          "video",
                         ],
                         "nsSeparator": ":",
                         "overloadTranslationOptionHandler": [Function],
@@ -7765,7 +8055,7 @@ exports[`SomePage should match snapshot 1`] = `
                   },
                   "resourceStore": Object {
                     "fr": Object {
-                      "index": Object {
+                      "common": Object {
                         "Hello world": "Hello world",
                       },
                     },

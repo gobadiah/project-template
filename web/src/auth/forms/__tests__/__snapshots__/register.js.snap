@@ -1,7 +1,19 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`PlainRegisterForm should match snapshot 1`] = `
+.emotion-0 {
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+.emotion-2 {
+  width: 100%;
+}
+
 <Form
+  className=""
   error={Array []}
   handleSubmit={[MockFunction]}
   pristine={true}
@@ -9,27 +21,49 @@ exports[`PlainRegisterForm should match snapshot 1`] = `
   submitting={false}
   warning={Array []}
 >
-  <Component
-    key="email"
-  />
-  <Component
-    autoComplete="new-password"
-    key="password"
-  />
-  <Component
-    autoComplete="new-password"
-    key="confirm_password"
-    label="Password confirmation"
-    name="confirm_password"
-  />
-  <Component
-    key="first_name"
-  />
-  <Component
-    key="last_name"
-  />
-  <Component
-    key="birthday"
+  <Styled(div)>
+    <Component />
+    <Component />
+  </Styled(div)>
+  <Component />
+  <Styled(div)>
+    <Component
+      autoComplete="new-password"
+    />
+    <Component
+      autoComplete="new-password"
+      label="Password confirmation"
+      name="confirm_password"
+    />
+  </Styled(div)>
+  <Styled(div)>
+    <Component />
+    <Component />
+  </Styled(div)>
+  <Component />
+  <Styled(div)
+    className="emotion-0"
+  >
+    <MaleField
+      inputClassName="css-1nvc6v8"
+    />
+    <FemaleField
+      inputClassName="css-1nvc6v8"
+    />
+  </Styled(div)>
+  <Styled(div)
+    className="emotion-0"
+  >
+    <LeftHandedField
+      inputClassName="css-1nvc6v8"
+    />
+    <RightHandedField
+      inputClassName="css-1nvc6v8"
+    />
+  </Styled(div)>
+  <RoundButton
+    className="emotion-2"
+    text=""
   />
 </Form>
 `;

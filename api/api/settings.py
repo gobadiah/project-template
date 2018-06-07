@@ -63,6 +63,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'core',
     'assets',
+    'sports',
+    'stats',
+    'tennis',
 ]
 
 if not DEBUG and 'SENTRY_DSN' in os.environ:

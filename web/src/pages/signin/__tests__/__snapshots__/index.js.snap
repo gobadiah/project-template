@@ -2,65 +2,600 @@
 
 exports[`SignIn should match snapshot 1`] = `
 .emotion-0 {
+  width: 100px;
+  height: 113px;
+}
+
+.emotion-30 {
+  width: 20px;
+  height: 11px;
+  position: absolute;
+  right: 17px;
+}
+
+.emotion-29 {
+  max-width: 20px;
+  max-height: 20px;
+  position: absolute;
+  left: 24px;
+}
+
+.emotion-20 {
+  background-color: Transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  overflow: hidden;
+  padding: 0;
+  width: 133px;
+  height: 60px;
+}
+
+.emotion-52 {
+  width: 520px;
+}
+
+.emotion-52 > * {
+  margin-bottom: 23px;
+}
+
+.emotion-25 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  margin: auto;
+  margin-top: 43px;
+  margin-bottom: 49px;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  width: 333px;
+  height: 114px;
+}
+
+.emotion-2 {
+  margin-left: 20px;
+  vertical-align: middle;
+  font-size: 59px;
+  font-weight: bold;
+  color: var(--white);
+}
+
+.emotion-1 {
+  color: var(--apple-green);
+}
+
+.emotion-23 {
+  position: relative;
+  width: 133px;
+  height: 60px;
+  position: absolute;
+  top: 33px;
+  right: 47px;
+}
+
+.emotion-12 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 133px;
+  height: 39px;
+  position: relative;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.emotion-4 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+.emotion-6 {
+  max-width: 33px;
+  max-height: 24px;
+  margin-left: 23px;
+  width: 100%;
+}
+
+.emotion-8 {
+  width: 33px;
+  height: 27px;
+  font-size: 26px;
+  margin-left: 7px;
+  margin-right: 10px;
+  font-weight: bold;
+  opacity: 0.5;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.04;
+  -webkit-letter-spacing: normal;
+  -moz-letter-spacing: normal;
+  -ms-letter-spacing: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: var(--white);
+}
+
+.emotion-10 {
+  width: 10px;
+  height: 8px;
+}
+
+.emotion-21 {
+  visibility: hidden;
+  opacity: 0;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  -webkit-transform: translateY(-2em);
+  -ms-transform: translateY(-2em);
+  transform: translateY(-2em);
+  z-index: -1;
+  -webkit-transition: all 0.3s ease-in-out 0s,visibility 0s linear 0.3s,z-index 0s linear 0.01s;
+  transition: all 0.3s ease-in-out 0s,visibility 0s linear 0.3s,z-index 0s linear 0.01s;
+}
+
+.emotion-24:hover .emotion-21,
+.emotion-24:focus .emotion-21,
+.emotion-24:focus-within .emotion-21 {
+  visibility: visible;
+  opacity: 1;
+  z-index: 1;
+  -webkit-transform: translateY(0%);
+  -ms-transform: translateY(0%);
+  transform: translateY(0%);
+  -webkit-transition-delay: 0s,0s,0.3s;
+  transition-delay: 0s,0s,0.3s;
+}
+
+.emotion-18 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 133px;
+  height: 39px;
+  position: relative;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  opacity: 0.9;
+  border-radius: 5px;
+  background-color: var(--dark-blue-grey);
+}
+
+.emotion-18:hover {
+  background-color: var(--white);
+}
+
+.emotion-18:hover > * {
+  color: var(--dark-blue-grey);
+}
+
+.emotion-55 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  margin: auto;
+  margin-top: 49px;
+  text-align: center;
+  border-radius: 5px;
+  padding-left: 38px;
+  padding-right: 38px;
+  background-color: rgba(255,255,255,0.9);
+  box-sizing: border-box;
+  width: 640px;
+  height: 682px;
+}
+
+.emotion-27 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  position: relative;
+  width: 640px;
+  height: 89px;
+  background-image: linear-gradient(to left,var(--apple-green),var(--yellow-green));
+  font-size: 36px;
+  font-weight: bold;
+  line-height: 0.81;
+  text-align: center;
+  color: var(--white);
+  text-shadow: 2px 2px 0 var(--apple-green);
+  vertical-align: middle;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.emotion-37 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-self: stretch;
+  -ms-flex-item-align: stretch;
+  align-self: stretch;
+  -webkit-box-pack: space-around;
+  -webkit-justify-content: space-around;
+  -ms-flex-pack: space-around;
+  justify-content: space-around;
+  margin-top: 21px;
+}
+
+.emotion-31 {
+  width: 249px;
+  height: 74px;
+  border-radius: 36.5px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: space-around;
+  -webkit-justify-content: space-around;
+  -ms-flex-pack: space-around;
+  justify-content: space-around;
+  position: relative;
+  font-size: 26px;
+  font-weight: bold;
+  line-height: 1.04;
+  text-align: center;
+  color: var(--white);
+  cursor: pointer;
+  outline: none;
+  border: none;
+  background-color: var(--dark-blue-grey);
+  background-color: var(--pale-red);
+}
+
+.emotion-35 {
+  width: 249px;
+  height: 74px;
+  border-radius: 36.5px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: space-around;
+  -webkit-justify-content: space-around;
+  -ms-flex-pack: space-around;
+  justify-content: space-around;
+  position: relative;
+  font-size: 26px;
+  font-weight: bold;
+  line-height: 1.04;
+  text-align: center;
+  color: var(--white);
+  cursor: pointer;
+  outline: none;
+  border: none;
+  background-color: var(--dark-blue-grey);
+  background-color: var(--dull-blue);
+}
+
+.emotion-39 {
+  margin-top: 38px;
+  margin-bottom: 30px;
+  width: 550px;
+  height: 2px;
+  border: solid 1px var(--dark-blue-grey);
+  background-color: var(--dark-blue-grey);
+}
+
+.emotion-41 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.emotion-50 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: space-around;
+  -webkit-justify-content: space-around;
+  -ms-flex-pack: space-around;
+  justify-content: space-around;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.emotion-45 {
+  font-size: 20px;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.35;
+  -webkit-letter-spacing: normal;
+  -moz-letter-spacing: normal;
+  -ms-letter-spacing: normal;
+  letter-spacing: normal;
+  text-align: left;
+  cursor: pointer;
+  text-decoration: underline;
+  color: var(--dark-blue-grey);
+}
+
+.emotion-48 {
+  width: 249px;
+  height: 74px;
+  border-radius: 36.5px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: space-around;
+  -webkit-justify-content: space-around;
+  -ms-flex-pack: space-around;
+  justify-content: space-around;
+  position: relative;
+  font-size: 26px;
+  font-weight: bold;
+  line-height: 1.04;
+  text-align: center;
+  color: var(--white);
+  cursor: pointer;
+  outline: none;
+  border: none;
+  background-color: var(--dark-blue-grey);
 }
 
 <div>
-  <form
-    onSubmit={[Function]}
+  <div
+    className="emotion-25 emotion-26"
+  >
+    <img
+      alt="KinCube"
+      className="emotion-0"
+      onClick={[Function]}
+      src="/static/build/0df991fc4679ecdd2f10d050b44973e7.png"
+    />
+    <div
+      className="emotion-2 emotion-3"
+    >
+      <span
+        className="emotion-1"
+      >
+        Kin
+      </span>
+      <span>
+        Cube
+      </span>
+    </div>
+    <div
+      className="emotion-23 emotion-24"
+    >
+      <div
+        className="emotion-12 emotion-13"
+      >
+        <img
+          alt=""
+          className="emotion-4 emotion-5"
+          src="/static/build/dbbce963afc7a43972b6bb8d4a4fd07f.png"
+        />
+        <img
+          alt="fr"
+          className="emotion-6 emotion-7"
+          src="/static/build/329f5c89d4f13938971b9b0d8d35f296.png"
+        />
+        <span
+          className="emotion-8 emotion-9"
+        >
+          FR
+        </span>
+        <img
+          alt=""
+          className="emotion-10 emotion-11"
+          src="/static/build/1ec3ef049ed3d04a0daa3747cfa75c00.png"
+        />
+      </div>
+      <div
+        className="emotion-21 emotion-22"
+      >
+        <button
+          className="emotion-20"
+          onClick={[Function]}
+        >
+          <div
+            className="emotion-18 emotion-13"
+          >
+            <img
+              alt="en"
+              className="emotion-6 emotion-7"
+              src="/static/build/1b46775dab5a7245b5969a5aa84e0dff.png"
+            />
+            <span
+              className="emotion-8 emotion-9"
+            >
+              EN
+            </span>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div
+    className="emotion-55 emotion-56"
+    width={undefined}
   >
     <div
-      className="emotion-0 emotion-1"
+      className="emotion-27 emotion-28"
     >
-      <label
-        htmlFor="email"
-      >
-        Email
-      </label>
-      <input
-        autoComplete="email"
-        className={undefined}
-        name="email"
-        onBlur={[Function]}
-        onChange={[Function]}
-        onDragStart={[Function]}
-        onDrop={[Function]}
-        onFocus={[Function]}
-        placeholder={undefined}
-        type="email"
-        value=""
-      />
+      <span>
+        Connect to your account
+      </span>
     </div>
     <div
-      className="emotion-0 emotion-1"
+      className="emotion-37 emotion-38"
     >
-      <label
-        htmlFor="password"
+      <button
+        className="emotion-31 emotion-32"
+        onClick={[Function]}
       >
-        Password
-      </label>
-      <input
-        autoComplete="current-password"
-        className={undefined}
-        name="password"
-        onBlur={[Function]}
-        onChange={[Function]}
-        onDragStart={[Function]}
-        onDrop={[Function]}
-        onFocus={[Function]}
-        placeholder={undefined}
-        type="password"
-        value=""
-      />
+        <img
+          alt=""
+          className="emotion-29"
+          src="/static/build/381ba043d1cda6db20454e5c303ddcaf.png"
+        />
+        <span>
+          Google
+        </span>
+        <img
+          alt=""
+          className="emotion-30"
+          src="/static/build/d8d94d60d9528bf1fd45fa221f02f20b.png"
+        />
+      </button>
+      <button
+        className="emotion-35 emotion-32"
+        onClick={[Function]}
+      >
+        <img
+          alt=""
+          className="emotion-29"
+          src="/static/build/4a6931efbd0b869b3a416855661dad1c.png"
+        />
+        <span>
+          Facebook
+        </span>
+        <img
+          alt=""
+          className="emotion-30"
+          src="/static/build/d8d94d60d9528bf1fd45fa221f02f20b.png"
+        />
+      </button>
     </div>
-    <input
-      type="submit"
-      value="Sign in"
+    <div
+      className="emotion-39 emotion-40"
     />
-  </form>
+    <form
+      className="emotion-52"
+      onSubmit={[Function]}
+    >
+      <div
+        className="emotion-41 emotion-42"
+      >
+        <input
+          autoComplete="email"
+          className=" "
+          id={undefined}
+          name="email"
+          onBlur={[Function]}
+          onChange={[Function]}
+          onDragStart={[Function]}
+          onDrop={[Function]}
+          onFocus={[Function]}
+          placeholder="Email"
+          type="email"
+          value=""
+        />
+      </div>
+      <div
+        className="emotion-41 emotion-42"
+      >
+        <input
+          autoComplete="current-password"
+          className=" "
+          id={undefined}
+          name="password"
+          onBlur={[Function]}
+          onChange={[Function]}
+          onDragStart={[Function]}
+          onDrop={[Function]}
+          onFocus={[Function]}
+          placeholder="Password"
+          type="password"
+          value=""
+        />
+      </div>
+      <div
+        className="emotion-50 emotion-51"
+      >
+        <a
+          className="emotion-45 emotion-46"
+          onClick={[Function]}
+        >
+          Password forgotten
+        </a>
+        <button
+          className="emotion-48 emotion-32"
+          onClick={undefined}
+        >
+          <span>
+            Connect me
+          </span>
+          <img
+            alt=""
+            className="emotion-30"
+            src="/static/build/d8d94d60d9528bf1fd45fa221f02f20b.png"
+          />
+        </button>
+      </div>
+    </form>
+    <div
+      className="emotion-39 emotion-40"
+    />
+    <a
+      href="/register"
+      onClick={[Function]}
+    >
+      Create your account
+    </a>
+  </div>
   <div />
 </div>
 `;

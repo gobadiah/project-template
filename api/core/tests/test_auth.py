@@ -124,6 +124,9 @@ def test_user_registration_successful(client):
             'data': {
                 'type': 'users',
                 'attributes': {
+                    'first_name': 'Nicolas',
+                    'last_name': 'Smith',
+                    'birthday': '1970-01-01',
                     'email': email,
                     'password': password,
                 },

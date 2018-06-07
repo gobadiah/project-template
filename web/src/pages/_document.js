@@ -38,7 +38,11 @@ export default class MyDocument extends Document {
           { // eslint-disable-next-line react/no-danger
           }<style dangerouslySetInnerHTML={{ __html: this.props.css }} />
           { // eslint-disable-next-line react/no-danger
-          }<style dangerouslySetInnerHTML={{ __html: removeSourceMaps(nprogress) }} />
+          }<style dangerouslySetInnerHTML={{ __html: nprogress }} />
+          <link
+            href='https://fonts.googleapis.com/css?family=Titillium+Web:400,700'
+            rel='stylesheet'
+          />
           { // eslint-disable-next-line react/no-danger
           }<style dangerouslySetInnerHTML={{ __html: removeSourceMaps(toastify) }} />
         </Head>

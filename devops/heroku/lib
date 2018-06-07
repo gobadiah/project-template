@@ -10,26 +10,20 @@ function heroku_login() {
 }
 
 function create_web_app() {
-  heroku apps:list -t $PROJECT | grep -q $web
-  if [ $? -ne 0 ]
-  then
+  heroku apps:list -t $PROJECT | grep -q $web ||
     heroku create -t $PROJECT --region eu -a $web
-  fi
 }
 
-function destroy_web_app() {
-  heroku apps:list -t $PROJECT | grep -q $web
-  if [ $? -eq 0 ]
-  then
+function teardown_web_app() {
+  heroku apps:list -t $PROJECT | grep -q $web &&
     heroku apps:destroy -c $web -a $web
-  fi
 }
 
 function configure_web_app() {
-  if [[ ! -v API_URL || ! -v WEB_URL || ! -v GOOGLE_CLIENT_ID || ! -v GOOGLE_CLIENT_SECRET || ! -v FACEBOOK_CLIENT_ID || ! -v FACEBOOK_CLIENT_SECRET ]]
+  if [[ ! -v API_URL || ! -v WEB_URL ]]
   then
     echo "Missing some env vars for web configuration:"
-    echo "API_URL=$API_URL WEB_URL=$WEB_URL GOOGLE_CLIENT_ID=$GOOGLE_CLIENT_ID GOOGLE_CLIENT_SECRET=$GOOGLE_CLIENT_SECRET FACEBOOK_CLIENT_ID=$FACEBOOK_CLIENT_ID FACEBOOK_CLIENT_SECRET=$FACEBOOK_CLIENT_SECRET"
+    echo "API_URL=$API_URL WEB_URL=$WEB_URL"
     exit 1
   fi
   heroku config:set -a $web API_URL=$API_URL
@@ -49,12 +43,9 @@ function create_api_app() {
   fi
 }
 
-function destroy_api_app() {
-  heroku apps:list -t $PROJECT | grep -q $api
-  if [ $? -eq 0 ]
-  then
+function teardown_api_app() {
+  heroku apps:list -t $PROJECT | grep -q $api &&
     heroku apps:destroy -c $api -a $api
-  fi
 }
 
 function configure_api_app() {
@@ -81,7 +72,7 @@ function configure_api_app() {
 function deploy_web_app() {
   pushd "$SCRIPTPATH/../../web"
 
-  WEB_URL=$WEB_URL TAG=$ENV ./build_docker
+  WEB_URL=$WEB_URL TAG=$ENV ./docker/build
 
   docker tag $PROJECT/web:$ENV registry.heroku.com/$web/web
   docker push registry.heroku.com/$web/web
@@ -90,9 +81,12 @@ function deploy_web_app() {
 }
 
 function deploy_api_app() {
-  pushd "$SCRIPTPATH/../../api2"
+  pushd "$SCRIPTPATH/../../api"
 
-  heroku container:push -a $api web
+  TAG=$ENV ./docker/build
+
+  docker tag $PROJECT/api:$ENV registry.heroku.com/$api/web
+  docker push registry.heroku.com/$api/web
   heroku run -a $api "python manage.py migrate" --type=worker
 
   popd

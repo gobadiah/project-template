@@ -1,0 +1,4 @@
+{
+  "title": "Mes sessions",
+  "Session title": "{{session.label}}"
+}

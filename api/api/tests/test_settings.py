@@ -22,6 +22,9 @@ def test_installed_apps():
     assert 'rest_framework' in settings.INSTALLED_APPS
     assert 'core' in settings.INSTALLED_APPS
     assert 'assets' in settings.INSTALLED_APPS
+    assert 'sports' in settings.INSTALLED_APPS
+    assert 'stats' in settings.INSTALLED_APPS
+    assert 'tennis' in settings.INSTALLED_APPS
 
 
 def test_dj_database_url_called(mocker):

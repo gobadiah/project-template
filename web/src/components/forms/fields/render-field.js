@@ -1,10 +1,10 @@
-import _ from 'lodash';
-import React from 'react';
 import { bool, number, shape, string } from 'prop-types';
+import { css } from 'react-emotion';
+import React from 'react';
+import _ from 'lodash';
 
+import { FlexAlignedCenter, FlexColumnAlignedCenter } from '~/styles';
 import { defaultPropTypes } from '~/components';
-
-import { FlexColumn, Flex } from '~/styles';
 
 import { Error, Warning } from '..';
 
@@ -17,32 +17,40 @@ const RenderField = ({
   inputClassName,
   label,
   meta: {
+    active,
     error,
     touched,
     warning,
   },
-  placeholder,
   rows,
   type,
+  required,
 }, { t }) => {
-  const container = column ? FlexColumn : Flex;
+  const container = column ? FlexColumnAlignedCenter : FlexAlignedCenter;
+  const id = type === 'radio' ? `${input.name}_${input.value}` : undefined;
+  const req = required ? ' *' : '';
+  const lab = `${t(label)}${req}`;
   const props = {
     autoComplete,
-    className: inputClassName,
+    className: `${inputClassName || ''} ${(type === 'radio' && css`width: 32px`) || ''}`,
     key: 'component',
-    placeholder,
-    type,
+    placeholder: lab,
+    id,
     ...input,
   };
   const component = type === 'textarea' ?
-    <textarea {...props} cols={cols} rows={rows} /> :
-    <input {...props} />;
+    <textarea {...props} cols={cols} rows={rows} /> : (
+      <input
+        type={(type !== 'date' || input.value || active) ? type : 'text'}
+        {...props}
+      />
+    );
   return React.createElement(
     container,
     { className },
     _.compact([
-      label && <label key='label' htmlFor={input.name}>{t(label)}</label>,
       component,
+      type === 'radio' && <label key='label' htmlFor={id}>{lab}</label>,
       touched && error && <Error key='error' error={error} />,
       touched && warning && <Warning key='warning' warning={warning} />,
     ]),
@@ -61,6 +69,7 @@ RenderField.propTypes = {
   placeholder: string,
   rows: number,
   type: string,
+  required: bool,
 };
 
 RenderField.defaultProps = {
@@ -73,6 +82,7 @@ RenderField.defaultProps = {
   placeholder: undefined,
   rows: 7,
   type: 'text',
+  required: false,
 };
 
 RenderField.contextTypes = defaultPropTypes;
