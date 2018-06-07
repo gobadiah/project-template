@@ -38,7 +38,7 @@ def test_get_list_statsviewset(client):
     user = UserFactory()
     token = get_token(user=user)
     response = client.get(
-        reverse('stats-list'),
+        reverse('stats:stats-list'),
         HTTP_AUTHORIZATION='Bearer %s' % token,
     )
     assert response.status_code == 200

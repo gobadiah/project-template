@@ -66,7 +66,14 @@ def test_integration_users_endpoint(client):
     assert result['data'][0]['type'] == 'users'
     assert result['data'][0]['id'] == str(user.id)
     assert result['data'][0]['attributes'] == {
+        'birthday': user.birthday.isoformat(),
+        'club': user.club,
+        'dominant-hand': user.dominant_hand,
         'email': user.email,
+        'first-name': user.first_name,
+        'gender': user.gender,
+        'last-name': user.last_name,
+        'ranking': user.ranking,
     }
 
 

@@ -9,7 +9,7 @@ class SomePage extends Page {
     const { t } = this.props;
     return (
       <div css='background-color: greenyellow;'>
-        <div>{t('index:Hello world')}</div>
+        <div>{t('Hello world')}</div>
         <Link route='index'><a>Back to index</a></Link><br />
         <Link route='generate-error'><a>Generate error</a></Link><br />
         <Link route='/api'><a>Api endpoint</a></Link><br />

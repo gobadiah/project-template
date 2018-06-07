@@ -1,5 +1,7 @@
 #!/usr/local/bin/zsh
 
+REGION=${REGION:=$AWS_DEFAULT_REGION}
+
 function get_user_id() {
   USER_ID=$(aws iam list-users | jq -r ".Users | map(select(.UserName == \"$USER\")) | .[0].UserId")
 }

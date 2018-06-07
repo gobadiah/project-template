@@ -3,10 +3,13 @@ import 'jsdom-global/register';
 import React from 'react';
 import renderer from 'react-test-renderer';
 import { shallow } from 'enzyme';
+import i18n from '~/services/i18n';
 
 import { pageProps } from '../../__tests__/utils';
 
 import Register from '..';
+
+i18n.languages = ['fr'];
 
 describe('Register', () => {
   it('should match snapshot', () => {
