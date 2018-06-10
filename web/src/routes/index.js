@@ -11,6 +11,7 @@ routes
 
 const { Router } = routes;
 
+// NProgress provides visual feedback during page changes
 Router.onRouteChangeStart = () => NProgress.start();
 Router.onRouteChangeComplete = () => NProgress.done();
 Router.onRouteChangeError = () => NProgress.done();
