@@ -18,7 +18,7 @@
     "test:ci": "npm run build && npm run lint:ci && npm run jest:ci"
   },
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-plugin-emotion": "^9.0.1",
