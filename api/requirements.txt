@@ -19,7 +19,7 @@ dj-database-url==0.5.0
 Django==2.0.4
 django-cors-headers==2.2.0
 django-extensions==2.0.6
-djangorestframework==3.8.0
+djangorestframework==3.11.2
 djangorestframework-jsonapi==2.4.0
 docopt==0.6.2
 docutils==0.14
