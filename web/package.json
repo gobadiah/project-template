@@ -92,7 +92,7 @@
     "jest-emotion": "^9.0.0",
     "jest-immutable-matchers": "^2.0.1",
     "jest-junit": "^3.6.0",
-    "jsdom": "^11.6.2",
+    "jsdom": "^16.5.0",
     "jsdom-global": "^3.0.2",
     "react-test-renderer": "^16.2.0",
     "supertest": "^3.0.0"
